@@ -80,32 +80,15 @@ hr {
                     <div class="verticality book_info">
                         <h2>예약정보</h2>
                         <div class="horizontal">
-                            <div class="verticality" v-if="!showDatepicker">
+                            <div class="verticality">
                                 <div>날짜</div>
                                 <div>
                                 	<input class="checkDates" type="text" id="checkInDate" name="checkIn" v-model="startDate" readonly>
                                 	~
                                 	<input class="checkDates" type="text" id="checkOutDate" name="checkOut" v-model="endDate" readonly>  
-<!--                                 	{{ startDate }} ~ {{ endDate }} -->
                                 </div>
                                 <div><i class="far fa-clock"></i> 체크인 : 오후 3:00이후</div>
-                                <div><button type="button" v-on:click="showDatepicker = true">날짜 수정하기</button></div>
-                            </div>
-                            <div class="verticality" v-if="showDatepicker">
-	                            <div class="horizontal">
-<!-- 		                            <div> -->
-<!-- 		                            	체크인  -->
-<!-- 		                            	<input class="checkDates" type="text" id="checkInDate" readonly> -->
-<!-- 		                            </div> -->
-<!-- 		                            <div> -->
-<!-- 		                        		체크아웃 -->
-<!-- 		                        		<input class="checkDates" type="text" id="checkOutDate" readonly>     -->
-<!-- 		                            </div> -->
-	                            </div>
-	                            <div>
-	                            	<button type="button" v-on:click="showDatepicker = false">설정하기</button>
-									<button type="button" v-on:click="">취소하기</button>
-	                            </div>
+                                <div v-if="showDateBtn"><button type="button" v-on:click="setShowDatepicker">날짜 수정하기</button></div>
                             </div>
                         </div>
                         <div class="horizontal">
@@ -261,7 +244,6 @@ hr {
             //input을 datepicker로 선언
             //datepicker 한국어로 사용하기 위한 언어설정
 			$.datepicker.setDefaults($.datepicker.regional['ko']); 
-
     		$('#checkInDate').datepicker({
             	dateFormat: 'yy-m-d' //Input Display Format 변경
                 ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
@@ -377,7 +359,7 @@ hr {
     		});
     		
     		$('#checkOutDate').datepicker('option', 'disabled', true);
-    		
+    		$('#checkInDate').datepicker('option', 'disabled', true);
 			//초기값을 오늘 날짜로 설정
 // 			$('#checkInDate').datepicker('setDate', 'today+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)   
 			
@@ -416,7 +398,7 @@ hr {
 		vue = new Vue({
 			el: '#app',
 			data: {
-				showDatepicker: false,
+				showDateBtn: true,
 				startDate: '${ bookVo.checkIn }',
 				endDate: '${ bookVo.checkOut }',
 				showPersonCnt: false,
@@ -446,9 +428,9 @@ hr {
 					this.cntOfPerson = ${ bookVo.cntOfPerson };
 					this.showPersonCnt = false
 				},
-				setshowDatepicker: function() {
-					showDatepicker = true;
-					
+				setShowDatepicker: function() {
+					$('#checkInDate').datepicker('option', 'disabled', false);
+					this.showDateBtn = false;
 				}
 			},
 			computed: {
