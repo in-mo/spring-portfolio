@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.portfolio.mapper.HostMapper">
+
+	<insert id="addContent">
+		insert into airbnb_host (id, classification, houseType, stayType, countOfPerson, countOfBedroom, countOfBed,
+			countOfSofeBed, countOfSofe, countOfBlanket, countOfBathroom, postcode, address1, address2, amenities, 
+			safety, usefull, hostComment, cost, title, reg_date)  
+		values(#{id}, #{classification}, #{houseType}, #{stayType}, #{countOfPerson}, #{countOfBedroom}, #{countOfBed},
+			#{countOfSofeBed}, #{countOfSofe}, #{countOfBlanket}, #{countOfBathroom}, #{postcode}, #{address1}, #{address2} ,#{amenities},
+			#{safety}, #{usefull}, #{hostComment}, #{cost} , #{title}, now()) 
+	</insert>
+	
+	<select id="getContentInfo" resultType="hostVo">
+		select * from airbnb_host where num = #{num}
+	</select>
+	
+	<update id="updateContentInfo">
+		update airbnb_host 
+			set classification = #{classification},
+			housetype = #{houseType},
+			staytype = #{stayType},
+			countOfPerson = #{countOfPerson},
+			countOfBedroom = #{countOfBedroom},
+			countOfBed = #{countOfBed},
+			countOfSofeBed = #{countOfSofeBed},
+			countOfSofe = #{countOfSofe},
+			countOfBlanket = #{countOfBlanket},
+			countOfBathroom = #{countOfBathroom},
+			postcode = #{postcode},
+			address1 = #{address1},
+			address2 = #{address2},
+			amenities = #{amenities},
+			safety = #{safety},
+			usefull = #{usefull},
+			hostComment = #{hostComment},
+			cost = #{cost},
+			title = #{title}
+			where num = #{num}
+	</update>
+	
+	<delete id="deleteContentInfo">
+		delete from airbnb_host where num = #{num} 
+	</delete>
+	
+</mapper>

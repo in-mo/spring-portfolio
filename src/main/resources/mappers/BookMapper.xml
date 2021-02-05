@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.portfolio.mapper.BookMapper">
+
+	<insert id="addBook"  parameterType="bookVo">
+		insert into airbnb_book (id, cost, check_in, check_out, cnt_of_person, no_num, reg_date)  
+		values(#{id}, #{cost}, #{checkIn}, #{checkOut}, #{cntOfPerson}, #{noNum}, now()) 
+	</insert>
+	
+	<select id="getBookInfoByNum" resultType="bookVo">
+		select * from airbnb_book where no_num = #{ noNum }
+	</select>
+	
+	<select id="getBookInfoById" resultType="bookVo">
+		select * from airbnb_book where id = #{ id }
+	</select>
+	
+	<select id="getBookInfoByNumAndId" resultType="bookVo">
+		select * from airbnb_book where num = #{ num } and id = #{ id }
+	</select>
+	
+	<update id="updateBookInfo">
+		update airbnb_book 
+			set id = #{id},
+			cost = #{cost},
+			check_in = #{checkIn},
+			check_out = #{checkOut},
+			cnt_of_person = #{cntOfPerson},
+			no_num = #{noNum}
+			where num = #{num}
+	</update>
+	
+	<delete id="deleteBookInfo">
+		delete from airbnb_book where num = #{num}
+	</delete>
+</mapper>
