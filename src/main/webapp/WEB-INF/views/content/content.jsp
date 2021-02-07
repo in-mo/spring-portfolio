@@ -295,7 +295,7 @@ table, td, tr {
 							<button type="button" v-on:click="cntOfGuestUp">+</button>
 						</div>
 					</div>
-					<div v-if="isPaymentShow">
+					<div  v-if="isPaymentShow">
 						<div><button type="button" v-on:click="booking">예약하기</button></div>
 						<div>예약 확정 전에는 요금이 청구되지 않습니다.</div>
 						<div>
@@ -517,12 +517,9 @@ table, td, tr {
 								alert('해당 날짜는 선택할 수 없습니다. 다시 선택해주세요.');
 								$('#checkOutDate').datepicker('option', 'disabled', true);
 								$('#checkInDate').datepicker('setDate');
-								$('#checkOutDate').datepicker('setDate');
-								vue.startDate = '';
-								vue.endDate = '';
-								vue.isPaymentShow = false;
 								return;
 							}
+								
 							
 							if(sDate < 0) {
 								
@@ -580,8 +577,6 @@ table, td, tr {
 
 							if((sDate < 0 && eDate > 0) || (sDate > 0 && eDate < 0)) {
 								alert('다시 선택해주세요');
-								$('#checkOutDate').datepicker('setDate');
-								vue.endDate = '';
                         		return;
 							}
 							
@@ -712,10 +707,6 @@ table, td, tr {
 		  		booking: function() {
 		  			let isBooking = confirm('정말 결제하시겠습니까?');
 		  			if(isBooking) {
-			  			if(this.startDate == ''|| this.endDate == '') {
-				  			alert('예약할 날짜를 선택해주세요!');
-				  			return;
-		  				}
 		  				location.href='/book/check?checkIn='+this.startDate+'&checkOut='+this.endDate+'&cost=' + this.totalCost +'&cntOfPerson='+this.cntOfGuest+'&noNum=${ hostVo.num }';
 		  			}
 		  		}

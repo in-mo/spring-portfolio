@@ -83,17 +83,12 @@ hr {
                             <div class="verticality">
                                 <div>날짜</div>
                                 <div>
-                                	<input class="checkDates" type="text" id="checkInDate" name="checkIn" v-model="startDate" required readonly>
+                                	<input class="checkDates" type="text" id="checkInDate" name="checkIn" v-model="startDate" readonly>
                                 	~
-                                	<input class="checkDates" type="text" id="checkOutDate" name="checkOut" v-model="endDate" required readonly>  
+                                	<input class="checkDates" type="text" id="checkOutDate" name="checkOut" v-model="endDate" readonly>  
                                 </div>
                                 <div><i class="far fa-clock"></i> 체크인 : 오후 3:00이후</div>
-                                <div v-if="showDateBtn">
-                                	<button type="button" v-on:click="setShowDatepicker">날짜 수정하기</button>
-                                </div>
-                                <div v-if="!showDateBtn">
-                                	<button type="button" v-on:click="setModifyDatepicker">수정</button>
-                                </div>
+                                <div v-if="showDateBtn"><button type="button" v-on:click="setShowDatepicker">날짜 수정하기</button></div>
                             </div>
                         </div>
                         <div class="horizontal">
@@ -109,7 +104,7 @@ hr {
                             	<div>인원수 수정</div>
                             	<div>
 	                            	<button type="button" v-on:click="personCountDown">-</button>
-									<input class="inputOutLine" name="cntOfPerson" v-model="cntOfPerson" required readonly>
+									<input class="inputOutLine" name="cntOfPerson" v-model="cntOfPerson" readonly>
 									<button type="button" v-on:click="personCountUp">+</button>
 									<button type="button" v-on:click="showPersonCnt = false">설정하기</button>
 									<button type="button" v-on:click="canelModifyPersonCount">취소하기</button>
@@ -156,7 +151,7 @@ hr {
                     <div class="verticality refund_policy">
                         <h2>환불 정책</h2>
                         <div>
-                            {{ startDate }} 12:00 PM 전에 예약을 취소하면 요금 전액이 환불됩니다.
+                            1월 23일 12:00 PM 전에 예약을 취소하면 요금 전액이 환불됩니다.
                             <br>
                             <a href="">자세히 알아보기</a>
                         </div>
@@ -177,7 +172,7 @@ hr {
                             아래 버튼을 선택하면, 숙소 이용규칙, 안전 정보 공개, 환불 정책, 에어비앤비의 사회적 거리 두기 및 기타 코로나19 관련 가이드라인, 및 게스트 환불 정책에 동의하는 것입니다. 또한 숙박세 및 서비스 수수료를 포함하여 표시된 총 금액에 동의합니다. 에어비앤비는 이제 이 지역에서 정부가 부과한 숙박세를 징수하여 납부합니다.
                         </div>
                     </div>
-                    <div class="btn_book"><button type="button" v-on:click="gotoPaymentPage">예약 요청하기</button></div>
+                    <div class="btn_book"><button>예약 요청하기</button></div>
                 </div>
             </div>
 
@@ -211,7 +206,7 @@ hr {
                         
                             <tr>
 								<td>청소비</td>
-								<td>{{ 20000 | comma }}원</td>							
+								<td>{{ 20000 | comma }}</td>							
 							</tr>
                             
                             <tr>
@@ -294,11 +289,9 @@ hr {
 								alert('해당 날짜는 선택할 수 없습니다. 다시 선택해주세요.');
 								$('#checkOutDate').datepicker('option', 'disabled', true);
 								$('#checkInDate').datepicker('setDate');
-								$('#checkOutDate').datepicker('setDate');
-								vue.startDate = '';
-								vue.endDate = '';
 								return;
 							}
+								
 							
 							if(sDate < 0) {
 								
@@ -353,8 +346,6 @@ hr {
 
 							if((sDate < 0 && eDate > 0) || (sDate > 0 && eDate < 0)) {
 								alert('다시 선택해주세요');
-								$('#checkOutDate').datepicker('setDate');
-								vue.endDate = '';
                         		return;
 							}
 							
@@ -440,24 +431,6 @@ hr {
 				setShowDatepicker: function() {
 					$('#checkInDate').datepicker('option', 'disabled', false);
 					this.showDateBtn = false;
-				},
-				setModifyDatepicker: function() {
-					if($('#checkOutDate').val() == '' || $('#checkInDate').val() == '') {
-						alert('날짜를 넣어주세요!');
-						return;
-					}
-						
-					$('#checkOutDate').datepicker('option', 'disabled', true);
-		    		$('#checkInDate').datepicker('option', 'disabled', true);
-					this.showDateBtn = true;
-				},
-				gotoPaymentPage: function() {
-					if($('#checkOutDate').val() == '' || $('#checkInDate').val() == '') {
-						alert('날짜를 넣어주세요!');
-						return;
-					}
-
-					location.href='/book/iamport?id=${ bookVo.id }&checkIn=' + this.startDate + '&checkOut='+this.endDate+'&cntOfPerson='+this.cntOfPerson+'&noNum=${ bookVo.noNum }&cost='+this.totalCost;
 				}
 			},
 			computed: {
