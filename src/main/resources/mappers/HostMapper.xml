@@ -18,6 +18,10 @@
 		select * from airbnb_host where num = #{num}
 	</select>
 	
+	<select id="getContentInfoForMain" resultType="hostVo">
+		select * from airbnb_host where classification = #{classification} order by reg_date desc  limit 1;
+	</select>
+	
 	<update id="updateContentInfo">
 		update airbnb_host 
 			set classification = #{classification},

@@ -20,11 +20,15 @@
 	</select>	
 	
 	<select id="getReviewsByNoNum" resultType="reviewVo">
-		select * from airbnb_review where no_num = #{ noNum }  order by num desc
+		select * from airbnb_review where no_num = #{ noNum } order by num desc
 	</select>
 	
 	<select id="getReviewsById" resultType="reviewVo">
 		select * from airbnb_review where id = #{ id } order by reg_date desc limit #{startRow}, 5
+	</select>
+	
+	<select id="getReviews" resultType="reviewVo">
+		select * from airbnb_review order by num desc
 	</select>
 	
 	<select id="countReviewByNoNum" resultType="int">

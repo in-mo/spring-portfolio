@@ -152,6 +152,21 @@ public class HostService {
 	}
 	
 	@Transactional
+	public List<HostVo> getContentInfoForMain() {
+		List<HostVo> hostList = new ArrayList<HostVo>();
+		hostList.add(hostMapper.getContentInfoForMain("아파트"));
+		hostList.add(hostMapper.getContentInfoForMain("주택"));
+		hostList.add(hostMapper.getContentInfoForMain("독특한 숙소"));
+		hostList.add(hostMapper.getContentInfoForMain("부티크 호텔"));
+		
+		for(HostVo hostVo : hostList) {
+			hostVo.setImageVo(imagesMapper.getImageByNoNum(hostVo.getNum()));
+		}
+		
+		return hostList;
+	}
+	
+	@Transactional
 	public int updateContentInfo(HostVo hostVo, String type) {
 		if(type.equals("houseType")) {
 			String classification = hostVo.getClassification();

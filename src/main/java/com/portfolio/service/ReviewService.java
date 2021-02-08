@@ -1,6 +1,5 @@
 package com.portfolio.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +68,10 @@ public class ReviewService {
 	
 	public List<ReviewVo> getReviewsByNoNum(int noNum) {
 		return reviewMapper.getReviewsByNoNum(noNum);
+	}
+	
+	public List<ReviewVo> getReviews() {
+		return reviewMapper.getReviews();
 	}
 	
 	public int countReviewByNoNum(int noNum) {
