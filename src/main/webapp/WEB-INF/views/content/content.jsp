@@ -392,23 +392,23 @@ table, td, tr {
 						<h4>숙소 이용규칙</h4>
 						<table>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-user-clock"></i></td>
 								<td>체크인 시간: 오후 3:00 이후</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-user-clock"></i></td>
 								<td>체크아웃 시간: 오전 11:00 이후</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-smoking-ban"></i></td>
 								<td>흡연 금지</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-dog"></i></td>
 								<td>반려동물 동반 불가</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-birthday-cake"></i></td>
 								<td>파티나 이벤트 금지</td>
 							</tr>
 						</table>
@@ -417,11 +417,11 @@ table, td, tr {
 						<h4>숙소 이용규칙</h4>
 						<table>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-hand-sparkles"></i></td>
 								<td>에어비앤비의 강화된 청소 절차 준수에 동의했습니다. 자세히 알아보기</td>
 							</tr>
 							<tr>
-								<td>아이콘</td>
+								<td><i class="fas fa-people-arrows"></i></td>
 								<td>에어비앤비의 사회적 거리 두기 및 관련 가이드라인이 적용됩니다.</td>
 							</tr>
 						</table>
