@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.portfolio.domain.HostVo;
 import com.portfolio.domain.ImagesVo;
-import com.portfolio.domain.MyReviewPageDto;
+import com.portfolio.domain.PageDto;
 import com.portfolio.domain.ReviewVo;
 import com.portfolio.service.ReviewService;
 
@@ -151,7 +151,7 @@ public class ReviewController {
 		// 페이지블록 관련 정보 구하기 작업
 		//=====================================
 		
-		MyReviewPageDto mPageDto = new MyReviewPageDto();
+		PageDto mPageDto = new PageDto();
 		if (count > 0) {
 			// 총 필요한 페이지 갯수 구하기
 			// 글50개. 한화면에보여줄글 10개 => 50/10 = 5 

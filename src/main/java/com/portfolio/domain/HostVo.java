@@ -39,4 +39,5 @@ public class HostVo {
 	private ImagesVo imageVo;
 	private SaveVo saveVo;
 	private int reviewCount;
+	private double score;
 }

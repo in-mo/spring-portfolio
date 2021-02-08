@@ -82,12 +82,7 @@ public class HostService {
 		}
 		contentInfo.put("bookList", strBookList);
 		
-		List<ReviewVo>reviewList = reviewMapper.getReviewsByNoNum(num);
-		Double sum = 0.0;
-		for(ReviewVo reviewVo : reviewList) {
-			sum += Double.valueOf(reviewVo.getScore());
-		}
-		Double score = sum/reviewList.size();
+		String score = reviewMapper.getAvgScoreByNoNum(num);
 		contentInfo.put("score", score);
 		
 		String checkIn = bookVo.getCheckIn();
@@ -140,13 +135,7 @@ public class HostService {
 			}
 		}
 		contentInfo.put("bookList", strBookList);
-		
-		Double sum = 0.0;
-		for(ReviewVo reviewVo : reviewList) {
-			sum += Double.valueOf(reviewVo.getScore());
-		}
-		
-		contentInfo.put("score", sum/reviewList.size());
+		contentInfo.put("score", reviewMapper.getAvgScoreByNoNum(num));
 		
 		return contentInfo;
 	}

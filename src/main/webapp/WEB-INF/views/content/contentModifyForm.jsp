@@ -52,10 +52,11 @@ th {
 }
 </style>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
 	<div class="app" id="app">
-		<div><a href="/content/info?num=${ hostVo.num }"><i class="fas fa-arrow-left"></i></a></div>
+		<div><a href="/content/info?num=${ hostVo.num }&pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }"><i class="fas fa-arrow-left"></i></a></div>
 		<div v-if="buttonDisable">
 			<button class="showBtn" type="button" v-on:click="setHouseTypeShow">숙소의 건물 유형 수정</button><br><br>
 			<button class="showBtn" type="button" v-on:click="setPersonCountShow">인원/침실/침대 정보 수정</button><br><br>
@@ -375,7 +376,7 @@ th {
 		</div>
 		
 		<div v-if="isPicFileShow">
-			<form action="/content/modify?num=${ hostVo.num }" method="post" enctype="multipart/form-data">
+			<form action="/content/modify?num=${ hostVo.num }&pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }" method="post" enctype="multipart/form-data">
 				<h3>멋진 사진으로 숙소가 돋보이게 해주세요.</h3>
 				<p>휴대전화나 카메라를 사용하여 사진을 찍으세요.
 				숙소를 등록하려면 1장 이상의 사진을 업로드하세요.
@@ -929,7 +930,12 @@ th {
 			    			classification: this.selectedItem,
 			    			houseType: this.detailSelectedItem,
 			    			stayType: this.staySeletedItem,
-			    			type: "houseType"
+			    			type: "houseType",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			console.log(res);
@@ -955,7 +961,12 @@ th {
 			    			countOfSofeBed: this.sofeBedCount,
 			    			countOfSofe: this.sofeCount,
 			    			countOfBlanket: this.blanketCount,
-			    			type: "personAndBed"
+			    			type: "personAndBed",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -975,7 +986,12 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			countOfBathroom: this.bathroomCount,
-			    			type: "bathroom"
+			    			type: "bathroom",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -997,7 +1013,12 @@ th {
 			    			postcode: this.postcode,
 			    			address1: this.address1,
 			    			address2: this.address2,
-			    			type: "address"
+			    			type: "address",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1018,7 +1039,12 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			amenities: this.amenitiesCheck,
-			    			type: "amenities"
+			    			type: "amenities",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1039,7 +1065,12 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			safety: this.safetyCheck,
-			    			type: "safety"
+			    			type: "safety",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1060,7 +1091,12 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			usefull: this.usefullCheck,
-			    			type: "usefull"
+			    			type: "usefull",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1081,7 +1117,12 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			hostComment: this.hostComment,
-			    			type: "hostComment"
+			    			type: "hostComment",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1101,7 +1142,12 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			cost: this.basicCost,
-			    			type: "cost"
+			    			type: "cost",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1122,7 +1168,12 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			title: this.title,
-			    			type: "title"
+			    			type: "title",
+			    			pageNum: ${ pageVo.pageNum },
+			    			address: '${ pageVo.address }',
+				    		checkIn: '${ pageVo.checkIn }',
+					    	checkOut: '${ pageVo.checkOut }',
+					    	cntOfPerson: ${ pageVo.cntOfPerson }
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 

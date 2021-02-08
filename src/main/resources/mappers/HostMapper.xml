@@ -19,7 +19,15 @@
 	</select>
 	
 	<select id="getContentInfoForMain" resultType="hostVo">
-		select * from airbnb_host where classification = #{classification} order by reg_date desc  limit 1;
+		select * from airbnb_host where classification = #{classification} order by reg_date desc  limit 1
+	</select>
+	
+	<select id="getContentCount" resultType="int">
+		select count(*) from airbnb_host where address1 like concat(#{location}, '%') and countofperson >= #{ cntOfPerson }
+	</select>
+	
+	<select id="getContentsByAddress" resultType="hostVo">
+		select * from airbnb_host where address1 like concat(#{location}, '%') and countofperson >= #{ cntOfPerson } order by reg_date desc limit #{startRow}, 5
 	</select>
 	
 	<update id="updateContentInfo">

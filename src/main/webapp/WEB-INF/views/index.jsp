@@ -24,11 +24,11 @@
 	width: 300px;
 	height: 220px;
 }
-.float_right {
-	float: right;
-}
 
 .reviewComment:hover {
+	cursor: pointer;
+}
+.contentInfo:hover {
 	cursor: pointer;
 }
 
@@ -72,7 +72,7 @@
 
 				<div class="search">
 					<label>인원</label>
-					<input type="number" class="form-control" name="headCount" min=1 required>
+					<input type="number" class="form-control" name="cntOfPerson" min=1 value="1" required>
 				</div>
 				
 				<div class="search">
@@ -95,7 +95,7 @@
 		<div class="row1">
 			<c:forEach var="host" items="${ hostList }">
 				<c:if test="${ host.classification eq '부티크 호텔' }">
-					<div class="contentInfo" onclick="location.href='/content/info?num=${ host.num }'">
+					<div class="contentInfo" onclick="location.href='/content/info?num=${ host.num }&pageNum=0&address=&checkIn=&checkOut=&cntOfPerson='">
 						<img src="/upload/${ host.imageVo.uploadpath }/${ host.imageVo.uuid }_${ host.imageVo.filename }" width="480" height="400">
 						<div class="txt3">
 							<h3>호텔</h3>
@@ -239,17 +239,6 @@
 		} else if ($('input#checkout').val() == '') {
 			alert('종료일을 선택해주세요.');
 			$('input#checkout').focus();
-			return false;
-		}
-
-		var t1 = $('input#checkin').val().split("-");
-		var t2 = $('input#checkout').val().split("-");
-		var t1date = new Date(t1[0], t1[1], t1[2]);
-		var t2date = new Date(t2[0], t2[1], t2[2]);
-		var diff = t2date - t1date;
-		var currDay = 24 * 60 * 60 * 1000;
-		if (parseInt(diff / currDay) > rangeDate) {
-			alert('로그 조회 기간은 ' + rangeDate + '일을 초과할 수 없습니다.');
 			return false;
 		}
 	});

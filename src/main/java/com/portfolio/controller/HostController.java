@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.portfolio.domain.HostVo;
 import com.portfolio.domain.ImagesVo;
+import com.portfolio.domain.PageVo;
 import com.portfolio.domain.ReviewVo;
 import com.portfolio.domain.SaveVo;
 import com.portfolio.service.HostService;
@@ -53,7 +54,7 @@ public class HostController {
 	private SaveService saveService;
 	
 	@GetMapping("/info")
-	public String content(int num, Model model) throws ParseException {
+	public String content(int num, Model model, PageVo pageVo) throws ParseException {
 		log.info("content() 호출됨");
 		Map<String, Object> contentInfo = hostService.getContentInfo(num);
 		HostVo hostVo = (HostVo) contentInfo.get("hostVo");
@@ -67,8 +68,9 @@ public class HostController {
 		log.info("bookList : " + bookList);
 		
 		int count = (int) contentInfo.get("count");
-		Double score = (Double) contentInfo.get("score");
-		score = Double.isNaN(score) ? 0.0 : score;
+		String score = (String) contentInfo.get("score")== null ? "0": (String) contentInfo.get("score");
+		double doScore = Double.parseDouble(score);
+		doScore = Double.isNaN(doScore) ? 0.0 : doScore;
 		
 		model.addAttribute("hostVo", hostVo);
 		model.addAttribute("imageList", imageList);
@@ -77,6 +79,7 @@ public class HostController {
 		model.addAttribute("count", count);
 		model.addAttribute("score", score);
 		model.addAttribute("bookList", bookList);
+		model.addAttribute("pageVo", pageVo);
 		return "/content/content";
 	}
 
@@ -163,17 +166,18 @@ public class HostController {
 	}
 
 	@GetMapping("/modify")
-	public String modify(int num, Model model) throws ParseException {
+	public String modify(int num, Model model, int pageNum) throws ParseException {
 		log.info("modify() - get 호출");
 		Map<String, Object> contentInfo = hostService.getContentInfo(num);
 		HostVo hostVo = (HostVo) contentInfo.get("hostVo");
-		hostVo.setHostComment(hostVo.getHostComment().replace("\n", "<br>"));
+		hostVo.setHostComment(hostVo.getHostComment().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		
 		List<ImagesVo> imageList = (List<ImagesVo>) contentInfo.get("imageList");
 		
 		model.addAttribute("hostVo", hostVo);
 		model.addAttribute("imageList", imageList);
 		model.addAttribute("imageList_size", imageList.size());
+		model.addAttribute("pageNum", pageNum);
 		
 		return "/content/contentModifyForm";
 	}
@@ -193,6 +197,7 @@ public class HostController {
 	@PostMapping("/modify")
 	public String modify(HttpServletRequest request, 
 			int num,
+			PageVo pageVo,
 			// name속성이 filename인 것들만 가져옴.
 			@RequestParam(required = false, value = "filename") List<MultipartFile> multipartFiles,
 			// delfile로 넘어오는 파일을 배열에 담음
@@ -283,6 +288,7 @@ public class HostController {
 		hostService.updateAddImagesAndDelImages(addImages, delFileNums);
 		
 		rttr.addAttribute("num", num);
+		rttr.addAttribute("pageVo", pageVo);
 		
 		return "redirect:/content/modify";
 	}

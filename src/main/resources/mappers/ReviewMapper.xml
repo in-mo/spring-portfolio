@@ -31,6 +31,10 @@
 		select * from airbnb_review order by num desc
 	</select>
 	
+	<select id="getAvgScoreByNoNum" resultType="string">
+		select avg(score) from airbnb_review where no_num = #{ noNum }
+	</select>
+	
 	<select id="countReviewByNoNum" resultType="int">
 		select count(*) from airbnb_review where no_num = #{ noNum }
 	</select>

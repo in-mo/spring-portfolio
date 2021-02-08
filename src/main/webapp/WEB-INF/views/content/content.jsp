@@ -114,7 +114,14 @@ table, td, tr {
 </head>
 <body>
 	<div class="app" id="app">
-		<div>메인</div>
+		<c:choose>
+			<c:when test="${ pageVo.pageNum ne 0 }">
+				<div><a href="/search/result?pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }">돌아가기</a></div>
+			</c:when>
+			<c:otherwise>
+				<div><a href="/">메인</a></div>
+			</c:otherwise>
+		</c:choose>
 		<div>${ hostVo.title }</div>
 		<div>
 			<c:choose>
@@ -434,6 +441,7 @@ table, td, tr {
 				</div>
 			</div>
 		</div>
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
 	<script src="/script/jquery-3.5.1.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a2aaef4af8220ddff7af9d36feda352a&libraries=services"></script>
@@ -665,7 +673,7 @@ table, td, tr {
 		  		contentModify: function() {
 		  			let isModifyContent = confirm('수정하시겠습니까?');
 		  			if(isModifyContent) {
-		  				location.href = '/content/modify?num=${ hostVo.num }';
+		  				location.href = '/content/modify?num=${ hostVo.num }&pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }';
 		  			}
 		  		},
 		  		contentDelete: function() {

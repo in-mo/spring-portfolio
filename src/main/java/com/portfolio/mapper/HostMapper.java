@@ -1,5 +1,9 @@
 package com.portfolio.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.portfolio.domain.HostVo;
 
 public interface HostMapper {
@@ -9,6 +13,13 @@ public interface HostMapper {
 	public HostVo getContentInfo(int num);
 	
 	public HostVo getContentInfoForMain(String classification);
+	
+	public int getContentCount(@Param("location") String location, @Param("cntOfPerson") int cntOfPerson);
+	
+	public List<HostVo> getContentsByAddress(
+			@Param("location") String location,
+			@Param("cntOfPerson") int cntOfPerson,
+			@Param("startRow") int startRow);
 	
 	public int updateContentInfo(HostVo hostVo);
 	
