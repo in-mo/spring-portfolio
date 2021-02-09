@@ -81,7 +81,8 @@ table, td, tr {
 .costTab {
 	display: inline-block;
  	position: sticky;
- 	top: 10px;
+ 	top: 100px;
+ 	z-index: 2;
 }
 .alignCenter {
 	text-align: center;
@@ -113,7 +114,9 @@ table, td, tr {
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 	<div class="app" id="app">
+		
 		<c:choose>
 			<c:when test="${ pageVo.pageNum ne 0 }">
 				<div><a href="/search/result?pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }">돌아가기</a></div>
@@ -133,9 +136,13 @@ table, td, tr {
 				</c:otherwise>
 			</c:choose>
 			
-			<button class="float_right" type="button" v-on:click="contentDelete">삭제</button>
+			<c:if test="${ pageVo.pageNum eq 0 }">
+				<button class="float_right" type="button" v-on:click="contentDelete">삭제</button>
+				<button class="float_right" type="button" v-on:click="contentModify">수정</button>
+			</c:if>
+			
 			<button class="float_right" type="button" v-on:click="contentSave">저장</button>
-			<button class="float_right" type="button" v-on:click="contentModify">수정</button>
+			
 		</div>
 		<div class="container">
 			<c:choose>
@@ -441,12 +448,13 @@ table, td, tr {
 				</div>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+	
 	<script src="/script/jquery-3.5.1.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a2aaef4af8220ddff7af9d36feda352a&libraries=services"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
 	
 	<script>
 		let bookList = '${ bookList }';
@@ -673,7 +681,7 @@ table, td, tr {
 		  		contentModify: function() {
 		  			let isModifyContent = confirm('수정하시겠습니까?');
 		  			if(isModifyContent) {
-		  				location.href = '/content/modify?num=${ hostVo.num }&pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }';
+		  				location.href = '/content/modify?num=${ hostVo.num }';
 		  			}
 		  		},
 		  		contentDelete: function() {

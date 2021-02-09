@@ -40,16 +40,20 @@ table, th, td, tr {
 	grid-template-rows: 170px;
 }
 .txt11 {
-	width:285px;
+	width:250px;
 	height:45px;
 	display:block;
 	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
 }
 .txt12 {
-	width:285px;
-	height:150px;
+	width:250px;
+	height:100px;
 	display:block;
 	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
 }
 .form {
 	margin:20px;
@@ -88,9 +92,9 @@ table, th, td, tr {
 	float: right;
 	margin-right:50px;
 }
-.float_left {
-	float: left;
-}
+/* .float_left { */
+/* 	float: left; */
+/* } */
 .submit {
 	margin: 50px 0 0 0;
 	float: right;
@@ -193,6 +197,5 @@ div {
 	float:right;
 }
 .page {
-	float:right;
-	margin-right:350px;
+	text-align: center;
 }

@@ -19,6 +19,7 @@ div {
 
 header {
 	background-color: white;
+	height: 55px;
 }
 </style>
 <header class="costTab">

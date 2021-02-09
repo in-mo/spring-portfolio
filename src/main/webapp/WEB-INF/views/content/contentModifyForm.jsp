@@ -56,7 +56,7 @@ th {
 </head>
 <body>
 	<div class="app" id="app">
-		<div><a href="/content/info?num=${ hostVo.num }&pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }"><i class="fas fa-arrow-left"></i></a></div>
+		<div><a href="/content/info?num=${ hostVo.num }"><i class="fas fa-arrow-left"></i></a></div>
 		<div v-if="buttonDisable">
 			<button class="showBtn" type="button" v-on:click="setHouseTypeShow">숙소의 건물 유형 수정</button><br><br>
 			<button class="showBtn" type="button" v-on:click="setPersonCountShow">인원/침실/침대 정보 수정</button><br><br>
@@ -930,12 +930,7 @@ th {
 			    			classification: this.selectedItem,
 			    			houseType: this.detailSelectedItem,
 			    			stayType: this.staySeletedItem,
-			    			type: "houseType",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "houseType"
 			    		},
 			    		success: function(res){
 			    			console.log(res);
@@ -961,12 +956,7 @@ th {
 			    			countOfSofeBed: this.sofeBedCount,
 			    			countOfSofe: this.sofeCount,
 			    			countOfBlanket: this.blanketCount,
-			    			type: "personAndBed",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "personAndBed"
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -986,12 +976,7 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			countOfBathroom: this.bathroomCount,
-			    			type: "bathroom",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "bathroom"
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1013,12 +998,7 @@ th {
 			    			postcode: this.postcode,
 			    			address1: this.address1,
 			    			address2: this.address2,
-			    			type: "address",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "address"
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1039,12 +1019,7 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			amenities: this.amenitiesCheck,
-			    			type: "amenities",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "amenities"
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1065,12 +1040,7 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			safety: this.safetyCheck,
-			    			type: "safety",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "safety"
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1091,12 +1061,7 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			usefull: this.usefullCheck,
-			    			type: "usefull",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "usefull"
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1117,12 +1082,7 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			hostComment: this.hostComment,
-			    			type: "hostComment",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "hostComment"
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1142,12 +1102,7 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			cost: this.basicCost,
-			    			type: "cost",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "cost"
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 
@@ -1168,12 +1123,7 @@ th {
 			    		data: { 
 			    			num: ${ hostVo.num },
 			    			title: this.title,
-			    			type: "title",
-			    			pageNum: ${ pageVo.pageNum },
-			    			address: '${ pageVo.address }',
-				    		checkIn: '${ pageVo.checkIn }',
-					    	checkOut: '${ pageVo.checkOut }',
-					    	cntOfPerson: ${ pageVo.cntOfPerson }
+			    			type: "title"
 			    		},
 			    		success: function(res){
 			    			if(res == 'OK') { 

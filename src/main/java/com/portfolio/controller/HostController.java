@@ -166,7 +166,7 @@ public class HostController {
 	}
 
 	@GetMapping("/modify")
-	public String modify(int num, Model model, int pageNum) throws ParseException {
+	public String modify(int num, Model model) throws ParseException {
 		log.info("modify() - get 호출");
 		Map<String, Object> contentInfo = hostService.getContentInfo(num);
 		HostVo hostVo = (HostVo) contentInfo.get("hostVo");
@@ -177,7 +177,6 @@ public class HostController {
 		model.addAttribute("hostVo", hostVo);
 		model.addAttribute("imageList", imageList);
 		model.addAttribute("imageList_size", imageList.size());
-		model.addAttribute("pageNum", pageNum);
 		
 		return "/content/contentModifyForm";
 	}

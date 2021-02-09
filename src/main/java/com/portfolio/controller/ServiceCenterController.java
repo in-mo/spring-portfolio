@@ -1,6 +1,5 @@
 package com.portfolio.controller;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,13 +41,13 @@ public class ServiceCenterController {
 		List<ServiceCenterVo> contentList = null;
 		if (count > 0) {
 			contentList = serviceCenterSerivce.getContents(startRow);
-		}
-		
-		String content = "";
-		for(ServiceCenterVo serviceCenterVo : contentList) {
-			if (serviceCenterVo.getContent() != null) {
-				content = serviceCenterVo.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
-				serviceCenterVo.setContent(content);
+			
+			String content = "";
+			for(ServiceCenterVo serviceCenterVo : contentList) {
+				if (serviceCenterVo.getContent() != null) {
+					content = serviceCenterVo.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+					serviceCenterVo.setContent(content);
+				}
 			}
 		}
 		
@@ -117,15 +116,13 @@ public class ServiceCenterController {
 		ServiceCenterVo serviceCenterVo = serviceCenterSerivce.getContentByNum(num);
 		
 		String content = "";
-		if (serviceCenterVo.getContent() != null) {
-			content = serviceCenterVo.getContent().replace("\n", "<br>");
-			serviceCenterVo.setContent(content);
-		}
+		content = serviceCenterVo.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+		serviceCenterVo.setContent(content);
 		
 		model.addAttribute("serviceCenterVo", serviceCenterVo);
 		model.addAttribute("pageNum", pageNum);
 		
-		return "hwh/customerCenterContent";
+		return "/serviceCenter/content";
 	} // content
 	
 	
@@ -146,11 +143,11 @@ public class ServiceCenterController {
 	public String modify(int num, @ModelAttribute("pageNum") String pageNum, Model model) {
 		// 글번호 num에 해당하는 글내용 VO로 가져오기
 		ServiceCenterVo serviceCenterVo = serviceCenterSerivce.getContentByNum(num);
+		serviceCenterVo.setContent(serviceCenterVo.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		
 		model.addAttribute("serviceCenterVo", serviceCenterVo);
-		//model.addAttribute("pageNum", pageNum);
 		
-		return "hwh/modifyForm";
+		return "/serviceCenter/modifyForm";
 	} // GET - modify
 	
 	

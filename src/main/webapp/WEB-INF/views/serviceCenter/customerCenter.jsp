@@ -11,17 +11,11 @@
 
 <link href="/css/hwh.css" rel="stylesheet" type="text/css"  media="all">
 
-<script src="/script/jquery-1.6.1.min.js"></script>
-
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 <div id="wrap">
 		
-	<%-- header 영역 --%>
-	<jsp:include page="/WEB-INF/views/include/header.jsp" />
-
-	<div class="clear"></div>
-	
 	<div class="txt2">
 		<h2>자주 하는 질문</h2>
 		<br><hr>
@@ -30,16 +24,16 @@
 	<div class="row3">
 	
 	<c:choose>
-		<c:when test="${ not empty noticeList }"><%-- ${ pageDto.count gt 0 } --%>
+		<c:when test="${ not empty contentList }"><%-- ${ pageDto.count gt 0 } --%>
 			
-			<c:forEach var="notice2" items="${ noticeList }">
-				<div class="notice2">
+			<c:forEach var="content" items="${ contentList }">
+				<div class="content">
 					<div class="txt11">
-						<a href ="/customerCenter/content?num=${ notice2.num }&pageNum=${ pageNum }">
-							<h3>${ notice2.subject }</h3></a><hr><br>
+						<h3><a href ="/customerCenter/content?num=${ content.num }&pageNum=${ pageNum }">
+							${ content.subject }</a></h3><hr>
 					</div>
 					<div class="txt12">
-						${ notice2.content }
+						${ content.content }
 					</div>
 				</div>
 			</c:forEach>
@@ -54,7 +48,8 @@
 	<div class="float_right2">
 		<input type="button" value="글쓰기" class="btn" onclick="location.href='/customerCenter/write?pageNum=${ pageNum }'">
 	</div>
-	
+	<br>
+	<br>
 	<div class="page">
 		<%-- 글갯수가 0보다 크면 페이지블록 계산해서 출력하기 --%>
 		<c:if test="${ pageDto.count gt 0 }">
@@ -83,12 +78,8 @@
 			</c:if>
 		</c:if>
 	</div>	
-	
-	<div class="clear"></div>
-	<%-- footer 영역 --%>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
-	
 </div>
+<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>
 
