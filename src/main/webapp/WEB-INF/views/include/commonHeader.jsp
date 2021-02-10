@@ -12,22 +12,23 @@ div {
 
 .costTab {
 	display: block;
- 	position: sticky;
- 	z-index: 1;
+/*  	position: sticky; */
+/*  	z-index: 1; */
  	top: 0px;
+ 	background-color: white;
 }
 
 header {
 	background-color: white;
-	height: 55px;
 }
 </style>
-<header class="costTab">
-	<div id="logo">
+<header>
+	<div class="costTab">
 		<a href="/">
 			<span style="color: #ff385c"><i class="fab fa-airbnb fa-2x"><b> airbnb</b></i></span>
 		</a>
 		<span class="float_right"><a>로그인</a> | <a>회원가입</a></span> 
 	</div>
+	
 </header>
     

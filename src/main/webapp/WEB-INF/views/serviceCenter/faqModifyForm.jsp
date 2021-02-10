@@ -4,52 +4,74 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>main</title>
-
-<link href="/css/hwh.css" rel="stylesheet" type="text/css"  media="all">
-
+<title>FAQ 수정</title>
+<style>
+/* div { */
+/* 	padding: 5px; */
+/* 	border: solid red 1px; */
+/* } */
+.faqContent {
+	margin:50px;
+	padding:20px;
+}
+#wrap {
+	width:1020px;
+	margin:0;
+	margin-right: auto;
+	margin-left: auto;
+	min-height:780px;
+}
+.float_right {
+	float: right;
+}
+.modifyTable {
+	width:800px;
+	padding:5px;
+	margin:20px;
+}
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 <div id="wrap">
 	
-	<div class="txt2">
+	<div>
 		<h2>자주 하는 질문</h2>
 		<hr>
 	</div>
 	
-	<form action="/customerCenter/modify" class="form2" method="post">
+	<form action="/customerCenter/faqModify" method="post">
 	<input type="hidden" name="pageNum" value="${ pageNum }">
-	<input type="hidden" name="num" value="${ serviceCenterVo.num }">
-		<div class="row4">
-			<div class="txt3">
-				<h2>QnA 수정</h2><hr><br>
-				<table id="table1">
+	<input type="hidden" name="num" value="${ faqVo.num }">
+		<div class="faqContent">
+			<div>
+				<h2>FAQ 수정</h2><hr><br>
+				<table class="modifyTable table">
 				<tr>
-					<th class="write">작성자</th>
-					<td class="float_left">
-						<%-- <p><%=id %></p> --%>
+					<th>작성자</th>
+					<td>
 						<input type="text" name="id" value="관리자" readonly>
 					</td>
 				</tr>
 				<tr>
-					<th class="write">제목</th>
-					<td class="float_left">
-						<input type="text" style="width: 98%" name="subject" v-model="title">
+					<th>제목</th>
+					<td>
+						<input type="text" style="width: 98%" name="subject" v-model="title" required>
 					</td>
 				</tr>
 				<tr>
-					<th class="write">내용</th>
-					<td class="float_left">
-						<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 99%" name="content" v-model="content" required></textarea>
+					<th>내용</th>
+					<td>
+						<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 300px;" name="content" v-model="content" required></textarea>
 					</td>
 				</tr>
-				</table>		
+				</table>	
+				<hr>	
 			</div>
-			<br><br>
 			<div class="float_right">
 				<input type="submit" value="글수정" class="btn">
-				<input type="button" value="목록으로" class="btn" onclick="location.href = '/customerCenter/list?pageNum=${ pageNum }'">
+				<input type="button" value="글목록" class="btn" onclick="location.href = '/customerCenter/faqList?pageNum=${ pageNum }'">
 			</div>
 		</div>
 	</form>
@@ -60,7 +82,7 @@
 	vue = new Vue({
 		el:'#wrap',
 		data: {
-			title: '${ serviceCenterVo.subject }',
+			title: '${ faqVo.subject }',
 			content:''
 		},
 		methods: {
@@ -86,7 +108,7 @@
 		}
 	});
 	// content 설정
-	let content = '${ serviceCenterVo.content }';
+	let content = '${ faqVo.content }';
 	content = content.replace(/(<br>|<br\/>|<br \/>)/g, '\r\n');
 	vue.content = content;
 </script>

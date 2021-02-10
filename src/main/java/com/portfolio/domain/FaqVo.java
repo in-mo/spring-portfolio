@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class ServiceCenterVo {
+public class FaqVo {
 	private int num;
 	private String id;
 	private String subject;

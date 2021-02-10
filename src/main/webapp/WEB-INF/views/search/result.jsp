@@ -240,7 +240,7 @@ hr {
 				</div>
 			</div>
 
-			<div class="col-md-6 costTab" style="padding:0">
+			<div class="col-md-6 costTab" style="padding:0; margin-top: 80px;">
 				<div id="map" style="width: 100%; height: 830px; z-index: 2" ></div>
 			</div>
 			
@@ -273,11 +273,13 @@ hr {
 	var listNum= [];
 	var imageList = [];
 	var titleList = [];
+	var costList = [];
 	<c:forEach var="search" items="${ hostList }">
 		list.push("${search.address1}");
 		listNum.push("${ search.num }");
 		imageList.push('/upload/${ search.imageVo.uploadpath }/${ search.imageVo.uuid }_${ search.imageVo.filename }');
 		titleList.push('${ search.title }');
+		costList.push(${ search.cost });
 		console.log('num : ' + ${ search.num });
 	</c:forEach>
 	console.log('list : ' + list);
@@ -307,10 +309,15 @@ hr {
 					map: map, // 마커를 표시할 지도
 					position: coords, // 마커를 표시할 위치
 					title : list[index], // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-					image : markerImage, // 마커 이미지
-					text: text 
+					image : markerImage // 마커 이미지
 				});
 
+				// 인포윈도우로 장소에 대한 설명을 표시합니다
+		        var infowindowCost = new kakao.maps.InfoWindow({
+		            content: '<div style="width:100px; height:30px; text-align:center;padding:6px 0;">'+costList[index]+'</div>'
+		        });
+		        infowindowCost.open(map, marker);
+				
 				// 마커를 클릭하면 장소명이 인포윈도우에 표출
 				kakao.maps.event.addListener(marker, 'click', function() {
 					console.log('index : ' + listNum[index]);

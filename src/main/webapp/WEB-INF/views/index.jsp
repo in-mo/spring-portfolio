@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>main</title>
+<title>AIRBNB</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -14,9 +14,16 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-<link href="/css/hwh.css" rel="stylesheet" type="text/css"  media="all">
+<!-- <link href="/css/hwh.css" rel="stylesheet" type="text/css"  media="all"> -->
 
 <style>
+#wrap {
+	width:1020px;
+	margin:0;
+	margin-right: auto;
+	margin-left: auto;
+	min-height:780px;
+}
 .overflow {
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -24,14 +31,56 @@
 	width: 300px;
 	height: 220px;
 }
-
+.row1 {
+	display: grid;
+	grid-template-columns: 500px 500px;
+	grid-template-rows: auto auto;
+}
+.searchBox {
+	display:grid;
+	grid-template-columns: 250px 250px 250px 250px;
+	grid-template-rows: 170px;
+}
+.mainComment {	
+	font-size:72px;
+	text-transform: inherit;
+	max-width: 800px;
+	font-weight: 600;
+	line-height: 1.22;
+	background-color: rgba(255, 0, 0, 0);
+}
+div {
+	padding: 5px;
+	border: solid red 1px;
+}
 .reviewComment:hover {
 	cursor: pointer;
 }
 .contentInfo:hover {
 	cursor: pointer;
 }
-
+.reviewBox {
+	display: grid;
+	grid-template-columns: 33% 33% 33%;
+	grid-template-rows: 300px;
+}
+.float_right {
+	float: right;
+}
+.search {
+	padding:10px;
+}
+#a {
+	height: 600px;
+	padding: 30px 0 30px 0;
+	display: flex;
+    justify-content: left;
+    align-items: top;
+	position: relative;
+	background: url(/images/banner.jpg)no-repeat;
+	background-size: cover;
+	background-position: center;
+}
 </style>
 </head>
 <body>
@@ -43,7 +92,7 @@
 	<div class="clear"></div>
 	
 	<section id="a">
-		<div class="txt">
+		<div class="mainComment">
 			Explore The Beautiful World
 		</div>
 		
@@ -59,7 +108,7 @@
 	</section>
 	
 	<form action="/search/result" method="get">
-		<div class="container2">
+		<div class="searchBox">
 				<div class="search">
 					<label>체크인</label>
 					<input type="text" class="form-control" id="checkin" name="checkIn" readonly>
@@ -87,15 +136,14 @@
 	</form>	
 	
 	<section id="b">
-		<div class="clear"></div>
-		<div class="txt2">
+		<div>
 			<h2>호텔 종류</h2>
 		</div>
 		
 		<div class="row1">
 			<c:forEach var="host" items="${ hostList }">
 				<c:if test="${ host.classification eq '부티크 호텔' }">
-					<div class="contentInfo" onclick="location.href='/content/info?num=${ host.num }&pageNum=0&address=&checkIn=&checkOut=&cntOfPerson='">
+					<div class="contentInfo" onclick="location.href='/content/info?num=${ host.num }'">
 						<img src="/upload/${ host.imageVo.uploadpath }/${ host.imageVo.uuid }_${ host.imageVo.filename }" width="480" height="400">
 						<div class="txt3">
 							<h3>호텔</h3>
@@ -149,12 +197,11 @@
 	</section>
 	
 	<section id="c">
-		<div class="clear"></div>
-		<div class="txt2">
+		<div>
 			<h2>리뷰</h2>
 		</div>
 		
-		<div class="row2">
+		<div class="reviewBox">
 			<c:choose>
 				<c:when test="${ reviewList ne null }">
 					<c:set var="loop_flag" value="false" />

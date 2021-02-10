@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.portfolio.domain.ServiceCenterVo;
+import com.portfolio.domain.FaqVo;
+import com.portfolio.domain.QnaVo;
 import com.portfolio.mapper.ServiceCenterMapper;
 
 @Service
@@ -14,31 +16,72 @@ public class ServiceCenterSerivce {
 	@Autowired
 	private ServiceCenterMapper serviceCenterMapper;
 	
-	public void addContent(ServiceCenterVo serviceCenterVo) {
-		serviceCenterMapper.addContent(serviceCenterVo);
+	// faq
+	
+	public void addFaqContent(FaqVo faqVo) {
+		serviceCenterMapper.addFaqContent(faqVo);
 	}
 	
-	public List<ServiceCenterVo> getContents(int startRow) {
-		return serviceCenterMapper.getContents(startRow);
+	public List<FaqVo> getFaqContents(int startRow) {
+		return serviceCenterMapper.getFaqContents(startRow);
 	}
 	
-	public int getCountAll() {
-		return serviceCenterMapper.getCountAll();
+	public int getFaqCountAll() {
+		return serviceCenterMapper.getFaqCountAll();
 	}
 	
-	public ServiceCenterVo getContentByNum(int num) {
-		return serviceCenterMapper.getContentByNum(num);
+	public FaqVo getFaqContentByNum(int num) {
+		return serviceCenterMapper.getFaqContentByNum(num);
 	}
 	
-	public void updateReadcount(int num) {
-		serviceCenterMapper.updateReadcount(num);
+	public void updateFaqReadcount(int num) {
+		serviceCenterMapper.updateFaqReadcount(num);
 	}
 	
-	public void updateContent(ServiceCenterVo serviceCenterVo) {
-		serviceCenterMapper.updateContent(serviceCenterVo);
+	public void updateFaqContent(FaqVo faqVo) {
+		serviceCenterMapper.updateFaqContent(faqVo);
 	}
 	
-	public void deleteContent(int num) {
-		serviceCenterMapper.deleteContent(num);
+	public void deleteFaqContent(int num) {
+		serviceCenterMapper.deleteFaqContent(num);
+	}
+	
+	// Qna
+	
+	public void addQnaContent(QnaVo qnaVo) {
+		serviceCenterMapper.addQnaContent(qnaVo);
+	}
+	
+	public List<QnaVo> getQnaContents(int startRow) {
+		return serviceCenterMapper.getQnaContents(startRow);
+	}
+	
+	public int getQnaCountAll() {
+		return serviceCenterMapper.getQnaCountAll();
+	}
+	
+	public QnaVo getQnaContentByNum(int num) {
+		return serviceCenterMapper.getQnaContentByNum(num);
+	}
+	
+	public List<QnaVo> getQnaContentByRef(int num) {
+		return serviceCenterMapper.getQnaContentByRef(num);
+	}
+	
+	public void updateQnaContent(QnaVo qnaVo) {
+		serviceCenterMapper.updateQnaContent(qnaVo);
+	}
+	
+	@Transactional
+	public void addQnaReply(int reRef, QnaVo addVo) {
+		QnaVo updateVo = serviceCenterMapper.getQnaContentByNum(reRef);
+		updateVo.setStatus("답변완료");
+		serviceCenterMapper.updateQnaContent(updateVo);
+		
+		serviceCenterMapper.addQnaContent(addVo);
+	}
+	
+	public void deleteQnaContent(int num) {
+		serviceCenterMapper.deleteQnaContent(num);
 	}
 }
