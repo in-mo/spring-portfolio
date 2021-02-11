@@ -35,7 +35,7 @@
 	</select>
 	
 	<select id="getQnaCountAll" resultType="int">
-		select COUNT(*) FROM airbnb_custom_service_qna
+		select COUNT(*) FROM airbnb_custom_service_qna where re_lev = 0
 	</select>
 	
 	<select id="getFaqContentByNum" resultType="faqVo">

@@ -174,7 +174,7 @@ hr {
 								<th>작성일자</th>
 							</tr>
 							</thead>
-							<tbody>
+							<tbody id="qnaContentBox">
 								<c:choose>
 									<c:when test="${ not empty qContentList }">
 										<c:forEach var="content" items="${ qContentList }">
@@ -190,7 +190,7 @@ hr {
 									</c:when>
 									<c:otherwise>
 										<tr>
-											<td colspan="5" class="text-center">등록된 글이 없습니다.</td>
+											<td colspan="6" class="text-center">등록된 글이 없습니다.</td>
 										</tr>
 									</c:otherwise>
 								</c:choose>
@@ -213,7 +213,7 @@ hr {
 								<c:forEach var="i" begin="${ qPageDto.startPage }" end="${ qPageDto.endPage }" step="1">
 									
 									<c:choose>
-										<c:when test="${ i eq fPageNum }">
+										<c:when test="${ i eq qPageNum }">
 											<a href="/customerCenter/qnaList?pageNum=${ i }" class="active">[${ i }]</a>
 										</c:when>
 										<c:otherwise>
@@ -243,7 +243,6 @@ hr {
 <script>
 
 	let type = '${ viewType }';
-	console.log('type : ' + type);
 	if(type == 'faq') {
 		$('#faq').addClass('active');
 		$('#qna').removeClass('active');
@@ -291,7 +290,9 @@ hr {
 								<hr>
 								<div class="text-left">\${res.reply.content}</div>
 								<div class="text-center">
-									<button type="button" class="btn" onclick="">수정하기</button>
+									<input type="hidden" name="replyNum" value="\${ res.reply.num }">
+									<input type="hidden" name="refNum" value="\${ res.reply.reRef }">
+									<button type="button" class="btn" onclick="qnaReplyModifyBtn(event)">수정하기</button>
 									<button type="button" class="btn" onclick="">삭제하기</button>
 								</div>
 							`;
@@ -306,6 +307,16 @@ hr {
 			}
 		});
 	}
+	function qnaReplyModifyBtn(event) {
+		let replyNum = $(event.currentTarget).prev().prev('input[name=replyNum]').val();
+		let refNum = $(event.currentTarget).prev('input[name=refNum]').val();
+		console.log(replyNum);
+		let isModify = confirm('답글을 수정하시겠습니까?');
+		if(isModify) {
+			window.open('/customerCenter/qnaReplyModify?refNum='+refNum+'&replyNum='+replyNum+'&pageNum=${ qPageNum }','qna',',top=100,left=400,width=570,height=750');
+		}
+	}
+	
 	function qnaReplyAddBtn(event){
 		let qnaNum = $(event.currentTarget).parent().children('input[name="num"]').val();
 		console.log(qnaNum)
@@ -316,7 +327,8 @@ hr {
 	}
 
 	function updateQnaList() {
-		console.log('호출됬니?');
+// 		$('#qnaContentBox').empty();
+		location.href = '/customerCenter/qnaList?pageNum=${ qPageNum }';
 	}
 	
 </script>

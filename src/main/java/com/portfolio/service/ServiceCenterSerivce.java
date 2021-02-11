@@ -10,7 +10,10 @@ import com.portfolio.domain.FaqVo;
 import com.portfolio.domain.QnaVo;
 import com.portfolio.mapper.ServiceCenterMapper;
 
+import lombok.extern.java.Log;
+
 @Service
+@Log
 public class ServiceCenterSerivce {
 
 	@Autowired
@@ -73,12 +76,31 @@ public class ServiceCenterSerivce {
 	}
 	
 	@Transactional
-	public void addQnaReply(int reRef, QnaVo addVo) {
+	public boolean updateQnaReplyContent(int num, String content) {
+		QnaVo qnaVo = serviceCenterMapper.getQnaContentByNum(num);
+		qnaVo.setContent(content);
+		
+		int updateNum = serviceCenterMapper.updateQnaContent(qnaVo);
+		if(updateNum == 1)
+			return true;
+		else 
+			return false;
+	}
+	
+	@Transactional
+	public boolean addQnaReply(int reRef, QnaVo addVo) {
 		QnaVo updateVo = serviceCenterMapper.getQnaContentByNum(reRef);
 		updateVo.setStatus("답변완료");
-		serviceCenterMapper.updateQnaContent(updateVo);
+		int updateNum = serviceCenterMapper.updateQnaContent(updateVo);
 		
-		serviceCenterMapper.addQnaContent(addVo);
+		int addNum = serviceCenterMapper.addQnaContent(addVo);
+		
+		log.info("updateNum : " + updateNum);
+		log.info("addNum : " + addNum);
+		if((updateNum + addNum) == 2)
+			return true;
+		else
+			return false;
 	}
 	
 	public void deleteQnaContent(int num) {

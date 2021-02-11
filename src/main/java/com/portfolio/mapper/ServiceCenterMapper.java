@@ -25,7 +25,7 @@ public interface ServiceCenterMapper {
 	
 	// Qna
 	
-	public void addQnaContent(QnaVo qnaVo);
+	public int addQnaContent(QnaVo qnaVo);
 	
 	public int getQnaCountAll();
 	
@@ -35,7 +35,7 @@ public interface ServiceCenterMapper {
 	
 	public QnaVo getQnaContentByNum(int num);
 	
-	public void updateQnaContent(QnaVo qnaVo);
+	public int updateQnaContent(QnaVo qnaVo);
 	
 	public void deleteQnaContent(int num);
 }

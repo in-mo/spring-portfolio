@@ -92,7 +92,7 @@ td{
 					<tr>
 						<td>내용</td>
 						<td>
-							<textarea name="content" maxlength="500" placeholder="내용 입력" style="resize: none; width: 300px; height: 120px;"></textarea>
+							<textarea name="content" maxlength="500" placeholder="내용 입력" style="resize: none; width: 300px; height: 120px;"></textarea>	
 						</td>
 					</tr>
 				</table>
@@ -114,47 +114,38 @@ td{
 <script src="/script/jquery-3.5.1.js"></script>
 <script>
 	
-// 	// 수정일 시 초기 값 설정
-<%-- 	let form = '<%=form%>'; --%>
-// 	if(form != 'write') {
-<%-- 		let type = '<%=qnaVo.getType()%>'; --%>
-<%-- 		let admin = '<%=qnaVo.getId()%>'; --%>
-<%-- 		let content = '<%=qnaVo.getContent()%>'; --%>
-// 		content = content.replace(/<br>/gi,'\n');
-// 		$('input[name="type"]').val([type]);
-// 		$('input[name="admin"]').val(admin);
-// 		$('textarea[name="content"]').val(content);
-// 	}
+	// 수정일 시 초기 값 설정
+	let form = '${ form }';
+	console.log(form);
+	if(form == 'modify') {
+		let content = '${ reply.content }';
+		content = content.replace(/<br>/gi,'\n');
+		$('textarea[name="content"]').val(content);
+	}
 	
-// 	// 수정이벤트
-// 	$('#modify').click(function() {
-// 		let admin = $('input:text[name="admin"]').val();
-// 		let content = $('textarea[name="content"]').val();
-<%-- 		let no_num = <%=prevQnaVo.getNum()%>; --%>
-// 		let type = '답변';
-<%-- 		let title = '<%=prevQnaVo.getNum()%> 번 글의 답글'; --%>
-// 		content = content.replace(/<br>/gi,'\n');
+ 	// 수정이벤트
+	$('#modify').click(function() {
+		let content = $('textarea[name="content"]').val();
+		let replyNum = ${ replyNum };
+				
+		if(content.length == 0){
+			alert('내용을 입력해주세요');
+			return false;
+		}
 		
-// 		if(admin.length == 0){
-// 			alert('담장자 이름을 입력해주세요');
-// 			return false;
-// 		}
-		
-// 		if(content.length == 0){
-// 			alert('내용을 입력해주세요');
-// 			return false;
-// 		}
-		
-// 		let isModify = confirm('상품 문의글을 수정하시겠습니까?');
-// 		$.ajax({
-// 			url: 'updateQnaInfoPro.jsp',
-<%-- 			data: { no_num: no_num, writer : admin, title: title, content: content, type: type, article: '<%=article%>', quaNum: <%=qnaNum%>}, --%>
-// 			success:function(res){
-// 				call_parent();
-// 				window.close();
-// 			}
-// 		});
-// 	});
+		let isModify = confirm('답글을 수정하시겠습니까?');
+		$.ajax({
+			url: '/customerCenter/qnaReplyModify',
+			data: { num: replyNum, content: content },
+			method: 'post',
+			success:function(res){
+				if(res.isSuccess) { 
+					window.close();
+					call_parent();
+				}
+			}
+		});
+	});
 	
 	// 작성 이벤트
 	$('#write').click(function() {
@@ -170,13 +161,14 @@ td{
 		let isWrite = confirm('상품 문의글을 작성하시겠습니까?');
 		if(isWrite){
 			$.ajax({
-				url: '',
+				url: '/customerCenter/qnaReply',
 				data: { content: content, reRef: reRef, reLev: reLev },
 				method: 'post',
 				success:function(res){
-					if(res.isSuccess)
+					if(res.isSuccess) { 
 						window.close();
-					call_parent();
+						call_parent();
+					}
 				}
 			});
 		}

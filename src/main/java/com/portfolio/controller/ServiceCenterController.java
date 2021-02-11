@@ -265,9 +265,10 @@ public class ServiceCenterController {
 
 		model.addAttribute("qnaVo", qnaVo);
 		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("replyNum", 0);
 		model.addAttribute("form", "write");
 		return "/serviceCenter/qnaAnswerForm";
-	} // content
+	} 
 	
 	@PostMapping("/qnaReply")
 	@ResponseBody
@@ -277,12 +278,40 @@ public class ServiceCenterController {
 		qnaVo.setType("문의답변");
 		qnaVo.setSubject("답변");
 		
-		serviceCenterSerivce.addQnaReply(qnaVo.getReRef(), qnaVo);
+		boolean isSuccess = serviceCenterSerivce.addQnaReply(qnaVo.getReRef(), qnaVo);
 		
 		Map<String, Object> msg = new HashMap<String, Object>();
-		msg.put("isSuccess", true);
+		msg.put("isSuccess", isSuccess);
 		
 		return msg;
+	}
+	
+	@GetMapping("/qnaReplyModify")
+	public String qnaReplyModify(int refNum, int replyNum, int pageNum, Model model) {
+		List<QnaVo> qnaList = serviceCenterSerivce.getQnaContentByRef(refNum);
+		
+		for(QnaVo qna : qnaList) {
+			qna.setContent(qna.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+		}
+		
+		model.addAttribute("qnaVo", qnaList.get(0));
+		model.addAttribute("reply", qnaList.get(1));
+		model.addAttribute("replyNum", replyNum);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("form", "modify");
+		
+		return "/serviceCenter/qnaAnswerForm";
+	}
+	
+	@PostMapping("/qnaReplyModify")
+	@ResponseBody
+	public Map<String, Object> qnaReplyModify (int num, String content){
+		boolean isSuccess = serviceCenterSerivce.updateQnaReplyContent(num, content);
+		
+		Map<String, Object> updateIsSuccess = new HashMap<>();
+		updateIsSuccess.put("isSuccess", isSuccess);
+		
+		return updateIsSuccess;
 	}
 	
 	@GetMapping("/qna/{num}")
