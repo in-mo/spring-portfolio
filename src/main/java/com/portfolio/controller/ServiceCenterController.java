@@ -161,7 +161,7 @@ public class ServiceCenterController {
 
 	// ======================= qna ===============================
 
-	@GetMapping("qnaList")
+	@GetMapping("/qnaList")
 	public String qnaList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
 		int count = serviceCenterSerivce.getQnaCountAll();
 
@@ -228,7 +228,6 @@ public class ServiceCenterController {
 		qnaVo.setId("test");
 		qnaVo.setStatus("답변대기");
 		qnaVo.setReRef(num);
-		qnaVo.setReRef(0);
 		
 		// 주글쓰기
 		serviceCenterSerivce.addQnaContent(qnaVo);

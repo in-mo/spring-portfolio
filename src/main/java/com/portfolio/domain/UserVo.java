@@ -33,5 +33,10 @@ public class UserVo {
 	@Pattern(regexp = "^(01[0-9])-(\\d{3,4})-(\\d{4})$",
 			message = "핸드폰번호 형식에 맞지 않습니다")
 	private String tel;
+	
+	private String uuid;
+	private String filename;
+	private String uploadpath;
+	
 	private Timestamp regDate;
 }

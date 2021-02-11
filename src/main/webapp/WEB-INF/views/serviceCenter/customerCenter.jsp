@@ -241,6 +241,12 @@ hr {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script>
+	// 부모창의 변화가 생길때 
+	// 자식창 닫아버리기
+	var pop;
+	window.onunload = function() { 
+		pop.close(); 
+	}
 
 	let type = '${ viewType }';
 	if(type == 'faq') {
@@ -280,10 +286,6 @@ hr {
 								</div>
 						`;
 					}
-					
-					str +=`
-									
-					`;
 
 					if(res.qnaVo.status == '답변완료') {
 						str +=`
@@ -313,7 +315,7 @@ hr {
 		console.log(replyNum);
 		let isModify = confirm('답글을 수정하시겠습니까?');
 		if(isModify) {
-			window.open('/customerCenter/qnaReplyModify?refNum='+refNum+'&replyNum='+replyNum+'&pageNum=${ qPageNum }','qna',',top=100,left=400,width=570,height=750');
+			pop = window.open('/customerCenter/qnaReplyModify?refNum='+refNum+'&replyNum='+replyNum+'&pageNum=${ qPageNum }','qna','dialog,top=100,left=400,width=570,height=750');
 		}
 	}
 	
@@ -322,7 +324,7 @@ hr {
 		console.log(qnaNum)
 		let isAnswer = confirm('답글을 작성하시겠습니까?');
 		if(isAnswer){
-			window.open('/customerCenter/qnaReply?num='+qnaNum+'&pageNum=${ qPageNum }','qna',',top=100,left=400,width=570,height=750');
+			pop = window.open('/customerCenter/qnaReply?num='+qnaNum+'&pageNum=${ qPageNum }','qna','dialog,top=100,left=400,width=570,height=750');
 		}
 	}
 

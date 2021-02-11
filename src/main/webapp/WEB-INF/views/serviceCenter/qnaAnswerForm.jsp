@@ -113,7 +113,7 @@ td{
 	</div>
 <script src="/script/jquery-3.5.1.js"></script>
 <script>
-	
+
 	// 수정일 시 초기 값 설정
 	let form = '${ form }';
 	console.log(form);
