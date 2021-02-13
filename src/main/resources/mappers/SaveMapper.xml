@@ -22,6 +22,10 @@
 		select num from airbnb_host_save where host_num = #{ hostNum } and id = #{ id }
 	</select>
 	
+	<select id="countSaveById" resultType="int">
+		select count(*) from airbnb_host_save where id = #{ id }
+	</select>
+	
 	<update id="updateSaveInfo">
 		update airbnb_host_save 
 			set isSave = #{isSave}

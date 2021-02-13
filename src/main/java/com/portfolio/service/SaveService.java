@@ -46,7 +46,6 @@ public class SaveService {
 	
 	@Transactional
 	public List<HostVo> getContentInfoForSaveList(String id) {
-		id = "test";
 		List<SaveVo> saveList = saveMapper.getSaveInfo(id);
 		
 		List<HostVo> hostList = new ArrayList<HostVo>();
@@ -55,8 +54,12 @@ public class SaveService {
 			ImagesVo imagesVo = imagesMapper.getImageByNoNum(saveVo.getHostNum());
 			HostVo hostVo = hostMapper.getContentInfo(saveVo.getHostNum());
 			
+			String score = reviewMapper.getAvgScoreByNoNum(hostVo.getNum()) == null ? "0": reviewMapper.getAvgScoreByNoNum(hostVo.getNum());
+			double doScore = Double.parseDouble(score);
+			doScore = Double.isNaN(doScore) ? 0.0 : doScore;
 			int reviewCount = reviewMapper.countReviewByNoNum(hostVo.getNum());
 			
+			hostVo.setScore(doScore);
 			hostVo.setImageVo(imagesVo);
 			hostVo.setReviewCount(reviewCount);
 			hostVo.setHostComment(hostVo.getHostComment().replace("\n", "<br>"));
@@ -71,13 +74,25 @@ public class SaveService {
 		return saveMapper.isExistSaveInfo(hostNum, id);
 	}
 	
+	public int countSaveById(String id) {
+		return saveMapper.countSaveById(id);
+	}
+	
 	public void updateSaveInfo(SaveVo saveVo) {
 		saveMapper.updateSaveInfo(saveVo);
 	}
 	
-	public int deleteSaveInfo(int hostNum, String id) {
+	@Transactional
+	public Map<String, Object> deleteSaveInfo(int hostNum, String id) {
 		int num = saveMapper.getSaveNum(hostNum, id);
+		int deleteNum = saveMapper.deleteSaveInfo(num);
 		
-		return saveMapper.deleteSaveInfo(num);
+		int count = countSaveById(id);
+		
+		Map<String, Object> deleteInfo = new HashMap<String, Object>();
+		deleteInfo.put("saveCount", count);
+		deleteInfo.put("deleteNum", deleteNum);
+		
+		return deleteInfo;
 	}
 }

@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ import com.portfolio.domain.ImagesVo;
 import com.portfolio.domain.PageVo;
 import com.portfolio.domain.ReviewVo;
 import com.portfolio.domain.SaveVo;
+import com.portfolio.domain.UserVo;
 import com.portfolio.service.HostService;
 import com.portfolio.service.ImagesService;
 import com.portfolio.service.MysqlService;
@@ -58,7 +60,9 @@ public class HostController {
 		log.info("content() 호출됨");
 		Map<String, Object> contentInfo = hostService.getContentInfo(num);
 		HostVo hostVo = (HostVo) contentInfo.get("hostVo");
-		hostVo.setHostComment(hostVo.getHostComment().replace("\n", "<br>"));
+		UserVo userVo = (UserVo) contentInfo.get("userVo");
+		
+		hostVo.setHostComment(hostVo.getHostComment().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		
 		List<ImagesVo> imageList = (List<ImagesVo>) contentInfo.get("imageList");
 		List<ReviewVo> reviewList = (List<ReviewVo>) contentInfo.get("reviewList");
@@ -73,11 +77,12 @@ public class HostController {
 		doScore = Double.isNaN(doScore) ? 0.0 : doScore;
 		
 		model.addAttribute("hostVo", hostVo);
+		model.addAttribute("userVo", userVo);
 		model.addAttribute("imageList", imageList);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewListFour", reviewListFour);
 		model.addAttribute("count", count);
-		model.addAttribute("score", score);
+		model.addAttribute("score", doScore);
 		model.addAttribute("bookList", bookList);
 		model.addAttribute("pageVo", pageVo);
 		return "/content/content";
@@ -92,15 +97,17 @@ public class HostController {
 
 	@PostMapping("/write")
 	public String wrtie(
+			HttpSession session,
 			HttpServletRequest request,
 			HostVo hostVo,
 			@RequestParam("filename") List<MultipartFile> multipartFiles) throws Exception {
 		log.info("Post - write() 호출됨");
+		String id = (String) session.getAttribute("id");
 
 		int num = mysqlService.getNextNum("airbnb_host");
 		
 		hostVo.setNum(num);
-		hostVo.setId("test");
+		hostVo.setId(id);
 		hostVo.setAmenities(hostVo.getAmenities() == null ? "" : hostVo.getAmenities());
 		hostVo.setSafety(hostVo.getSafety() == null ? "" : hostVo.getSafety());
 		hostVo.setUsefull(hostVo.getUsefull() == null ? "" : hostVo.getUsefull());
@@ -293,7 +300,7 @@ public class HostController {
 	}
 	
 	@GetMapping("/delete")
-	public void delete(int num, HttpServletRequest request, RedirectAttributes rttr) {
+	public String delete(int num, int pageNum, HttpServletRequest request, RedirectAttributes rttr) {
 		List<ImagesVo> imageList = imagesService.getImagesByNum(num);
 		
 		// application 객체 참조 가져오기
@@ -318,22 +325,9 @@ public class HostController {
 		
 		hostService.deleteContentAndImages(num);
 
+		rttr.addAttribute("pageNum", pageNum);
 		// 삭제 시 자기가 등록한 호스트 목록보기로 이동
-	}
-	
-	@GetMapping("/isExist")
-	@ResponseBody // JSON으로 반환 시켜줌
-	public int isExistSaveInfo(int hostNum, String id){
-		int count = saveService.isExistSaveInfo(hostNum, id);
-		return count;
-	}
-	
-	@GetMapping("/save")
-	@ResponseBody // JSON으로 반환 시켜줌
-	public int save(SaveVo saveVo) {
-		saveVo.setIsSave("Y");
-		int count = saveService.addSave(saveVo);
-		return count;
+		return "redirect:/user/MyHosts";
 	}
 	
 	// 오늘 날짜 형식의 폴더 문자열 가져오기

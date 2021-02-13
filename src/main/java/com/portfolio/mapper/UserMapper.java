@@ -22,7 +22,7 @@ public interface UserMapper {
 	int getCountById(String id);
 	
 	
-	void update(String name, String email, String tel, String id);
+	int update(UserVo userVo);
 	
 	//@Delete("DELETE FROM member WHERE id = #{id} ")
 	void deleteById(String id);

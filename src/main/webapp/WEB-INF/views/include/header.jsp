@@ -34,7 +34,7 @@ header {
 	<div id="login">
 	<c:choose>
 		<c:when test="${ not empty id }">
-			${ id }님 | <a href="/user/logout">로그아웃</a>		
+			<a href="/user/show">${ id }님</a> | <a href="/user/logout">로그아웃</a>		
 		</c:when>
 		<c:otherwise>
 			<a href="/user/login">로그인</a>

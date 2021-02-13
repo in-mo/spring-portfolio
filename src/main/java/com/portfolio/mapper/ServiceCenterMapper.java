@@ -37,5 +37,5 @@ public interface ServiceCenterMapper {
 	
 	public int updateQnaContent(QnaVo qnaVo);
 	
-	public void deleteQnaContent(int num);
+	public int deleteQnaContent(int num);
 }

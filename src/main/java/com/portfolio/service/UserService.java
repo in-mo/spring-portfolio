@@ -11,8 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
-import com.portfolio.mapper.UserMapper;
+import com.portfolio.domain.HostVo;
+import com.portfolio.domain.ImagesVo;
 import com.portfolio.domain.UserVo;
+import com.portfolio.mapper.HostMapper;
+import com.portfolio.mapper.ImagesMapper;
+import com.portfolio.mapper.ReviewMapper;
+import com.portfolio.mapper.UserMapper;
 
 @Service
 @Transactional  // 이 클래스의 모든 메소드가 각각 한개의 트랜잭션 단위로 수행됨
@@ -20,10 +25,19 @@ public class UserService {
 
 	// 스프링 빈으로 등록된 객체들 중에서
 	// 타입으로 객체의 참조를 가져와서 참조변수에 저장해줌
+	@Autowired
 	private UserMapper userMapper;
 	
+	@Autowired
+	private ReviewMapper reviewMapper;
 	
-	 public Map<String, String> validateHandling(Errors errors) {
+	@Autowired
+	private HostMapper hostMapper;
+	
+	@Autowired
+	private ImagesMapper imagesMapper;
+	
+	public Map<String, String> validateHandling(Errors errors) {
 	        Map<String, String> validatorResult = new HashMap<>();
 
 	        for (FieldError error : errors.getFieldErrors()) {
@@ -34,15 +48,43 @@ public class UserService {
 	        return validatorResult;
 	    }
 	
-	
-	@Autowired
-	public void setMemberMapper(UserMapper userMapper) {
-		this.userMapper = userMapper;
-	}
-
 	public UserVo getMemberById(String id) {
+		return userMapper.getMemberById(id);
+	}
+	
+	@Transactional
+	public Map<String, Object> getMemberInfoByIdForReviews(String id) {
 		UserVo userVo = userMapper.getMemberById(id);
-		return userVo;
+		int cntOfReview = reviewMapper.countReviewById(id);
+		int cntOfHost = hostMapper.countContentsById(id);
+		
+		Map<String, Object> userInfo = new HashMap<>();
+		userInfo.put("userVo", userVo);
+		userInfo.put("cntOfReview", cntOfReview);
+		userInfo.put("cntOfHost", cntOfHost);
+		
+		return userInfo;
+	}
+	
+	@Transactional
+	public Map<String, Object> getMemberInfoByIdForHosts(String id, int startRow) {
+		UserVo userVo = userMapper.getMemberById(id);
+		int cntOfHost = hostMapper.countContentsById(id);
+		
+		List<HostVo> hostList = hostMapper.getContentsById(id, startRow);
+		for(HostVo hostVo : hostList) {
+			ImagesVo imagesVo = imagesMapper.getImageByNoNum(hostVo.getNum());
+			int count = reviewMapper.countReviewByNoNum(hostVo.getNum());
+			hostVo.setImageVo(imagesVo);
+			hostVo.setReviewCount(count);
+		}
+		
+		Map<String, Object> userInfo = new HashMap<>();
+		userInfo.put("userVo", userVo);
+		userInfo.put("cntOfHost", cntOfHost);
+		userInfo.put("hostList", hostList);
+		
+		return userInfo;
 	}
 	
 	public void addMember(UserVo userVo) {
@@ -77,8 +119,8 @@ public class UserService {
 		return count;
 	}
 	
-	public void update(String name, String email, String tel, String id) {
-		userMapper.update(name, email, tel, id);
+	public int update(UserVo userVo) {
+		return userMapper.update(userVo);
 	}
 	
 	public void deleteById(String id) {
@@ -88,16 +130,6 @@ public class UserService {
 	public void deleteAll() {
 		userMapper.deleteAll();
 	}
-	
-//	public List<Map<String, Object>> getGenderPerCount() {
-//		List<Map<String, Object>> list = userMapper.getGenderPerCount();
-//		return list;
-//	}
-//	
-//	public List<Map<String, Object>> getAgeRangePerCount() {
-//		List<Map<String, Object>> list = userMapper.getAgeRangePerCount();
-//		return list;
-//	}
 	
 	// 회원가입 시, 유효성 체크
     public Map<String, String> validateHandlingMap(Errors errors) {

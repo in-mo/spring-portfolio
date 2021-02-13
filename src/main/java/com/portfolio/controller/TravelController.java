@@ -1,16 +1,26 @@
 package com.portfolio.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.portfolio.domain.BookVo;
 import com.portfolio.domain.HostVo;
+import com.portfolio.domain.SaveVo;
+import com.portfolio.service.BookService;
 import com.portfolio.service.SaveService;
+import com.portfolio.service.UserService;
 
 import lombok.extern.java.Log;
 
@@ -22,17 +32,56 @@ public class TravelController {
 	@Autowired
 	private SaveService saveService;
 	
-	@GetMapping("/appointment")
-	public String appointment(int num) {
-		log.info("appointment() - 호출");
+	@Autowired
+	private BookService bookService;
+	
+	@GetMapping("/history")
+	public String appointment(@RequestParam(defaultValue = "pay") String viewType,
+			HttpSession session, Model model) {
 		
+		String id = (String) session.getAttribute("id");
+		List<BookVo> bookList = bookService.getBooksAndHostVoById(id);
+		List<HostVo> hostList = saveService.getContentInfoForSaveList(id);
+		
+		model.addAttribute("bookList", bookList);
+		model.addAttribute("hostList", hostList);
+		model.addAttribute("viewType", viewType);
 		return "/travel/appointment";
 	}
 	
-	@GetMapping("/savelist")
-	public String savelist(Model model) {
+	@PostMapping("/cancel")
+	@ResponseBody
+	public Map<String, Object> cancel(int num) {
+		int check = bookService.deleteBookInfo(num);
 		
-		List<HostVo> hostList = saveService.getContentInfoForSaveList("test");
+		Map<String, Object> checkInfo = new HashMap<>();
+		if(check >= 1)
+			checkInfo.put("isSuccess", true);
+		else
+			checkInfo.put("isSuccess", false);
+		
+		return checkInfo;
+	}
+	
+	@GetMapping("/isExist")
+	@ResponseBody // JSON으로 반환 시켜줌
+	public int isExistSaveInfo(int hostNum, String id){
+		int count = saveService.isExistSaveInfo(hostNum, id);
+		return count;
+	}
+	
+	@GetMapping("/save")
+	@ResponseBody // JSON으로 반환 시켜줌
+	public int save(SaveVo saveVo) {
+		saveVo.setIsSave("Y");
+		int count = saveService.addSave(saveVo);
+		return count;
+	}
+	
+	@GetMapping("/savelist")
+	public String savelist(HttpSession session, Model model) {
+		String id = (String) session.getAttribute("id");
+		List<HostVo> hostList = saveService.getContentInfoForSaveList(id);
 		
 		model.addAttribute("hostList", hostList);
 		
@@ -41,11 +90,12 @@ public class TravelController {
 	
 	@GetMapping("/saveDelete")
 	@ResponseBody
-	public String saveDelete(int num, Model model) {
-		int count = saveService.deleteSaveInfo(num, "test");
-		if(count == 1)
-			return "OK";
+	public Map<String, Object> saveDelete(HttpSession session, int num, Model model) {
+		String id = (String) session.getAttribute("id");
 		
-		return "FALSE";
+		Map<String, Object> deleteInfo = new HashMap<String, Object>();
+		deleteInfo = saveService.deleteSaveInfo(num, id);
+		
+		return deleteInfo;
 	}
 }

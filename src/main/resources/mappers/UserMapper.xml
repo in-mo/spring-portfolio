@@ -27,7 +27,13 @@
 	
 	<update id="update">
 		UPDATE airbnb_user 
-		SET name = #{name}, email = #{email}, tel = #{tel} 
+		SET password = #{password}, 
+		name = #{name}, 
+		email = #{email}, 
+		tel = #{tel},
+		uuid = #{uuid},
+		filename = #{filename},
+		uploadpath = #{uploadpath}
 		WHERE id = #{id}
 	</update>
 	

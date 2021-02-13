@@ -26,6 +26,7 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
 		registration.addPathPatterns("/book/*");
 		registration.addPathPatterns("/content/*");
 		registration.addPathPatterns("/review/*");
+		registration.addPathPatterns("/travel/*");
 		registration.addPathPatterns("/customerCenter/*");
 		
 		// 인터셉터 수행에서 제외할 URL 주소 경로 추가

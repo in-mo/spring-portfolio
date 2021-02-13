@@ -50,7 +50,7 @@
 								</div>
 							</div>
 							<div class="phone">
-								<label for="">폰번호 </label> <br> 
+								<label for="">전화번호 </label> <br> 
 								<input type="tel" id="telIn" name="tel" class="phone" placeholder="xxx-xxxx-xxxx" maxlength="13" onkeyup="noSpaceForm(this);" required><br>
 							</div>
 						</fieldset>

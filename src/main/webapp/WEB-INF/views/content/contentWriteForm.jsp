@@ -50,6 +50,7 @@ th {
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 	<div class="app" id="app">
 		<form action="/content/write" method="post" enctype="multipart/form-data">
 			<div>메인</div>
@@ -429,6 +430,7 @@ th {
 			</div>
 		</form>
 	</div>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 	<script src="/script/jquery-3.5.1.js"></script>

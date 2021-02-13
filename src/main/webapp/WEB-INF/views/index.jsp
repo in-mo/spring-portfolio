@@ -81,6 +81,10 @@ div {
 	background-size: cover;
 	background-position: center;
 }
+pre{
+    overflow: auto;
+    white-space: pre-wrap; /* pre tag내에 word wrap */
+}  
 </style>
 </head>
 <body>

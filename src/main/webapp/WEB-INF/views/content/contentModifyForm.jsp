@@ -55,6 +55,7 @@ th {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 	<div class="app" id="app">
 		<div><a href="/content/info?num=${ hostVo.num }"><i class="fas fa-arrow-left"></i></a></div>
 		<div v-if="buttonDisable">
@@ -469,6 +470,7 @@ th {
 			<button type="button" v-on:click="cancelAjax">취소</button>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 	<script src="/script/jquery-3.5.1.js"></script>

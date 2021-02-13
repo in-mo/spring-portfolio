@@ -45,7 +45,10 @@ p {
 	width: 200px;
 	height: 22px;
 }
-
+pre{
+    overflow: auto;
+    white-space: pre-wrap; /* pre tag내에 word wrap */
+}  
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>

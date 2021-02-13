@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,10 +38,12 @@ public class BookController {
 	private HostService hostService;
 	
 	@GetMapping("/check")
-	public String check(BookVo bookVo, Model model) throws ParseException {
+	public String check(HttpSession session, BookVo bookVo, Model model) throws ParseException {
+		String id = (String) session.getAttribute("id");
+		
 		Map<String, Object> contentInfo = hostService.getContentInfoForBooking(bookVo.getNoNum(), bookVo);
 		HostVo hostVo = (HostVo) contentInfo.get("hostVo");
-		bookVo.setId("test");
+		bookVo.setId(id);
 		
 		ImagesVo imagesVo = (ImagesVo) contentInfo.get("imagesVo");
 		int count = (int) contentInfo.get("count");
@@ -81,9 +85,10 @@ public class BookController {
 	}
 
 	@GetMapping("/complete")
-	public String bookList(int num, Model model) {
+	public String bookList(HttpSession session, int num, Model model) {
+		String id = (String) session.getAttribute("id");
 		
-		BookVo bookVo = bookService.getBookInfoByNumAndId(num, "test");
+		BookVo bookVo = bookService.getBookInfoByNumAndId(num, id);
 		log.info(bookVo.toString());
 		model.addAttribute("bookVo", bookVo);
 		

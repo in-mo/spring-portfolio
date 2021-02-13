@@ -69,25 +69,15 @@ public class ModifyUserController {
 	
 	
 	@PostMapping("/modifyUser")
-	public void postModify(HttpSession session, HttpServletRequest request, Model model) throws Exception {
+	public void postModify(HttpServletRequest request, Model model, UserVo userVo) throws Exception {
 		
 		log.info("Testing.postModify() 호출됨");
 			
 		request.setCharacterEncoding("utf-8");
 		
-		// id 세션 가져오기
-		String id = (String) session.getAttribute("id");
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
-		String tel = request.getParameter("tel");
-		
-		log.info("이름 :" +name+ "// 이메일 :" +email+ "// 전번 :" +tel+ "// 아이디 :" + id);
 		
 		// 정보 업데이트
-		userService.update(name, email, tel, id);
-		
-		// 업데이트 후 저장된 정보 가져오기
-		UserVo userVo = userService.getMemberById(id);
+		userService.update(userVo);
 		
 		// 회원정보 model에 저장
 		model.addAttribute("userVo", userVo);

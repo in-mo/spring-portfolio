@@ -71,8 +71,8 @@ public class ServiceCenterSerivce {
 		return serviceCenterMapper.getQnaContentByRef(num);
 	}
 	
-	public void updateQnaContent(QnaVo qnaVo) {
-		serviceCenterMapper.updateQnaContent(qnaVo);
+	public int updateQnaContent(QnaVo qnaVo) {
+		return serviceCenterMapper.updateQnaContent(qnaVo);
 	}
 	
 	@Transactional
@@ -103,7 +103,19 @@ public class ServiceCenterSerivce {
 			return false;
 	}
 	
-	public void deleteQnaContent(int num) {
-		serviceCenterMapper.deleteQnaContent(num);
+	public int deleteQnaContent(int num) {
+		return serviceCenterMapper.deleteQnaContent(num);
+	}
+	
+	@Transactional
+	public boolean deleteQnaContent(int num, int reRef) {
+		QnaVo qnaVo = getQnaContentByNum(reRef);
+		qnaVo.setStatus("답변대기");
+		int updateCheck = updateQnaContent(qnaVo);
+		int deleteCheck = serviceCenterMapper.deleteQnaContent(num);
+		
+		if(updateCheck + deleteCheck >= 2)
+			return true;
+		return false;
 	}
 }

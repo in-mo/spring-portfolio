@@ -11,11 +11,11 @@
 	</insert>
 	
 	<select id="getBookInfoByNum" resultType="bookVo">
-		select * from airbnb_book where no_num = #{ noNum }
+		select * from airbnb_book where no_num = #{ noNum } order by reg_date desc;
 	</select>
 	
 	<select id="getBookInfoById" resultType="bookVo">
-		select * from airbnb_book where id = #{ id }
+		select * from airbnb_book where id = #{ id } order by reg_date desc;
 	</select>
 	
 	<select id="getBookInfoByNumAndId" resultType="bookVo">

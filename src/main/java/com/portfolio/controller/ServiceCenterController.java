@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -213,19 +215,75 @@ public class ServiceCenterController {
 
 		return "/serviceCenter/customerCenter";
 	}
+	
+	@PostMapping("/qnaList")
+	@ResponseBody
+	public Map<String, Object> updateQnaList(@RequestParam(defaultValue = "1") int pageNum) {
+		int count = serviceCenterSerivce.getQnaCountAll();
+
+		int pageSize = 10;
+
+		int startRow = (pageNum - 1) * pageSize;
+
+		List<QnaVo> contentList = null;
+		if (count > 0) {
+			contentList = serviceCenterSerivce.getQnaContents(startRow);
+
+			String content = "";
+			for (QnaVo qnaVo : contentList) {
+				if (qnaVo.getContent() != null) {
+					content = qnaVo.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+					qnaVo.setContent(content);
+				}
+			}
+		}
+
+		PageDto pageDto = new PageDto();
+
+		if (count > 0) {
+			int pageCount = (count / pageSize) + (count % pageSize == 0 ? 0 : 1);
+			// int pageCount = (int) Math.ceil((double) count / pageSize);
+
+			int pageBlock = 5;
+
+			// 1~5 6~10 11~15 16~20 ...
+			// 1~5 => 1 6~10 => 6 11~15 => 11 16~20 => 16
+			int startPage = ((pageNum / pageBlock) - (pageNum % pageBlock == 0 ? 1 : 0)) * pageBlock + 1;
+
+			int endPage = startPage + pageBlock - 1;
+			if (endPage > pageCount) {
+				endPage = pageCount;
+			}
+
+			pageDto.setCount(count);
+			pageDto.setPageCount(pageCount);
+			pageDto.setPageBlock(pageBlock);
+			pageDto.setStartPage(startPage);
+			pageDto.setEndPage(endPage);
+		} // if
+
+		Map<String, Object> qnaListInfo = new HashMap<>();
+		qnaListInfo.put("qContentList", contentList);
+		qnaListInfo.put("qPageDto", pageDto);
+		qnaListInfo.put("qPageNum", pageNum);
+		
+		return qnaListInfo;
+	}
 
 	@GetMapping("/qnaWrite")
-	public String qnaWrite(@ModelAttribute("pageNum") String pageNum, Model model) {
-		model.addAttribute("id", "test");
+	public String qnaWrite(HttpSession session, @ModelAttribute("pageNum") String pageNum, Model model) {
+		String id = (String) session.getAttribute("id");
+		model.addAttribute("id", id);
 		// 로그인 했을때는 글쓰기 화면으로 보여줌
 		return "/serviceCenter/qnaWriteForm";
 	} // Get - write
 
 	@PostMapping("/qnaWrite")
-	public String qnaWrite(String pageNum, QnaVo qnaVo) {
+	public String qnaWrite(HttpSession session, String pageNum, QnaVo qnaVo) {
+		String id = (String) session.getAttribute("id");
 		int num = mysqlService.getNextNum("airbnb_custom_service_qna");
 
-		qnaVo.setId("test");
+		qnaVo.setId(id);
 		qnaVo.setStatus("답변대기");
 		qnaVo.setReRef(num);
 		
@@ -311,6 +369,17 @@ public class ServiceCenterController {
 		updateIsSuccess.put("isSuccess", isSuccess);
 		
 		return updateIsSuccess;
+	}
+	
+	@PostMapping("/qnaReplyDelete")
+	@ResponseBody
+	public Map<String, Object> qnaReplyDelete (int num, int reRef) {
+		boolean check = serviceCenterSerivce.deleteQnaContent(num, reRef);
+		
+		Map<String, Object> deleteIsSuccess = new HashMap<>();
+		deleteIsSuccess.put("isSuccess", check);
+		
+		return deleteIsSuccess;
 	}
 	
 	@GetMapping("/qna/{num}")

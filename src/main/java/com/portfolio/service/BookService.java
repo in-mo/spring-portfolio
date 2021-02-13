@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.portfolio.domain.BookVo;
 import com.portfolio.domain.HostVo;
+import com.portfolio.domain.ImagesVo;
 import com.portfolio.mapper.BookMapper;
 import com.portfolio.mapper.HostMapper;
+import com.portfolio.mapper.ImagesMapper;
 import com.portfolio.mapper.MysqlMapper;
 
 @Service
@@ -23,6 +25,9 @@ public class BookService {
 	
 	@Autowired
 	private HostMapper hostMapper;
+	
+	@Autowired
+	private ImagesMapper imagesMapper;
 	
 	public int addBook(BookVo bookVo) {
 		int num = mysqlMapper.getNextNum("airbnb_book");
@@ -40,6 +45,19 @@ public class BookService {
 		bookVo.setHostVo(hostVo);
 		
 		return bookVo;
+	}
+	
+	@Transactional
+	public List<BookVo> getBooksAndHostVoById(String id) {
+		List<BookVo> bookList = getBookInfoById(id);
+		for(BookVo bookVo : bookList) {
+			HostVo hostVo = hostMapper.getContentInfo(bookVo.getNoNum());
+			ImagesVo imagesVo = imagesMapper.getImageByNoNum(hostVo.getNum());
+			hostVo.setImageVo(imagesVo);
+			hostVo.setHostComment(hostVo.getHostComment().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+			bookVo.setHostVo(hostVo);
+		}
+		return bookList;
 	}
 	
 	public List<BookVo> getBookInfoByNum(int num) {

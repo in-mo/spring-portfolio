@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>나의 후기 및 평점 목록</title>
+<title>나의 게시글 목록</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <style>
 .app {
@@ -51,14 +51,14 @@ p {
 pre{
     overflow: auto;
     white-space: pre-wrap; /* pre tag내에 word wrap */
-}  
+} 
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 	<div class="app" id="app">
-		<div><a href="/user/show">회원정보</a> > My Reviews</div>
+		<div><a href="/user/show">회원정보</a> > My Hosts</div>
 		<div class="horizontal">
 			<div>
 				<div style="width: 170px; height: 170px;">
@@ -76,47 +76,45 @@ pre{
 				<p>이름 : ${ userVo.name }</p>
 			</div>
 			<div class="verticality" style="width: 882px;">
-				후기 목록 [후기 갯수: ${ mPageDto.count }]
+				게시글 목록 [게시글 갯수: ${ mPageDto.count }]
 				<c:choose>
 					<c:when test="${ mPageDto.count gt 0 }">
-						<c:forEach var="review" items="${ reviewList }">
+						<c:forEach var="host" items="${ hostList }">
 							<div>
-								<div class="horizontal">
+								<div class="horizontal" onclick="location.href='/content/info?num=${ host.num }'">
 									<div>
-										<img src="/upload/${ review.imagesVo.uploadpath }/${ review.imagesVo.uuid }_${ review.imagesVo.filename }" width="200" height="200">
-										<p class="overflow">${ review.hostVo.address1 } ${ review.hostVo.address2 } </p>
-										<p>${ review.hostVo.stayType }ㆍ후기(${ review.count })</p>	
-										<p>호스트 : ${ review.hostVo.id }</p>
-										<p>2021-01-27 ~ 2021-01-28</p>
+										<img src="/upload/${ host.imageVo.uploadpath }/${ host.imageVo.uuid }_${ host.imageVo.filename }" width="200" height="200">
+										<p class="overflow">${ host.address1 } ${ host.address2 } </p>
+										<p>${ host.stayType }ㆍ후기(${ host.reviewCount })</p>	
 									</div>
 									<div>
-										<span><b>작성일자 : <fmt:formatDate value="${ review.regDate }"
-									pattern="yyyy-MM-dd" /></b></span><br>
+										<span><b>작성일자 : <fmt:formatDate value="${ host.regDate }" pattern="yyyy-MM-dd" /></b></span><br>
 										<hr>
-										<span><b>만족도</b></span><br>
-										<span style="color: #ff385c"><i class="fas fa-star"></i></span><span>${ review.score }</span>
+										<span><b>제목</b></span><br>
+										<div style="width: 570px;"><pre>${ host.title }</pre></div>
 										<hr>
-										<span><b>후기</b></span><br>
-										<div style="width: 570px;"><pre>${ review.comment }</pre></div>
+										<span><b>소개글</b></span><br>
+										<div style="width: 570px;"><pre>${ host.hostComment }</pre></div>
 									</div>
 								</div>
 								<div class="text-center">
-									<input type="hidden" value="${ review.num }">
+									<button type="button" class="btn btn-dark" v-on:click="showContent">게시물 보러가기</button>
+									<input type="hidden" value="${ host.num }">
 									<input type="hidden" value="${ pageNum }">
-									<button type="button" class="btn btn-dark" v-on:click="modifyReview($event)">수정하기</button>
-									<button type="button" class="btn btn-dark" v-on:click="deleteReview($event)">삭제하기</button>
+									<button type="button" class="btn btn-dark" v-on:click="modifyHost($event)">수정하기</button>
+									<button type="button" class="btn btn-dark" v-on:click="deleteHost($event)">삭제하기</button>
 								</div>
 							</div>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<div class="text-center">후기 글 없음</div>
+						<div class="text-center">게시글 없음</div>
 					</c:otherwise>
 				</c:choose>
 				<div>
 					<c:if test="${ mPageDto.count gt 0 }">
 						<c:if test="${ mPageDto.startPage gt mPageDto.pageBlock }">
-							<a href="/review/MyReviews?pageNum=${ mPageDto.startPage - mPageDto.pageBlock }">[이전]</a>
+							<a href="/review/MyHosts?pageNum=${ mPageDto.startPage - mPageDto.pageBlock }">[이전]</a>
 						</c:if>
 						
 						<c:forEach var="i" begin="${ mPageDto.startPage }" end="${ mPageDto.endPage }" step="1">
@@ -124,11 +122,11 @@ pre{
 							<c:choose>
 							
 								<c:when test="${ pageNum eq i}">
-									<a href="/review/MyReviews?pageNum=${ i }"><b>[${ i }]</b></a>
+									<a href="/review/MyHosts?pageNum=${ i }"><b>[${ i }]</b></a>
 								</c:when>
 								
 								<c:otherwise>
-									<a href="/review/MyReviews?pageNum=${ i }">[${ i }]</a>
+									<a href="/review/MyHosts?pageNum=${ i }">[${ i }]</a>
 								</c:otherwise>
 							
 							</c:choose>
@@ -136,7 +134,7 @@ pre{
 						</c:forEach>
 						
 						<c:if test="${ mPageDto.endPage lt mPageDto.pageCount }">
-							<a href="/review/MyReviews?pageNum=${ mPageDto.startPage + mPageDto.pageBlock }">[다음]</a>
+							<a href="/review/MyHosts?pageNum=${ mPageDto.startPage + mPageDto.pageBlock }">[다음]</a>
 						</c:if>
 					</c:if>
 				</div>
@@ -154,20 +152,28 @@ pre{
 				 
 			},
 			methods: {
-				modifyReview: function(e) {
+				modifyHost: function(e) {
 					let num = $(e.currentTarget).prev().prev().val();
 					console.log(num);
 					let isModify = confirm('수정하시겠습니까?');
 					if(isModify) {
-						location.href = '/review/modify?num=' + num + '&pageNum=${ pageNum }';
+						location.href = '/content/modify?num=' + num + '&pageNum=${ pageNum }';
 					}
 				},
-				deleteReview: function(e) {
+				deleteHost: function(e) {
 					let num = $(e.currentTarget).prev().prev().prev().val();
 					console.log(num);
 					let isDelete = confirm('정말 삭제하시겠습니까?');
 					if(isDelete) {
-						location.href = '/review/delete?num=' + num + '&pageNum=${ pageNum }';
+						location.href = '/content/delete?num=' + num + '&pageNum=${ pageNum }';
+					}
+				},
+				showContent: function(e) {
+					let num = $(e.currentTarget).next().val();
+					console.log(num);
+					let isMove = confirm('게시물로 이동하겠습니까?');
+					if(isMove) {
+						location.href = '/content/info?num=' + num;
 					}
 				}
 			}

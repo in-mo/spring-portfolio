@@ -17,10 +17,12 @@ import com.portfolio.domain.BookVo;
 import com.portfolio.domain.HostVo;
 import com.portfolio.domain.ImagesVo;
 import com.portfolio.domain.ReviewVo;
+import com.portfolio.domain.UserVo;
 import com.portfolio.mapper.BookMapper;
 import com.portfolio.mapper.HostMapper;
 import com.portfolio.mapper.ImagesMapper;
 import com.portfolio.mapper.ReviewMapper;
+import com.portfolio.mapper.UserMapper;
 
 import lombok.extern.java.Log;
 
@@ -40,6 +42,9 @@ public class HostService {
 	
 	@Autowired
 	private BookMapper bookMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 	
 	public void addContent(HostVo hostVo) {
 		hostMapper.addContent(hostVo);
@@ -104,11 +109,18 @@ public class HostService {
 		return contentInfo;
 	}
 	
+	public HostVo getContent(int num) {
+		return hostMapper.getContentInfo(num);
+	}
+	
 	@Transactional
 	public Map<String, Object> getContentInfo(int num) throws ParseException {
 		Map<String, Object> contentInfo = new HashMap<>();
 		
-		contentInfo.put("hostVo", hostMapper.getContentInfo(num));
+		HostVo hostVo = hostMapper.getContentInfo(num);
+		UserVo userVo = userMapper.getMemberById(hostVo.getId());
+		contentInfo.put("hostVo", hostVo);
+		contentInfo.put("userVo", userVo);
 		contentInfo.put("imageList", imagesMapper.getImagesByNum(num));
 		contentInfo.put("reviewList", reviewMapper.getReviewsByNoNum(num));
 		contentInfo.put("reviewListFour", reviewMapper.getReviewsByNoNumFour(num));

@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>상품 문의</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <style>
 .app {
 	width: 500px;
@@ -102,10 +103,10 @@ td{
 				<input type="reset" class="btnTag" value="취소">
 				<c:choose>
 					<c:when test="${ form eq 'write' }">
-						<input type="button" class="btnTag" id="write" value="작성하기">				
+						<input type="button" class="btn btn-dark" id="write" value="작성하기">				
 					</c:when>
 					<c:otherwise>
-						<input type="button" class="btnTag" id="modify" value="수정하기">
+						<input type="button" class="btn btn-dark" id="modify" value="수정하기">
 					</c:otherwise>
 				</c:choose>
 			</div>

@@ -117,14 +117,9 @@ table, td, tr {
 <jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 	<div class="app" id="app">
 		
-		<c:choose>
-			<c:when test="${ pageVo.pageNum ne 0 }">
-				<div><a href="/search/result?pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }">돌아가기</a></div>
-			</c:when>
-			<c:otherwise>
-				<div><a href="/">메인</a></div>
-			</c:otherwise>
-		</c:choose>
+		<c:if test="${ pageVo.pageNum ne 0 }">
+			<div><a href="/search/result?pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }"><i class="fas fa-arrow-left"></i></a></div>
+		</c:if>
 		<div>${ hostVo.title }</div>
 		<div>
 			<c:choose>
@@ -136,12 +131,14 @@ table, td, tr {
 				</c:otherwise>
 			</c:choose>
 			
-			<c:if test="${ pageVo.pageNum eq 0 }">
+			<c:if test="${ id eq hostVo.id || id eq 'admin'}">
 				<button class="float_right" type="button" v-on:click="contentDelete">삭제</button>
 				<button class="float_right" type="button" v-on:click="contentModify">수정</button>
 			</c:if>
 			
-			<button class="float_right" type="button" v-on:click="contentSave">저장</button>
+			<c:if test="${ not empty id && id ne 'admin' && id ne hostVo.id }">
+				<button class="float_right" type="button" v-on:click="contentSave">저장</button>
+			</c:if>
 			
 		</div>
 		<div class="container">
@@ -170,7 +167,11 @@ table, td, tr {
 						<div>${ hostVo.id }님이 호스팅하는 ${ hostVo.houseType }</div>
 						<div>최대 인원 ${ hostVo.countOfPerson }명ㆍ침실 ${ hostVo.countOfBedroom }개ㆍ욕실 ${ hostVo.countOfBathroom }개</div>
 					</div>
-					<div class="float_right">호스터 이미지</div>
+					<div class="float_right">
+						<c:if test="${ not empty userVo }">
+							<img src="/upload/${ userVo.uploadpath }/${ userVo.uuid }_${ userVo.filename }" width="150" height="150">
+						</c:if>
+					</div>
 				</div>
 				<hr>
 				<div>
@@ -695,27 +696,29 @@ table, td, tr {
 		  			let isSaveContent = confirm('저장하시겠습니까?');
 		  			if(isSaveContent) {
 		  				$.ajax({
-		  					url: '/content/isExist',
-		  					data: { hostNum : ${ hostVo.num }, id: 'test' },
+		  					url: '/travel/isExist',
+		  					data: { hostNum : ${ hostVo.num }, id: '${ id }' },
 		  					success: function(res) {
 		  						if(res == 0){
 		  							$.ajax({
-		  								url: '/content/save',
-		  								data: { hostNum : ${ hostVo.num }, id: 'test' },
+		  								url: '/travel/save',
+		  								data: { hostNum : ${ hostVo.num }, id: '${ id }' },
 		  								success: function(res) {
 		  									// 1이면 등록된 것
 		  									if(res == 1){
 			  									let isMove = confirm('저장하였습니다. 저장목록으로 이동하시겠습니까?');
 			  						  			if(isMove) {
-			  						  				location.href = '/travel/savelist';
+			  						  				location.href = '/travel/history?viewType=save';
 			  						  			}
-		  									}
+		  									} else {
+												alert('다시 시도해주세요.');
+			  								}
 		  								}
 		  							});
 		  						} else {
 		  							let isMove = confirm('이미 저장 되어있습니다. 저장목록으로 이동하시겠습니까?');
   						  			if(isMove) {
-  						  				location.href = '/travel/savelist';
+  						  				location.href = '/travel/history?viewType=save';
   						  			}
 		  						}
 		  					}

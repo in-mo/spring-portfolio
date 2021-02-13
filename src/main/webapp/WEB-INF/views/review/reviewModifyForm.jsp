@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>평가 및 후기 수정</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <style>
 .app {
 	width: 840px;
@@ -103,9 +104,9 @@ p {
 </style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 	<div class="app" id="app">
-		<div>돌아가기</div>
-		<div>평가 및 후기</div>
+		<div>평가 및 후기 수정</div>
 		<hr>
 		<div class="horizontal">
 			<div>
@@ -168,11 +169,14 @@ p {
 				<textarea v-model="comment" name="comment" maxlength="500" style="resize: none; width: 570px; height: 120px;"></textarea>
 				<span style="position: relative; left: 530px; top: -40px;">{{ commentCount }}</span>
 				<hr>
-				<button type="button" v-on:click="modifyReview">수정하기</button>
-				<button type="button" v-on:click="cancelModifyReview">취소하기</button>
+				<div class="text-center">
+					<button type="button" class="btn btn-dark" v-on:click="modifyReview">수정하기</button>
+					<button type="button" class="btn btn-dark" v-on:click="cancelModifyReview">취소하기</button>
+				</div>
 			</div>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	<script src="/script/jquery-3.5.1.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 	<script>
@@ -199,7 +203,8 @@ p {
 							success: function(res) {
 								console.log(res);
 								if(res == 'OK') {
-									location.href = '/review/content?num=${ reviewVo.num }&pageNum=${ pageNum }';
+// 									location.href = '/review/content?num=${ reviewVo.num }&pageNum=${ pageNum }';
+									location.href = '/user/MyReviews?pageNum=${ pageNum }';
 // 									location.href = '/review/MyReviews';
 								}
 							}
@@ -210,7 +215,7 @@ p {
 					let isCancel = confirm('취소하시겠습니까?');
 					if(isCancel) {
 // 						location.href = '/review/content?num=${ reviewVo.num }';
-						location.href = '/review/MyReviews?pageNum=${ pageNum }';
+						location.href = '/user/MyReviews?pageNum=${ pageNum }';
 					}
 				},
 				setScore: function(event) {

@@ -30,7 +30,7 @@ header {
 		</a>
 		<c:choose>
 			<c:when test="${ not empty id }">
-				<span class="float_right">${ id }님 | <a href="/user/logout">로그아웃</a></span>
+				<span class="float_right"><a href="/user/show">${ id }님</a> | <a href="/user/logout">로그아웃</a></span>
 			</c:when>
 			<c:otherwise>
 				<span class="float_right"><a href="/user/login">로그인</a> | <a href="/user/join">회원가입</a></span>
@@ -40,6 +40,3 @@ header {
 	</div>
 	
 </header>
-<script>
-	console.log('${id }');
-</script>
