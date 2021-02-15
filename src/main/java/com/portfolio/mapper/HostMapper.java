@@ -21,6 +21,8 @@ public interface HostMapper {
 			@Param("cntOfPerson") int cntOfPerson,
 			@Param("startRow") int startRow);
 	
+	public List<HostVo> getContentAllById(String id);
+	
 	public List<HostVo> getContentsById(@Param("id") String id, @Param("startRow") int startRow);
 	
 	public int countContentsById(String id);
@@ -28,4 +30,6 @@ public interface HostMapper {
 	public int updateContentInfo(HostVo hostVo);
 	
 	public void deleteContentInfo(int num);
+	
+	public int deleteContentById(String id);
 }

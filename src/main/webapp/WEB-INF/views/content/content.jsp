@@ -7,9 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>게시물</title>
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
 <style>
 .app {
-	width: 1020px;
+	width: 1050px;
 	display: block;
 	margin: 0 auto;
 	position: relative;
@@ -28,7 +29,7 @@ span {
 	float: right;
 }
 
-.container {
+.containerImages {
 	display: grid;
 	grid-template-columns: 500px 250px 250px;
 	grid-template-rows: 250px 250px;
@@ -81,8 +82,9 @@ table, td, tr {
 .costTab {
 	display: inline-block;
  	position: sticky;
+ 	z-index: 1;
+ 	background-color:white;
  	top: 100px;
- 	z-index: 2;
 }
 .alignCenter {
 	text-align: center;
@@ -108,10 +110,20 @@ table, td, tr {
 	width: 30px;
 	text-align: center;
 }
+#checkInDate {
+	z-index: 2;
+}
+#checkInDate {
+	z-index: 2;
+}
 
+pre{
+    overflow: auto;
+    white-space: pre-wrap; /* pre tag내에 word wrap */
+}  
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
+<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
@@ -141,7 +153,7 @@ table, td, tr {
 			</c:if>
 			
 		</div>
-		<div class="container">
+		<div class="containerImages">
 			<c:choose>
 				<c:when test="${ not empty imageList }">
 					<c:forEach var="image" items="${ imageList }" varStatus="status">
@@ -168,9 +180,14 @@ table, td, tr {
 						<div>최대 인원 ${ hostVo.countOfPerson }명ㆍ침실 ${ hostVo.countOfBedroom }개ㆍ욕실 ${ hostVo.countOfBathroom }개</div>
 					</div>
 					<div class="float_right">
-						<c:if test="${ not empty userVo }">
-							<img src="/upload/${ userVo.uploadpath }/${ userVo.uuid }_${ userVo.filename }" width="150" height="150">
-						</c:if>
+						<c:choose>
+							<c:when test="${ not empty userVo }">
+								<img src="/upload/${ userVo.uploadpath }/${ userVo.uuid }_${ userVo.filename }" width="150" height="150">
+							</c:when>
+							<c:otherwise>
+								<span><i class="fas fa-user fa-5x"></i></span>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 				<hr>
@@ -295,23 +312,23 @@ table, td, tr {
 					<div class="dateNperson">
 						<div class="dateNpersonItem"> 
 							체크인
-<!-- 							<datepicker @update-date="updateDate"></datepicker> -->
-<!--     						<p>{{ date }}</p> -->
     						<input class="checkDates" type="text" id="checkInDate" readonly>
     					</div>
 						<div class="dateNpersonItem">
 							체크아웃
 							<input class="checkDates" type="text" id="checkOutDate" readonly>
 						</div>
-						<div class="dateNpersonItem">
-							게스트 인원<br>
-							<button type="button" v-on:click="cntOfGuestDown">-</button>
+						<div class="dateNpersonItem text-center">
+							게스트 인원 
+							<button type="button" class="btn btn-dark" v-on:click="cntOfGuestDown">-</button>
 							<input class="inputOutLine" name="cntOfGuest" v-model="cntOfGuest" readonly>
-							<button type="button" v-on:click="cntOfGuestUp">+</button>
+							<button type="button" class="btn btn-dark" v-on:click="cntOfGuestUp">+</button>
 						</div>
 					</div>
 					<div v-if="isPaymentShow">
-						<div><button type="button" v-on:click="booking">예약하기</button></div>
+						<div class="text-center">
+							<button type="button" class="btn btn-dark" v-on:click="booking">예약하기</button>
+						</div>
 						<div>예약 확정 전에는 요금이 청구되지 않습니다.</div>
 						<div>
 							<table>
@@ -376,7 +393,7 @@ table, td, tr {
 									</c:forEach>
 								</div>
 							</div>
-							<button type="button" v-on:click="showReviewList" class="float_right">전체 리뷰 보기</button>
+							<button type="button" v-on:click="showReviewList" class="float_right btn btn-dark" style="margin-bottom: 50px;">전체 리뷰 보기</button>
 						</c:when>
 						<c:otherwise>
 							<div style="text-align: center;">후기글이 없음</div>
@@ -452,10 +469,10 @@ table, td, tr {
 	</div>
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	
-	<script src="/script/jquery-3.5.1.js"></script>
+<!-- 	<script src="/script/jquery-3.5.1.js"></script> -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a2aaef4af8220ddff7af9d36feda352a&libraries=services"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script> -->
 	
 	<script>
 		let bookList = '${ bookList }';

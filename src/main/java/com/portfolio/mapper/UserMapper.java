@@ -13,7 +13,7 @@ public interface UserMapper {
 	List<UserVo> getAllMembers();
 	
 	
-	void addMember(UserVo userVo);
+	int addMember(UserVo userVo);
 	
 	//@Select("SELECT passwd FROM member WHERE id = #{id}")
 	String userCheck(String id);
@@ -25,7 +25,7 @@ public interface UserMapper {
 	int update(UserVo userVo);
 	
 	//@Delete("DELETE FROM member WHERE id = #{id} ")
-	void deleteById(String id);
+	int deleteById(String id);
 	
 	//@Delete("DELETE FROM member")
 	void deleteAll();

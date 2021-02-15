@@ -6,7 +6,6 @@
 <html>
 <head>
 <title>회원 정보</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <style>
 div{
 	padding: 10px;
@@ -24,16 +23,24 @@ hr {
 	height: 1px;
 	background: #d2d2d2;
 }
+.verticality {
+	display: inline-flex;
+	flex-direction: column;
+}
+
+.horizontal {
+	display: inline-flex;
+	flex-direction: row;
+}
 </style>
 
 </head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <body>
 <jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 <div class="container text-center" id="app">
-	<div class="wrap row">
-		<div><h4><b>회원정보</b></h4></div>
-		<div class="col-md-4">
+	<div><h4><b>회원정보</b></h4></div>
+	<div class="horizontal">
+		<div class="verticality" style="width: 300px;">
 			<div>
 				<div class="profileImageBox">
 					<c:choose>
@@ -67,11 +74,11 @@ hr {
 			</div>
 			<hr>
 			<div>
-				<button class="btn">회원 탈퇴</button>
+				<button type="button" class="btn" onclick="deleteId()">회원 탈퇴</button>
 			</div>
 		</div>
 		
-		<div class="col-md-8">
+		<div class="verticality" style="width: 750px;">
 			<div>
 				<div>
 					${ userVo.id } 회원님
@@ -154,8 +161,6 @@ hr {
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-<script src="/script/jquery-3.5.1.js"></script>
 <script>
 vue = new Vue ({
     el: '#app',
@@ -334,7 +339,7 @@ let newPwdComform = false;
 $('input[name="currentPwd"]').keyup(function() {
 	let pwd = $(this).val();
 
-	if (pwd.length <= 8) {
+	if (pwd.length < 8) {
 		return;
 	}
 
@@ -427,6 +432,13 @@ function changePwd() {
 			}
 		}
 	});
+}
+function deleteId() {
+	let isDelete = confirm('정말 삭제하시겠습니까?');
+	
+	if(isDelete) {
+		location.href = '/user/delete';
+	}
 }
 </script>
 </body>

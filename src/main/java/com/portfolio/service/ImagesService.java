@@ -31,7 +31,7 @@ public class ImagesService {
 		return imagesMapper.getImageByNoNum(noNum);
 	}
 	
-	public List<ImagesVo> getImagesByNum(int num){
-		return imagesMapper.getImagesByNum(num);
+	public List<ImagesVo> getImagesByNoNum(int num){
+		return imagesMapper.getImagesByNoNum(num);
 	}
 }

@@ -14,7 +14,7 @@ public interface ImagesMapper {
 	
 	ImagesVo getImageByNoNum(int noNum);
 	
-	List<ImagesVo> getImagesByNum(int num);
+	List<ImagesVo> getImagesByNoNum(int noNum);
 	
 	void deleteImagesByNoNum(int num);
 	

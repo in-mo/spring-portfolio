@@ -1,6 +1,7 @@
 package com.portfolio.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -13,10 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.portfolio.service.EmailService;
 import com.portfolio.service.MailHandler;
+import com.portfolio.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -32,6 +35,9 @@ public class MailController {
 	
 	private JavaMailSender mailSender;
 	
+	@Autowired
+	private UserService userService;
+	
 	 @GetMapping("/email")
 	    public String dispMail() {
 	        return "email";
@@ -39,7 +45,7 @@ public class MailController {
 
 	    @GetMapping(value = "/ajax/email", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	    @ResponseBody
-	    public void ajaxEmail(@Valid String email, Model model) {
+	    public void ajaxEmail(String email, Model model) {
 	    	
 	        // 임의의 숫자 다섯개 생성하기
 	        int num[] = new int[5];
@@ -73,6 +79,7 @@ public class MailController {
 //               mailHandler.setInline("sample-img", "static/sample1.jpg");
 
                 mailHandler.send();
+                emailService.deleteByEmail(email);
                 emailService.addNumber(email, randomNum);
                 
             }
@@ -154,12 +161,13 @@ public class MailController {
 	    
 	    
 	    @PostMapping("/findId")
-	    public String findId(String email) {
+	    @ResponseBody
+	    public Map<String, Object> findId(String email) {
 	    	
 	    	log.info("Testing.findId() - Post 호출");
-	    	
-	    	String resultId = emailService.getIdByEmail(email);
-		    	
+	    	Map<String, Object> isSuccessCheck = new HashMap<>();
+	    	List<String> resultIdList = emailService.getIdByEmail(email);
+	    	String htmlContent="";
 	    	try {
 	            MailHandler mailHandler = new MailHandler(mailSender);
 	                
@@ -168,32 +176,32 @@ public class MailController {
 	            // 보내는 사람
 	            mailHandler.setFrom("ruitest20@gmail.com");
 	            // 제목
-	            mailHandler.setSubject("아이디 찾기 메일입니다다다다다다다다");
+	            mailHandler.setSubject("회원정보 찾기 응답 메일입니다.");
 	            // HTML Layout
-	            String htmlContent = "<h1>" +  resultId +"</h1>"; // <img src='cid:sample-img'> 이미지 추가할려면 이거 뒤에 추가하면됨
+	            for(String resultId : resultIdList)
+	            htmlContent += "회원님의 아이디는\" <h1>" +  resultId + "</h1> \"입니다.<br><br>";
 	            mailHandler.setText(htmlContent, true);
-	            // 첨부 파일
-	//               mailHandler.setAttach("newTest.txt", "static/originTest.txt");
-	            // 이미지 삽입
-	//               mailHandler.setInline("sample-img", "static/sample1.jpg");
 	
 	            mailHandler.send();
-	                
-	            }
-	            catch(Exception e){
+	            isSuccessCheck.put("isSuccess", true);
+            }
+            catch(Exception e){
+	            	isSuccessCheck.put("isSuccess", false);
 	                e.printStackTrace();
-	            }
+            }
 	    	
-	    	return "redirect:/user/login";
+	    	return isSuccessCheck;
+//	    	return "redirect:/user/login";
 	    }
 	    
 	    @PostMapping("/findPass")
-	    public String findPass(String id ,String email) {
+	    @ResponseBody
+	    public Map<String, Object> findPass(String id ,String email) {
 	    	
 	    	log.info("Testing.findPass() - Post 호출");
+	    	Map<String, Object> isSuccessCheck = new HashMap<>();
 	    	
-	    	String resultPass = emailService.getPassByInfo(id, email);
-		    	
+	    	String htmlContent = "";
 	    	try {
 		            MailHandler mailHandler = new MailHandler(mailSender);
 		                
@@ -202,23 +210,25 @@ public class MailController {
 		            // 보내는 사람
 		            mailHandler.setFrom("ruitest20@gmail.com");
 		            // 제목
-		            mailHandler.setSubject("비밀번호 찾기 메일입니다다다다다다다다");
+		            mailHandler.setSubject("회원정보 찾기 응답 메일입니다.");
 		            // HTML Layout
-		            String htmlContent = "<h1>" +  resultPass +"</h1>"; // <img src='cid:sample-img'> 이미지 추가할려면 이거 뒤에 추가하면됨
+		          
+		    		String newPwd = userService.getMemberByIdAndUpdatePass(id);
+		            if(newPwd.equals("false"))
+		            	htmlContent = "비밀번호 찾기를 다시 시도해주세요.";
+		            else
+		            	htmlContent = "회원님의 임시 비밀번호는\"<h1>" +  newPwd +"</h1>\" 입니다.";
 		            mailHandler.setText(htmlContent, true);
-		            // 첨부 파일
-		//               mailHandler.setAttach("newTest.txt", "static/originTest.txt");
-		            // 이미지 삽입
-		//               mailHandler.setInline("sample-img", "static/sample1.jpg");
 		
 		            mailHandler.send();
-		                
+		            isSuccessCheck.put("isSuccess", true);
 	            }
 	            catch(Exception e){
+	            	isSuccessCheck.put("isSuccess", false);
 	                e.printStackTrace();
 	            }
 	    	
-	    	return "redirect:/user/login";
+	    	return isSuccessCheck;
 	    }
 	    
 	    

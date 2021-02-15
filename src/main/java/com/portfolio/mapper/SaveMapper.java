@@ -21,4 +21,6 @@ public interface SaveMapper {
 	public void updateSaveInfo(SaveVo saveVo);
 	
 	public int deleteSaveInfo(int num);
+	
+	public int deleteSaveById(String id);
 }

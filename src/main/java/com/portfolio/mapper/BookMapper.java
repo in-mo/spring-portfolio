@@ -19,4 +19,8 @@ public interface BookMapper {
 	public int updateBookInfo(BookVo bookVo);
 	
 	public int deleteBookInfo(int num);
+	
+	public int deleteBookById(String id);
+	
+	public int deleteBookByNoNum(int noNum);
 }

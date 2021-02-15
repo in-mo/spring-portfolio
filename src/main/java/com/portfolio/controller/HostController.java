@@ -301,7 +301,7 @@ public class HostController {
 	
 	@GetMapping("/delete")
 	public String delete(int num, int pageNum, HttpServletRequest request, RedirectAttributes rttr) {
-		List<ImagesVo> imageList = imagesService.getImagesByNum(num);
+		List<ImagesVo> imageList = imagesService.getImagesByNoNum(num);
 		
 		// application 객체 참조 가져오기
 		ServletContext application = request.getServletContext();

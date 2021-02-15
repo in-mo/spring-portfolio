@@ -4,11 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 <title>검색 결과</title>
 <style>
 button {
@@ -34,11 +34,11 @@ strong {
 .left {
 	margin-left: 30px;
 }
-.costTab {
-	display: inline-block;
- 	position: sticky;
- 	top: 10px;
-}
+/* .costTab { */
+/* 	display: inline-block; */
+/*  	position: sticky; */
+/*  	top: 10px; */
+/* } */
 td {
 	padding: 0 10px;
 }
@@ -116,37 +116,37 @@ hr {
 				
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner">
-						<div class="item active">
+						<div class="carousel-item active">
 							<a href="/search/result?address=서울&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }">
 								<img src="/images/search/10.gif" style="width:100%; height: 400px;" class="d-block w-100">
 							</a>
-							<div class="carousel-caption">
+							<div class="carousel-caption d-none d-md-block">
 		                    	<h3>Seoul</h3>
 		                    	<p>Seoul is always so much fun!</p>
 		                    </div>
 						  </div>
 					
-						<div class="item">
+						<div class="carousel-item">
 							<a href="/search/result?address=인천&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }">
 								<img src="/images/search/11.gif" style="width:100%; height: 400px;" class="d-block w-100">
 							</a>
-							<div class="carousel-caption">
+							<div class="carousel-caption d-none d-md-block">
 		                    	<h3>Incheon</h3>
 		                    	<p>Incheon is always so much fun!</p>
 		                    </div>
 						</div>
 					
-						<div class="item">
+						<div class="carousel-item">
 							<a href="/search/result?address=대구&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }">
 							<img src="/images/search/5.gif" style="width:100%; height: 400px;" class="d-block w-100">
 							</a>
-							<div class="carousel-caption">
+							<div class="carousel-caption d-none d-md-block">
 		                    	<h3>Daegu</h3>
 		                    	<p>Daegu is always so much fun!</p>
 		                    </div>
 						</div>
 						
-						<div class="item">
+						<div class="carousel-item">
 							<a href="/search/result?address=부산&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }">
 								<img src="/images/search/4.gif" style="width:100%; height: 400px;" class="d-block w-100">
 							</a>
@@ -158,12 +158,12 @@ hr {
 					</div>
 				
 					<!-- Left and right controls -->
-					<a class="left carousel-control" href="#myCarousel" data-slide="prev" style="margin-left: 0px;">
-						<span class="glyphicon glyphicon-chevron-left"></span>
+					<a class="carousel-control-prev" href="#myCarousel" data-slide="prev" style="margin-left: 0px;">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="sr-only">Previous</span>
 					</a>
-					<a class="right carousel-control" href="#myCarousel" data-slide="next">
-						<span class="glyphicon glyphicon-chevron-right"></span>
+					<a class="carousel-control-next" href="#myCarousel" data-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
 						<span class="sr-only">Next</span>
 					</a>
 				</div>

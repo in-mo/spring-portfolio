@@ -1,6 +1,7 @@
 package com.portfolio.controller;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,30 +56,13 @@ public class UserController {
 	
 	@GetMapping("/join")
 	public void join() {
-		log.info("GET - join() 호출됨");
+		log.info("get - join() 호출됨");
 	}
 	
 	@PostMapping("/join")
-	public ResponseEntity<String> join(@Valid UserVo userVo, BindingResult bindingResult) {
+	@ResponseBody
+	public Map<String, Object> join(UserVo userVo) {
 		log.info("POST - join() 호출됨");
-
-		if (bindingResult.hasErrors()) {
-	        List<ObjectError> errorList = bindingResult.getAllErrors();
-	        for (ObjectError error : errorList)
-	        {
-	            log.info(error.getDefaultMessage());
-	            HttpHeaders headers = new HttpHeaders();
-				headers.add("Content-Type", "text/html; charset=UTF-8");
-				
-				StringBuilder sb = new StringBuilder();
-				sb.append("<script>");
-				sb.append("  alert('"+ error.getDefaultMessage() +"');");
-				sb.append("  history.back();");
-				sb.append("</script>");
-				
-				return new ResponseEntity<String>(sb.toString(), headers, HttpStatus.OK);
-	        }
-	    }
         
 		// 비번 암호화시켜서 저장
 		String pass = userVo.getPassword();
@@ -91,12 +75,15 @@ public class UserController {
 		log.info("userVo : " + userVo);
 		
 		// 회원가입 처리
-		userService.addMember(userVo);
+		int check = userService.addMember(userVo);
+		Map<String, Object> userAddCheck = new HashMap<>();
 		
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Location", "/user/login"); // 리다이렉트 경로를 Location으로 설정
-		// 리다이렉트일 경우는 HttpStatus.FOUND 를 지정해야 함
-		return new ResponseEntity<String>(headers, HttpStatus.FOUND);
+		if(check >= 1)
+			userAddCheck.put("isSuccess", true);
+		else
+			userAddCheck.put("isSuccess", false);
+		
+		return userAddCheck;
 		
 	}
 	
@@ -128,28 +115,19 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> login(String id, String password, 
-			@RequestParam(defaultValue = "false") boolean keepLogin,
+	@ResponseBody
+	public int login(String id, String password) {
+			
+		return userService.userCheck(id, password);
+	} // login
+	
+	@PostMapping("loginSuccess") 
+	public ResponseEntity<String> loginSuccess(
+			HttpServletResponse response, 
 			HttpSession session,
-			HttpServletResponse response) {
+			String url,
+			boolean keepLogin, String id) {
 		
-		int check = userService.userCheck(id, password);
-		// 로그인 실패시
-		if (check != 1) {
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Content-Type", "text/html; charset=UTF-8");
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append("<script>");
-			sb.append("  alert('아이디 또는 패스워드가 일치하지 않습니다.');");
-			sb.append("  history.back();");
-			sb.append("</script>");
-			
-			return new ResponseEntity<String>(sb.toString(), headers, HttpStatus.OK);
-		}
-		
-		// 로그인 성공시
-		// 세션에 아이디 저장(로그인 인증)
 		session.setAttribute("id", id);
 		log.info("session id : " + session.getAttribute("id"));
 		if (keepLogin) { // keepLogin == true
@@ -160,14 +138,11 @@ public class UserController {
 			response.addCookie(cookie);
 		}
 		
-//		return "redirect:/";
-		
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Location", "/"); // 리다이렉트 경로를 Location으로 설정
+		headers.add("Location", url); // 리다이렉트 경로를 Location으로 설정
 		// 리다이렉트일 경우는 HttpStatus.FOUND 를 지정해야 함
 		return new ResponseEntity<String>(headers, HttpStatus.FOUND);
-	} // login
-	
+	}
 	
 	@GetMapping("/logout")
 	public String postLogout(HttpSession session,
@@ -178,10 +153,6 @@ public class UserController {
 		
 		// 세션 초기화
 		session.invalidate();
-//		session.removeAttribute("id");
-//		request.getSession().invalidate();
-//		String clear = "";
-//		session.setAttribute("id", clear);
 		
 		// 로그인 상태유지용 쿠키가 존재하면 삭제
 		Cookie[] cookies = request.getCookies();
@@ -195,7 +166,6 @@ public class UserController {
 				}
 			}
 		}
-		
 		
 		return "redirect:/";
 	} // logout
@@ -530,6 +500,40 @@ public class UserController {
 		checkInfo.put("isSuccess", check);
 		
 		return checkInfo;
+	}
+	
+	@GetMapping("/delete")
+	public String deleteUser(HttpSession session, 
+			HttpServletRequest request, 
+			HttpServletResponse response) throws Exception {
+		String id = (String) session.getAttribute("id");
+		String url;
+		
+		int check = userService.deleteById(id, request);
+		
+		if(check >= 1) {
+			session.invalidate();
+			
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals("id")) {
+						cookie.setMaxAge(0); // 유효시간 0
+						cookie.setPath("/"); // 경로는 생성할때와 동일하게 설정해야 삭제됨
+						
+						response.addCookie(cookie); // 삭제할 쿠키정보를 추가
+					}
+				}
+			}
+			url = "redirect:/";
+		} else {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('다시 시도해주세요.');</script>");
+            out.flush();
+			url = "/user/show";
+		}
+		return url;
 	}
 }
 

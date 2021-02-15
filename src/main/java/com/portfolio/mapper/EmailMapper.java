@@ -1,5 +1,7 @@
 package com.portfolio.mapper;
 
+import java.util.List;
+
 public interface EmailMapper {
 
 	//@Insert("INSERT INTO emailnum (email, number) VALUES (#{email}, #{number}) ")
@@ -12,7 +14,7 @@ public interface EmailMapper {
 	void deleteByEmail(String email);
 	
 	//@Select("SELECT id FROM user WHERE email = #{email}")
-	String getIdByEmail(String email);
+	List<String> getIdByEmail(String email);
 	
 	//@Select("SELECT password FROM user WHERE id = #{id} AND email = #{email}")
 	String getPassByInfo(String id, String email);

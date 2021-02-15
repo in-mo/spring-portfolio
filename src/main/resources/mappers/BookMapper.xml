@@ -36,4 +36,12 @@
 	<delete id="deleteBookInfo">
 		delete from airbnb_book where num = #{num}
 	</delete>
+	
+	<delete id="deleteBookByNoNum">
+		delete from airbnb_book where no_num = #{noNum}
+	</delete>
+	
+	<delete id="deleteBookById">
+		delete from airbnb_book where id = #{id}
+	</delete>
 </mapper>

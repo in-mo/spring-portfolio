@@ -121,7 +121,7 @@ public class HostService {
 		UserVo userVo = userMapper.getMemberById(hostVo.getId());
 		contentInfo.put("hostVo", hostVo);
 		contentInfo.put("userVo", userVo);
-		contentInfo.put("imageList", imagesMapper.getImagesByNum(num));
+		contentInfo.put("imageList", imagesMapper.getImagesByNoNum(num));
 		contentInfo.put("reviewList", reviewMapper.getReviewsByNoNum(num));
 		contentInfo.put("reviewListFour", reviewMapper.getReviewsByNoNumFour(num));
 		contentInfo.put("count", reviewMapper.countReviewByNoNum(num));

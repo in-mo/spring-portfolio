@@ -30,6 +30,10 @@
 		select * from airbnb_host where address1 like concat(#{location}, '%') and countofperson >= #{ cntOfPerson } order by reg_date desc limit #{startRow}, 5
 	</select>
 	
+	<select id="getContentAllById" resultType="hostVo">
+		select * from airbnb_host where id = #{ id }
+	</select>
+	
 	<select id="getContentsById" resultType="hostVo">
 		select * from airbnb_host where id = #{ id } order by reg_date desc limit #{startRow}, 5
 	</select>
@@ -66,4 +70,7 @@
 		delete from airbnb_host where num = #{num} 
 	</delete>
 	
+	<delete id="deleteContentById">
+		delete from airbnb_host where id = #{id}
+	</delete>
 </mapper>

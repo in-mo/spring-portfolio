@@ -1,5 +1,7 @@
 package com.portfolio.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +32,8 @@ public class EmailService {
 		emailMapper.deleteByEmail(email);
 	}
 	
-	public String getIdByEmail(String email) {
-		String strId = emailMapper.getIdByEmail(email);
+	public List<String> getIdByEmail(String email) {
+		List<String> strId = emailMapper.getIdByEmail(email);
 		return strId;
 	}
 	

@@ -35,4 +35,9 @@
 	<delete id="deleteSaveInfo">
 		delete from airbnb_host_save where num = #{ num }
 	</delete>
+	
+	<delete id="deleteSaveById">
+		delete from airbnb_host_save where id = #{ id }
+	</delete>
+	
 </mapper>

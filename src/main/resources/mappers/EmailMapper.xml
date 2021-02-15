@@ -18,11 +18,11 @@
 	</delete>
 
 	<select id="getIdByEmail" resultType="string">
-		SELECT id FROM user WHERE email = #{email}
+		SELECT id FROM airbnb_user WHERE email = #{email}
 	</select>
 	
 	<select id="getPassByInfo" resultType="string">
-		SELECT password FROM user WHERE id = #{id} AND email = #{email} 
+		SELECT password FROM airbnb_user WHERE id = #{id} AND email = #{email} 
 	</select>
 
 </mapper>

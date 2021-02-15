@@ -18,8 +18,12 @@
 		select * from airbnb_host_image where noNum = #{noNum} group by noNum
 	</select>
 	
-	<select id="getImagesByNum" resultType="imagesVo">
+	<select id="getImagesByNoNum" resultType="imagesVo">
 		select * from airbnb_host_image where nonum = #{num} 
+	</select>
+	
+	<select id="getImagesById" resultType="imagesVo">
+		select * from airbnb_host_image where id = #{id} 
 	</select>
 	
 	<delete id="deleteImagesByNoNum">
@@ -33,4 +37,5 @@
 			#{num}
 		</foreach>
 	</delete>
+
 </mapper>
