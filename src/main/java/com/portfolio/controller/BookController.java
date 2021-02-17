@@ -2,7 +2,6 @@ package com.portfolio.controller;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -19,10 +18,9 @@ import com.google.gson.Gson;
 import com.portfolio.domain.BookVo;
 import com.portfolio.domain.HostVo;
 import com.portfolio.domain.ImagesVo;
-import com.portfolio.domain.ReviewVo;
+import com.portfolio.domain.UserVo;
 import com.portfolio.service.BookService;
 import com.portfolio.service.HostService;
-import com.portfolio.service.ImagesService;
 
 import lombok.extern.java.Log;
 
@@ -43,16 +41,18 @@ public class BookController {
 		
 		Map<String, Object> contentInfo = hostService.getContentInfoForBooking(bookVo.getNoNum(), bookVo);
 		HostVo hostVo = (HostVo) contentInfo.get("hostVo");
+		UserVo userVo = (UserVo) contentInfo.get("userVo");
 		bookVo.setId(id);
 		
 		ImagesVo imagesVo = (ImagesVo) contentInfo.get("imagesVo");
 		int count = (int) contentInfo.get("count");
-		Double score = (Double) contentInfo.get("score");
+		Double score = Double.parseDouble((String) contentInfo.get("score") == null ? "0": (String) contentInfo.get("score"));
 		int days = (int) contentInfo.get("days");
 		ArrayList<String> bookList = (ArrayList<String>) contentInfo.get("bookList");
 		
 		
 		model.addAttribute("hostVo", hostVo);
+		model.addAttribute("userVo", userVo);
 		model.addAttribute("bookVo", bookVo);
 		model.addAttribute("imagesVo", imagesVo);
 		model.addAttribute("count", count);

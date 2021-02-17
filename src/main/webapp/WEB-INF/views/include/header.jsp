@@ -9,7 +9,9 @@
 	float:left;
 }
 #top_menu {
-	margin: 10px 0 0 0;
+	margin-top : -30px;
+	margin-bottom: 10px;
+	margin-left: 10px;
 	float: right;
 }
 #top_menu ul {
@@ -21,13 +23,14 @@
 	margin: 5px;
 }
 header {
-	height: 130px;
+	height: 80px;
 	padding: 10px;
-	border: solid green 1px;
 }
 .clear {
 	height: 10px;
 	clear:both;
+	padding: 0px;
+	margin: 0px;
 }
 
 div {
@@ -74,12 +77,13 @@ hr {
 		</c:choose>
 			
 		</div>
-		<div class="clear"></div>
+
 		<div id="logo">
 			<a href="/">
-			<img src="/images/logo2.png">
+				<span style="color: #ff385c"><i class="fab fa-airbnb fa-2x"><b> airbnb</b></i></span>
 			</a>
 		</div>
+		<div class="clear"></div>
 		<div id="top_menu">
 			<ul>
 				<li><a href="#d">검색</a></li>

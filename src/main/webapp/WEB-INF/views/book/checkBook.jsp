@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<!--     <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> <!--     <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
 <title>예약하기</title>
 <style>
 .app {
@@ -17,11 +18,10 @@
 
 div {
 	padding: 10px;
-	border: solid red 1px;
 }
 
 table, td, tr {
-	border: solid 1px blue;
+	border: solid 1px #d2d2d2;
 }
 
 .verticality {
@@ -42,6 +42,7 @@ hr {
 
 .costTab {
     display: inline-block;
+    width: 500px;
     position: sticky;
     top: 10px;
 }
@@ -58,75 +59,109 @@ hr {
 .checkDates {
 	width: 100px;
 }
+
+.drawOutLine {
+	border: solid 1px #d2d2d2;
+}
+
+hr {
+	border: 0;
+	height: 1px;
+	background: #d2d2d2;
+}
+
+.verticalityTags {
+/* 	text-align: center; */
+/*     display: table-cell; */
+/*     vertical-align: middle; */
+	display: flex;
+	justify-content: space-around;
+}
+
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
-<body>
-    <div class="app" id="app">
-        <div class="horizontal">
-            <a href="/content/info?num=${ bookVo.noNum }"><i class="fas fa-arrow-left"></i></a><br>
+<body style="background-color: #f2f2f2;">
+    <div class="app drawOutLine" id="app" style="background-color: white;">
+        <div>
+            <a href="/content/info?num=${ bookVo.noNum }">
+            	<span style="color: #d2d2d2;">
+					<i class="fas fa-angle-left fa-lg"></i>
+				</span>
+			</a>
+			<br>
             <h1>예약 요청하기</h1>
+            <hr>
         </div>
         <form action="/book/iamport" method="get">
         <div class="horizontal">
             <div>
                 <div class="verticality" style="width: 600px;">
-                    <div class="verticality discount_info">
+                    <div class="discount_info">
                         <div>저렴한 요금</div>
                         <div>검색하시는 날짜의 요금은 지난 3개월의 평균 1박 요금보다 $7 저렴합니다.</div>
                     </div>
-                    <div class="verticality book_info">
+                    <div>
+                    	<hr>
+                    </div>
+                    <div class="verticality book_info text-center">
                         <h2>예약정보</h2>
                         <div class="horizontal">
-                            <div class="verticality">
-                                <div>날짜</div>
+                            <div style="width: 100%; padding: 0px;" class="verticality drawOutLine text-center">
+                             	<div style="background: #f2f2f2;">날짜</div>
                                 <div>
                                 	<input class="checkDates" type="text" id="checkInDate" name="checkIn" v-model="startDate" required readonly>
                                 	~
                                 	<input class="checkDates" type="text" id="checkOutDate" name="checkOut" v-model="endDate" required readonly>  
                                 </div>
                                 <div><i class="far fa-clock"></i> 체크인 : 오후 3:00이후</div>
-                                <div v-if="showDateBtn">
-                                	<button type="button" v-on:click="setShowDatepicker">날짜 수정하기</button>
+                                <div class="text-center" v-if="showDateBtn">
+                                	<button class="btn btn-dark" type="button" v-on:click="setShowDatepicker">날짜 수정하기</button>
                                 </div>
-                                <div v-if="!showDateBtn">
-                                	<button type="button" v-on:click="setModifyDatepicker">수정</button>
+                                <div class="text-center" v-if="!showDateBtn">
+                                	<button class="btn btn-dark" type="button" v-on:click="setModifyDatepicker">수정</button>
                                 </div>
                             </div>
                         </div>
                         <div class="horizontal">
-                            <div class="verticality" v-if="!showPersonCnt">
-                                <div>게스트</div>
+                            <div style="width: 100%; padding:0;" class="verticality drawOutLine text-center" v-if="!showPersonCnt">
 								<input type="hidden" name="cntOfPerson" v-model="cntOfPerson">
-                                <div>게스트 {{ cntOfPerson }}명</div>
+                                <div style="background: #f2f2f2;">게스트 {{ cntOfPerson }}명</div>
                                 <div>
-                                	<button type="button" v-on:click="showPersonCnt = true" v-if="!showPersonCnt">인원수 수정하기</button>
+                                	<button class="btn btn-dark" type="button" v-on:click="showPersonCnt = true" v-if="!showPersonCnt">수정</button>
                                 </div>
                             </div>
-                            <div v-if="showPersonCnt">
-                            	<div>인원수 수정</div>
+                            <div style="width: 100%; padding:0;" class="drawOutLine text-center" v-if="showPersonCnt">
+                            	<div style="background: #f2f2f2;">게스트 인원수 수정</div>
                             	<div>
-	                            	<button type="button" v-on:click="personCountDown">-</button>
+	                            	<button class="btn btn-dark" type="button" v-on:click="personCountDown">-</button>
 									<input class="inputOutLine" name="cntOfPerson" v-model="cntOfPerson" required readonly>
-									<button type="button" v-on:click="personCountUp">+</button>
-									<button type="button" v-on:click="showPersonCnt = false">설정하기</button>
-									<button type="button" v-on:click="canelModifyPersonCount">취소하기</button>
+									<button class="btn btn-dark" type="button" v-on:click="personCountUp">+</button>
+								</div>
+								<div>
+									<button class="btn btn-dark" type="button" v-on:click="showPersonCnt = false">설정</button>
+									<button class="btn btn-dark" type="button" v-on:click="canelModifyPersonCount">취소</button>
 								</div>
                             </div>
                         </div>
-                        <div class="horizontal business_trip">
-                            <div>출장인가요?</div>
-                            <div>(슬라이드 버튼)</div>
-                        </div>
                     </div>
-                    <div class="verticality payment_means">
-                        <h2>결제 수단</h2>
-                        <div>(결제 수단 아이콘 묶음)</div>
+                    <div>
+                    	<hr>
+                    </div>
+                    <div class="verticality payment_means text-center">
+                        <h2>결제 수단</h2> 
+                        <div class="verticalityTags text-center">
+                        	<i class="far fa-credit-card fa-2x"></i>
+                        	<i class="fas fa-mobile-alt fa-2x"></i>
+                        	<img src="/images/kakaopay_icon.png" width="35">
+                        	<img src="/images/paypal_icon.png" width="35">
+                        	<img src="/images/googleplay_icon.png" width="35">
+                        	<img src="/images/payco_icon.png" width="35">
+                        	<img src="/images/samsungpay_icon.png" width="35">
+                        </div>
                         <div>
-                            (toggle or dropdown로변경)
-                            <br>
                             <select name="payment_means" id="payment-select">
                                 <option value="">--Please choose an option--</option>
                                 <option value="kakaopay">Kakaopay</option>
@@ -137,30 +172,46 @@ hr {
                         </div>
                         <div><a href="">쿠폰 입력하기</a></div>
                     </div>
-                    <div class="verticality required_info">
+                    <div>
+                    	<hr>
+                    </div>
+                    <div class="verticality required_info text-center">
                         <h2>필수 입력 정보</h2>
-                        <div class="verticality">
+                        <div class="verticality text-left">
                             <div>호스트에게 메시지 보내기</div>
                             <div>호스트에게 여행 목적과 도착 예정 시간을 알려주세요.</div>
                         </div>
                         <div class="horizontal host_info">
-                            <div class="host_photo">(호스트사진)</div>
-                            <div class="verticality">
-                            	<input type="hidden" name="id" value="${ bookVo.id }">
-                                <div class="host_name">${ bookVo.id }</div>
-                                <div class="host_join_date">에어비앤비 가입:2018년</div>
+                            <div class="host_photo">
+								<c:choose>
+									<c:when test="${ not empty userVo.filename }">
+										<img src="/upload/${ userVo.uploadpath }/${ userVo.uuid }_${ userVo.filename }" width="100" height="100">
+									</c:when>
+									<c:otherwise>
+										<span><i class="fas fa-user fa-8x"></i></span>
+									</c:otherwise>
+								</c:choose>
+							</div>
+                            <div class="verticality text-left">
+                                <div class="host_name">${ userVo.id }</div>
+                                <div class="host_join_date">에어비앤비 가입: <fmt:formatDate value="${ userVo.regDate }" pattern="yyyy년 MM월 dd일" /></div>
                             </div>
                         </div>
-                        <div><textarea name="message_to_host" id="message_to_host" cols="30" rows="10"></textarea></div>
-                    </div>
-                    <div class="verticality refund_policy">
-                        <h2>환불 정책</h2>
                         <div>
+                        	<textarea name="message_to_host" id="message_to_host" cols="30" rows="10" style="resize: none; width: 500px; height: 150px;"></textarea>
+                        </div>
+                    </div>
+                    <div>
+                    	<hr>
+                    </div>
+                    <div class="verticality refund_policy text-center">
+                        <h2>환불 정책</h2>
+                        <div class="text-left">
                             {{ startDate }} 12:00 PM 전에 예약을 취소하면 요금 전액이 환불됩니다.
                             <br>
                             <a href="">자세히 알아보기</a>
                         </div>
-                        <div>
+                        <div class="text-left">
                             호스트가 제공하는 환불 정책이 내게 적합한지 확인하세요. 3월 15일 혹은 그 이후 확정된 예약에는 코로나19 확산 사태에 따른 정상참작이 가능한 상황 정책이 적용되지 않습니다.
                             <a href="">자세히 알아보기</a>
                         </div>
@@ -177,14 +228,19 @@ hr {
                             아래 버튼을 선택하면, 숙소 이용규칙, 안전 정보 공개, 환불 정책, 에어비앤비의 사회적 거리 두기 및 기타 코로나19 관련 가이드라인, 및 게스트 환불 정책에 동의하는 것입니다. 또한 숙박세 및 서비스 수수료를 포함하여 표시된 총 금액에 동의합니다. 에어비앤비는 이제 이 지역에서 정부가 부과한 숙박세를 징수하여 납부합니다.
                         </div>
                     </div>
-                    <div class="btn_book"><button type="button" v-on:click="gotoPaymentPage">예약 요청하기</button></div>
+                    <div>
+                    	<hr>
+                    </div>
+                    <div class="btn_book text-center">
+                    	<button class="btn btn-dark" type="button" v-on:click="gotoPaymentPage">예약 요청하기</button>
+                    </div>
                 </div>
             </div>
 
             <!-- costTab -->
             <div>
 
-                <div class="verticality costTab">
+                <div class="verticality costTab drawOutLine">
                     <div class="horizontal">
                     <input type="hidden" name="noNum" value="${ bookVo.noNum }">
                         <div class="accommodation_photo">
@@ -200,10 +256,11 @@ hr {
 								
                         </div>
                     </div>
-                    <div class="rate_details">
+                    <hr>
+                    <div class="rate_details text-center">
                     	<input type="hidden" name="cost" v-model="totalCost">
                         <h2>요금 세부정보</h2>
-                        <table>
+                        <table style="width: 100%">
                             <tr>
                                 <td>{{ oneCost | comma }}원 x {{ days }}박</td>
                                 <td>{{ setOneCostAndDays | comma }}원</td>

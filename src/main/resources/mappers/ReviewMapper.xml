@@ -6,8 +6,8 @@
 <mapper namespace="com.portfolio.mapper.ReviewMapper">
 
 	<insert id="addReview">
-		insert into airbnb_review (id, comment, score, no_num, reg_date)  
-		values(#{ id }, #{ comment }, #{ score }, #{ noNum }, now()) 
+		insert into airbnb_review (id, comment, score, no_num, book_num, reg_date)  
+		values(#{ id }, #{ comment }, #{ score }, #{ noNum }, #{ bookNum }, now()) 
 	</insert>
 	
 	<select id="getReviewInfo" resultType="reviewVo">
@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="getReviews" resultType="reviewVo">
-		select * from airbnb_review order by num desc
+		select * from airbnb_review order by num desc limit 0, 3
 	</select>
 	
 	<select id="getAvgScoreByNoNum" resultType="string">

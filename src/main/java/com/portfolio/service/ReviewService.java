@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.portfolio.domain.BookVo;
 import com.portfolio.domain.HostVo;
 import com.portfolio.domain.ImagesVo;
 import com.portfolio.domain.ReviewVo;
+import com.portfolio.mapper.BookMapper;
 import com.portfolio.mapper.HostMapper;
 import com.portfolio.mapper.ImagesMapper;
 import com.portfolio.mapper.MysqlMapper;
@@ -34,6 +36,9 @@ public class ReviewService {
 	
 	@Autowired
 	private MysqlMapper mysqlMapper;
+	
+	@Autowired
+	private BookMapper bookMapper;
 	
 	@Transactional
 	public int addReview(ReviewVo reviewVo) {
@@ -110,7 +115,7 @@ public class ReviewService {
 	public List<ReviewVo> getContentForReviewList(String id, int startRow) {
 		List<ReviewVo> reviewList = reviewMapper.getReviewsById(id, startRow);
 		
-		for(ReviewVo reviewVo: reviewList) {
+		for(ReviewVo reviewVo : reviewList) {
 			HostVo hostVo = hostMapper.getContentInfo(reviewVo.getNoNum());
 			reviewVo.setHostVo(hostVo);
 			
@@ -119,6 +124,9 @@ public class ReviewService {
 			
 			int count = countReviewByNoNum(reviewVo.getNoNum());
 			reviewVo.setCount(count);
+			
+			BookVo bookVo = bookMapper.getBookInfo(reviewVo.getBookNum());
+			reviewVo.setBookVo(bookVo);
 		}
 		
 		return reviewList;

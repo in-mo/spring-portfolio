@@ -6,10 +6,9 @@
 <meta charset="UTF-8">
 <title>FAQ 수정</title>
 <style>
-/* div { */
-/* 	padding: 5px; */
-/* 	border: solid red 1px; */
-/* } */
+div {
+	padding: 10px;
+}
 .faqContent {
 	margin:50px;
 	padding:20px;
@@ -19,7 +18,6 @@
 	margin:0;
 	margin-right: auto;
 	margin-left: auto;
-	min-height:780px;
 }
 .float_right {
 	float: right;
@@ -30,54 +28,51 @@
 	margin:20px;
 }
 </style>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
-<body>
-<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
-<div id="wrap">
-	
-	<div>
-		<h2>자주 하는 질문</h2>
-		<hr>
-	</div>
-	
-	<form action="/customerCenter/faqModify" method="post">
-	<input type="hidden" name="pageNum" value="${ pageNum }">
-	<input type="hidden" name="num" value="${ faqVo.num }">
-		<div class="faqContent">
-			<div>
-				<h2>FAQ 수정</h2><hr><br>
-				<table class="modifyTable table">
-				<tr>
-					<th>작성자</th>
-					<td>
-						<input type="text" name="id" value="관리자" readonly>
-					</td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td>
-						<input type="text" style="width: 98%" name="subject" v-model="title" required>
-					</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>
-						<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 300px;" name="content" v-model="content" required></textarea>
-					</td>
-				</tr>
-				</table>	
-				<hr>	
-			</div>
-			<div class="float_right">
-				<input type="submit" value="글수정" class="btn">
-				<input type="button" value="글목록" class="btn" onclick="location.href = '/customerCenter/faqList?pageNum=${ pageNum }'">
-			</div>
+<body style="background-color: #f2f2f2;">
+	<div id="wrap" style="background-color: white;">
+		<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
+		<div>
+			<h2>자주 하는 질문</h2>
+			<hr>
 		</div>
-	</form>
-</div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp" />
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+		
+		<form action="/customerCenter/faqModify" method="post">
+		<input type="hidden" name="pageNum" value="${ pageNum }">
+		<input type="hidden" name="num" value="${ faqVo.num }">
+			<div class="faqContent">
+				<div>
+					<h2>FAQ 수정</h2><hr><br>
+					<table class="modifyTable table">
+					<tr>
+						<th>작성자</th>
+						<td>
+							<input type="text" name="id" value="관리자" readonly>
+						</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td>
+							<input type="text" style="width: 98%" name="subject" v-model="title" required>
+						</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>
+							<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 300px;" name="content" v-model="content" required></textarea>
+						</td>
+					</tr>
+					</table>	
+					<hr>	
+				</div>
+				<div class="float_right">
+					<input type="submit" value="글수정" class="btn">
+					<input type="button" value="글목록" class="btn" onclick="location.href = '/customerCenter/faqList?pageNum=${ pageNum }'">
+				</div>
+			</div>
+		</form>
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+	</div>
 <script>
 	vue = new Vue({
 		el:'#wrap',

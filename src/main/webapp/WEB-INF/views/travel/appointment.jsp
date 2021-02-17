@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>여행 내역</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <style>
 .app {
 	width: 900px;
@@ -18,7 +17,6 @@
 
 div {
 	padding: 10px;
-	border: solid red 1px;
 }
 
 hr {
@@ -47,12 +45,15 @@ hr {
 	display: grid;
 	grid-template-columns: 280px 280px 280px;
 }
+
+.drawOutLine {
+	border: solid 1px #d2d2d2;
+}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
-<body>
-<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
-	<div class="app">
+<body style="background-color: #f2f2f2;">
+	<div class="app" style="background-color: white;">
+		<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 		<div>
 			<b><a href="/user/show">회원정보</a></b> > <b>여행 내역</b>
 		</div>
@@ -85,25 +86,27 @@ hr {
 				<c:choose>
 					<c:when test="${ not empty bookList }">
 						<c:forEach var="book" items="${ bookList }">
-							<div>
-								<div class="horizontal" style="width: 858x;">
-									<div>
-										<img src="/upload/${ book.hostVo.imageVo.uploadpath }/${ book.hostVo.imageVo.uuid }_${ book.hostVo.imageVo.filename }" width="200" height="200">
+							<div class="drawOutLine">
+								<div class="horizontal" style="width: 100%;">
+									<div style="width: 60%;">
+										<div class="text-center">
+											<img src="/upload/${ book.hostVo.imageVo.uploadpath }/${ book.hostVo.imageVo.uuid }_${ book.hostVo.imageVo.filename }" width="200" height="200">
+										</div>
 										<p>숙박일정 : ${ book.checkIn } ~ ${ book.checkOut }</p>
 										<p>금액 : <fmt:formatNumber value="${ book.cost }" pattern="#,###,###"/>원</p>
 										<p>위치 : (${book.hostVo.postcode}) ${ book.hostVo.address1 } ${ book.hostVo.address2 }</p>
 										<p>결제일자 : <fmt:formatDate value="${ book.regDate }" pattern="yyyy-MM-dd a hh:mm:ss" /></p>
 									</div>
-									<div>
+									<div class="drawOutLine" style="width: 100%;">
 										<p>제목 : ${ book.hostVo.title }</p>
 										<p>${ book.hostVo.hostComment }</p>
 									</div>
 								</div>
+								<hr>
 								<div class="text-center">
-									<button type="button" class="btn" data-num="${ book.hostVo.num }" onclick="writeReivew(event)">후기 작성하기</button>
+									<button type="button" class="btn" data-num="${ book.hostVo.num }" data-book-num="${ book.num }" onclick="writeReivew(event)">후기 작성하기</button>
 									<button type="button" class="btn" data-num="${ book.num }" onclick="deleteBook(event)">취소하기</button>
 								</div>
-								<hr>
 							</div>
 						</c:forEach>
 					</c:when>
@@ -117,12 +120,12 @@ hr {
 					<c:when test="${ not empty hostList }">
 						<div class="container">
 							<c:forEach var="host" items="${ hostList }">
-								<div class="item">
+								<div class="item drawOutLine">
 									<p class="overflow"><a href="/content/info?num=${ host.num }">${ host.title }</a></p>
 									<a href="/content/info?num=${ host.num }">
 										<img src="/upload/${ host.imageVo.uploadpath }/${ host.imageVo.uuid }_${ host.imageVo.filename }" width="250" height="250">
 									</a>
-									<p>평점 <span style="color: #ff385c"><i class="fas fa-star"></i></span>${ host.score } /후기(${ host.reviewCount })</p>
+									<p class="text-center">평점 <span style="color: #ff385c"><i class="fas fa-star"></i></span>${ host.score } /후기(${ host.reviewCount })</p>
 									<p class="overflow">${ host.hostComment }</p>
 									<div class="text-center">
 										<input type="hidden" value="${ host.saveVo.hostNum }">
@@ -138,13 +141,8 @@ hr {
 				</c:choose>
 			</div>
 		</div>
-		<div>에약 내역을 찾을 수 없나요? 도움말 센터를 방문하세요.</div>
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp" />
-<script src="/script/jquery-3.5.1.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 <script>
 
 	let type = '${ viewType }';
@@ -160,7 +158,7 @@ hr {
 		let num = $(e.currentTarget).prev().val();
 		let removeTag = $(e.currentTarget).parent().parent();
 		let appendTag = removeTag.parent().parent();
-		console.log(appendTag);
+		
 		let isDelete = confirm('정말 삭제하시겠습니까?');
 		if(isDelete) {
 			$.ajax({
@@ -188,6 +186,7 @@ hr {
 	function deleteBook(event) {
 		let num = event.currentTarget.dataset.num;
 		let removeTag = $(event.currentTarget).parent().parent();
+		let appendTag = removeTag.parent().parent();
 		
 		let isDelete = confirm('정말 취소하시겠습니까?');
 		if(isDelete) {
@@ -207,10 +206,11 @@ hr {
 
 	function writeReivew(event) {
 		let num = event.currentTarget.dataset.num;
-		
+		let bookNum = event.currentTarget.dataset.bookNum;
+		console.log(bookNum);
 		let isWrite = confirm('후기를 작성하시겠습니까?');
 		if(isWrite) {
-			location.href = '/review/write?num=' + num;
+			location.href = '/review/write?num=' + num + '&bookNum=' + bookNum;
 		}
 	}
 </script>

@@ -54,7 +54,7 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/write")
-	public String write(int num, Model model) {
+	public String write(int num, int bookNum, Model model) {
 		
 		Map<String, Object> reviewContent=  reviewService.getContentInfoForReview(num);
 		HostVo hostVo = (HostVo) reviewContent.get("hostVo");
@@ -65,6 +65,7 @@ public class ReviewController {
 		int count = (int) reviewContent.get("count");
 		
 		model.addAttribute("hostVo", hostVo);
+		model.addAttribute("bookNum", bookNum);
 		model.addAttribute("imagesVo", imagesVo);
 		model.addAttribute("count", count);
 		
@@ -124,6 +125,6 @@ public class ReviewController {
 		
 		rttr.addAttribute("pageNum", pageNum);
 		
-		return "redirect:/review/MyReviews";
+		return "redirect:/user/MyReviews";
 	}
 }

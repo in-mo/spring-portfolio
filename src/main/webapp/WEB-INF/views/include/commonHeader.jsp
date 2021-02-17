@@ -37,12 +37,18 @@ header {
 .containerJoin {
 	width: 400px;
 }
-
+.clear {
+	height: 10px;
+	clear:both;
+	padding: 0px;
+	margin: 0px;
+}
 </style>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!-- 모달 및 슬라이더 -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- 아이콘용 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> <!-- 데이트 피커용 -->
 <body>
 	<header>
 		<div class="topTab">
@@ -63,8 +69,9 @@ header {
 			 
 		</div>
 	</header>
+	<div class="clear"></div>
 	<div class="modal fade" id="loginModal" role="dialog"> <!-- 사용자 지정 부분① : id명 -->
-		<div class="modal-dialog modal-lg modal-fullsize">
+		<div class="modal-dialog modal-fullsize">
 			<div class="modal-content modal-fullsize">
 				<div class="modal-header">
 					<span style="font-size: 30px;">로그인</span>
@@ -105,7 +112,7 @@ header {
 		</div>
 	</div>
 	<div class="modal fade" id="findIdModal" role="dialog"> <!-- 사용자 지정 부분① : id명 -->
-		<div class="modal-dialog modal-lg modal-fullsize">
+		<div class="modal-dialog modal-fullsize">
 			<div class="modal-content modal-fullsize">
 				<div class="modal-header">
 					<span style="font-size: 30px;">아이디 찾기</span>
@@ -124,7 +131,7 @@ header {
 		</div>
 	</div>
 	<div class="modal fade" id="findPwdModal" role="dialog"> <!-- 사용자 지정 부분① : id명 -->
-		<div class="modal-dialog modal-lg modal-fullsize">
+		<div class="modal-dialog modal-fullsize">
 			<div class="modal-content modal-fullsize">
 				<div class="modal-header">
 					<span style="font-size: 30px;">비밀번호 찾기</span>
@@ -148,7 +155,7 @@ header {
 		</div>
 	</div>
 	<div class="modal fade" id="joinModal" role="dialog"> <!-- 사용자 지정 부분① : id명 -->
-		<div class="modal-dialog modal-lg modal-fullsize">
+		<div class="modal-dialog modal-fullsize">
 			<div class="modal-content modal-Joinsize">
 				<div class="modal-header">
 					<span style="font-size: 30px;">회원가입</span>
@@ -210,11 +217,11 @@ header {
 	<script src="/script/jquery-3.5.1.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<!-- 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
 	
 	<script src="https://code.jquery.com/jquery-1.12.1.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script> -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<script>

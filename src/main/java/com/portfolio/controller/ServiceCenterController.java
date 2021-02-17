@@ -106,7 +106,7 @@ public class ServiceCenterController {
 		// 주글쓰기
 		serviceCenterSerivce.addFaqContent(faqVo);
 
-		return "redirect:/customerCenter/content?num=" + num + "&pageNum=" + pageNum;
+		return "redirect:/customerCenter/faqContent?num=" + num + "&pageNum=" + pageNum;
 	} // Post - write
 
 	@GetMapping("/faqContent")
@@ -310,9 +310,9 @@ public class ServiceCenterController {
 		return "/serviceCenter/qnaContent";
 	} // content
 	
+	
 	@GetMapping("/qnaReply")
-	public String qnaReply(int num, String pageNum, Model model) {
-
+	public String qnaReply(int num, String pageNum, Model model, String form) {
 		// 상세보기 대상 글내용 VO로 가져오기
 		QnaVo qnaVo = serviceCenterSerivce.getQnaContentByNum(num);
 
@@ -323,9 +323,9 @@ public class ServiceCenterController {
 		model.addAttribute("qnaVo", qnaVo);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("replyNum", 0);
-		model.addAttribute("form", "write");
+		model.addAttribute("form", form);
 		return "/serviceCenter/qnaAnswerForm";
-	} 
+	}
 	
 	@PostMapping("/qnaReply")
 	@ResponseBody
@@ -344,25 +344,27 @@ public class ServiceCenterController {
 	}
 	
 	@GetMapping("/qnaReplyModify")
-	public String qnaReplyModify(int refNum, int replyNum, int pageNum, Model model) {
-		List<QnaVo> qnaList = serviceCenterSerivce.getQnaContentByRef(refNum);
+	public String qnaReplyModify(int refNum, int replyNum, int pageNum, Model model, String form) {
 		
+		List<QnaVo> qnaList = serviceCenterSerivce.getQnaContentByRef(refNum);
 		for(QnaVo qna : qnaList) {
 			qna.setContent(qna.getContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		}
-		
+		log.info("get - replyNum : " + replyNum);
+		log.info("get - form : " + form);
 		model.addAttribute("qnaVo", qnaList.get(0));
 		model.addAttribute("reply", qnaList.get(1));
 		model.addAttribute("replyNum", replyNum);
 		model.addAttribute("pageNum", pageNum);
-		model.addAttribute("form", "modify");
-		
+		model.addAttribute("form", form);
 		return "/serviceCenter/qnaAnswerForm";
 	}
 	
 	@PostMapping("/qnaReplyModify")
 	@ResponseBody
 	public Map<String, Object> qnaReplyModify (int num, String content){
+		log.info("post - num : " + num);
+		log.info("post - content : " + content);
 		boolean isSuccess = serviceCenterSerivce.updateQnaReplyContent(num, content);
 		
 		Map<String, Object> updateIsSuccess = new HashMap<>();

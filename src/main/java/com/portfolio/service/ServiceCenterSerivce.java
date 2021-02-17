@@ -78,6 +78,7 @@ public class ServiceCenterSerivce {
 	@Transactional
 	public boolean updateQnaReplyContent(int num, String content) {
 		QnaVo qnaVo = serviceCenterMapper.getQnaContentByNum(num);
+		log.info("qnaVo : " + qnaVo);
 		qnaVo.setContent(content);
 		
 		int updateNum = serviceCenterMapper.updateQnaContent(qnaVo);
@@ -95,8 +96,6 @@ public class ServiceCenterSerivce {
 		
 		int addNum = serviceCenterMapper.addQnaContent(addVo);
 		
-		log.info("updateNum : " + updateNum);
-		log.info("addNum : " + addNum);
 		if((updateNum + addNum) == 2)
 			return true;
 		else

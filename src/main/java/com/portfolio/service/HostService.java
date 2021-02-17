@@ -62,8 +62,11 @@ public class HostService {
 	@Transactional
 	public Map<String, Object> getContentInfoForBooking(int num, BookVo bookVo) throws ParseException {
 		Map<String, Object> contentInfo = new HashMap<>();
+		HostVo hostVo = hostMapper.getContentInfo(num);
+		UserVo userVo = userMapper.getMemberById(hostVo.getId());
 		
-		contentInfo.put("hostVo", hostMapper.getContentInfo(num));
+		contentInfo.put("hostVo", hostVo);
+		contentInfo.put("userVo", userVo);
 		contentInfo.put("imagesVo", imagesMapper.getImageByNoNum(num));
 		contentInfo.put("count", reviewMapper.countReviewByNoNum(num));
 		List<BookVo> bookList = bookMapper.getBookInfoByNum(num);
@@ -119,6 +122,8 @@ public class HostService {
 		
 		HostVo hostVo = hostMapper.getContentInfo(num);
 		UserVo userVo = userMapper.getMemberById(hostVo.getId());
+		
+		log.info("userVo : " + userVo);
 		contentInfo.put("hostVo", hostVo);
 		contentInfo.put("userVo", userVo);
 		contentInfo.put("imageList", imagesMapper.getImagesByNoNum(num));

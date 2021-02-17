@@ -10,6 +10,10 @@
 		values(#{id}, #{cost}, #{checkIn}, #{checkOut}, #{cntOfPerson}, #{noNum}, now()) 
 	</insert>
 	
+	<select id="getBookInfo" resultType="bookVo">
+		select * from airbnb_book where num = #{ num }
+	</select>
+	
 	<select id="getBookInfoByNum" resultType="bookVo">
 		select * from airbnb_book where no_num = #{ noNum } order by reg_date desc;
 	</select>
@@ -20,6 +24,10 @@
 	
 	<select id="getBookInfoByNumAndId" resultType="bookVo">
 		select * from airbnb_book where num = #{ num } and id = #{ id }
+	</select>
+	
+	<select id="getBookInfoByIdAndNoNum" resultType="bookVo">
+		select * from airbnb_book where id = #{ id } and no_num = #{ noNum } order by reg_date desc
 	</select>
 	
 	<update id="updateBookInfo">

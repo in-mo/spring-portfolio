@@ -4,13 +4,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>  -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>  -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 글자 작음  -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 모달필수였던것 -->
 <title>검색 결과</title>
 <style>
+
 button {
 	margin: 0 5px;
 	padding: 5px 10px;
@@ -34,11 +37,13 @@ strong {
 .left {
 	margin-left: 30px;
 }
-/* .costTab { */
-/* 	display: inline-block; */
-/*  	position: sticky; */
-/*  	top: 10px; */
-/* } */
+ .costTab {
+	display: inline-block;
+ 	position: sticky;
+ 	z-index: 1;
+ 	background-color:white;
+ 	top: 30px;
+}
 td {
 	padding: 0 10px;
 }
@@ -85,20 +90,31 @@ hr {
 	height: 1px;
 	background: #d2d2d2;
 }
-/* div { */
-/* 	border: 1px solid red; */
-/* } */
+.contentTable {
+	width: 100%;
+}
+.contentTable:hover {
+	background-color: #e2e2e2;
+	cursor: pointer;
+}
+#resultApp {
+	width:1300px;
+	margin:0;
+	margin-right: auto;
+	margin-left: auto;
+}
 </style>
 </head>
-<body>
-	<div class="container-fluid">
+<body style="background-color: #f2f2f2;">
+<div id=resultApp style="background-color: white;">
 	<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-6" style="padding:20px;">
 				<div>숙박 ${mPageDto.count}건 ㆍ ${checkIn}~${checkOut} ㆍ 게스트 ${cntOfPerson}명</div>
 				<div><strong>${address}의 숙소</strong></div><br>
 				<div>
-					예약하기전에 코로나19 관련 여행 제한 사항을 확인하세요. <a href="help.jsp">자세히 알아보기</a>
+					예약하기전에 코로나19 관련 여행 제한 사항을 확인하세요. <a href="http://ncov.mohw.go.kr/guidelineView.do?brdId=6&brdGubun=62&ncvContSeq=2833&contSeq=2833">자세히 알아보기</a>
 				</div>
 				<hr>
 				<div>
@@ -172,7 +188,7 @@ hr {
 					<c:choose>
 						<c:when test="${ not empty hostList }"><%-- ${ pageDto.count gt 0 } --%>
 							<c:forEach var="search" items="${ hostList }">
-								<table onclick="location.href='/content/info?num=${ search.num }&pageNum=${ pageNum }&address=${ address }&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }'">
+								<table class="contentTable" onclick="location.href='/content/info?num=${ search.num }&pageNum=${ pageNum }&address=${ address }&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }'">
 									<tr>
 										<td rowspan="6">
 											<img src="/upload/${ search.imageVo.uploadpath }/${ search.imageVo.uuid }_${ search.imageVo.filename }" width="200" height="200">
@@ -240,13 +256,13 @@ hr {
 				</div>
 			</div>
 
-			<div class="col-md-6 costTab" style="padding:0; margin-top: 80px;">
-				<div id="map" style="width: 100%; height: 830px; z-index: 2" ></div>
+			<div class="col-md-6 " style="padding:0; margin-top: 80px;">
+				<div class="costTab" id="map" style="width: 100%; height: 830px;" ></div>
 			</div>
-			
 		</div>
-		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+</div>
 
 
 <!-- <script type="text/javascript" -->

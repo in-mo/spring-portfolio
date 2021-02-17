@@ -10,11 +10,15 @@ public interface BookMapper {
 	
 	public void addBook(BookVo bookVo);
 	
+	public BookVo getBookInfo(int num);
+	
 	public List<BookVo> getBookInfoByNum(int noNum);
 	
 	public BookVo getBookInfoByNumAndId(@Param("num") int num, @Param("id") String id);
 	
 	public List<BookVo> getBookInfoById(String id);
+	
+	public BookVo getBookInfoByIdAndNoNum(@Param("id") String id, @Param("noNum") int noNum);
 	
 	public int updateBookInfo(BookVo bookVo);
 	

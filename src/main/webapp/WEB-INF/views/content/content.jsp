@@ -18,7 +18,6 @@
 
 div {
 	padding: 10px;
-	border: solid red 1px;
 }
 
 span {
@@ -76,7 +75,7 @@ hr {
 }
 
 table, td, tr {
-	border: solid 1px blue;
+	border: solid 1px #d2d2d2;
 }
 
 .costTab {
@@ -120,19 +119,28 @@ table, td, tr {
 pre{
     overflow: auto;
     white-space: pre-wrap; /* pre tag내에 word wrap */
-}  
+}
+
+.drawOutLine {
+	border: solid 1px #d2d2d2;
+}
 </style>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
 <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 </head>
-<body>
-<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
-	<div class="app" id="app">
-		
+<body style="background-color: #f2f2f2;">
+	<div class="app drawOutLine" id="app" style="background-color: white;">
+		<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 		<c:if test="${ pageVo.pageNum ne 0 }">
-			<div><a href="/search/result?pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }"><i class="fas fa-arrow-left"></i></a></div>
+			<div>
+				<a href="/search/result?pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }">
+					<span style="color: #d2d2d2;">
+						<i class="fas fa-angle-left fa-lg"></i>
+					</span>
+				</a>
+			</div>
 		</c:if>
-		<div>${ hostVo.title }</div>
+		<div class="drawOutLine">${ hostVo.title }</div>
 		<div>
 			<c:choose>
 				<c:when test="${ count eq 0 }">
@@ -144,12 +152,12 @@ pre{
 			</c:choose>
 			
 			<c:if test="${ id eq hostVo.id || id eq 'admin'}">
-				<button class="float_right" type="button" v-on:click="contentDelete">삭제</button>
-				<button class="float_right" type="button" v-on:click="contentModify">수정</button>
+				<button style="margin-left: 10px;" class="float_right btn btn-dark" type="button" v-on:click="contentDelete">삭제</button>
+				<button class="float_right btn btn-dark" type="button" v-on:click="contentModify">수정</button>
 			</c:if>
 			
 			<c:if test="${ not empty id && id ne 'admin' && id ne hostVo.id }">
-				<button class="float_right" type="button" v-on:click="contentSave">저장</button>
+				<button class="float_right btn btn-dark" type="button" v-on:click="contentSave">저장</button>
 			</c:if>
 			
 		</div>
@@ -172,16 +180,16 @@ pre{
 			</c:choose>
 		</div>
 
-		<div class="horizontal">
+		<div class="horizontal drawOutLine">
 			<div class="verticality" style="width: 600px;">
-				<div class="horizontal">
-					<div class="verticality">
+				<div class="horizontal text-center">
+					<div class="verticality drawOutLine">
 						<div>${ hostVo.id }님이 호스팅하는 ${ hostVo.houseType }</div>
 						<div>최대 인원 ${ hostVo.countOfPerson }명ㆍ침실 ${ hostVo.countOfBedroom }개ㆍ욕실 ${ hostVo.countOfBathroom }개</div>
 					</div>
-					<div class="float_right">
+					<div class="float_right drawOutLine">
 						<c:choose>
-							<c:when test="${ not empty userVo }">
+							<c:when test="${ not empty userVo.filename }">
 								<img src="/upload/${ userVo.uploadpath }/${ userVo.uuid }_${ userVo.filename }" width="150" height="150">
 							</c:when>
 							<c:otherwise>
@@ -230,11 +238,15 @@ pre{
 						</tr>
 					</table>
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 				<div>
 					${ hostVo.hostComment }
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 				<div>
 					<h3>침대/침구 유형</h3>
 					<div>
@@ -253,7 +265,9 @@ pre{
 						</c:if>
 					</div>
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 				<div>
 					<h3>편의시설</h3>
 					<c:choose>
@@ -268,7 +282,9 @@ pre{
 					</c:choose>
 					
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 				<div>
 					<h3>안전시설</h3>
 					<c:choose>
@@ -284,6 +300,9 @@ pre{
 					
 				</div>
 				<div>
+					<hr>
+				</div>
+				<div>
 					<h3>이용 가능한 시설</h3>
 					
 					<c:choose>
@@ -297,10 +316,12 @@ pre{
 						</c:otherwise>
 					</c:choose>
 				</div>
-				<hr>
+				<div>
+					<hr>
+				</div>
 			</div>
 			<div>
-				<div class="costTab" style="width: 332px;">
+				<div class="costTab drawOutLine" style="width: 332px;">
 					<div>
 						<span>{{ stayCostPerOneDay | comma }}원/1박</span>
 						<span class="float_right">
@@ -325,11 +346,14 @@ pre{
 							<button type="button" class="btn btn-dark" v-on:click="cntOfGuestUp">+</button>
 						</div>
 					</div>
+					
 					<div v-if="isPaymentShow">
+						<hr>
 						<div class="text-center">
 							<button type="button" class="btn btn-dark" v-on:click="booking">예약하기</button>
 						</div>
 						<div>예약 확정 전에는 요금이 청구되지 않습니다.</div>
+						<hr>
 						<div>
 							<table>
 								<tr>
@@ -367,14 +391,14 @@ pre{
 		</div>
 		<div>
 		<hr>
-			<div>
+			<div style="margin-bottom: 70px;">
 				<h3>후기</h3>
 				<div>
 					<c:choose>
 						<c:when test="${ not empty reviewListFour  }">
 							<div><span style="color: #ff385c"><i class="fas fa-star"></i></span><span>${ score }(${ count })</span></div>
-							<div class="horizontal" style="width: 932px;">
-								<div class="reviewWidth">
+							<div class="horizontal drawOutLine" style="width: 932px; margin-bottom: 30px;">
+								<div class="reviewWidth drawOutLine">
 									<c:forEach var="review" varStatus="status" items="${ reviewListFour }">
 										<c:if test="${ status.index lt 2 }">
 											<span>${ review.id }</span><span class="float_right"><fmt:formatDate value="${ review.regDate }" pattern="yyyy-MM-dd" /></span>
@@ -383,7 +407,7 @@ pre{
 										</c:if>
 									</c:forEach>
 								</div>
-								<div class="reviewWidth">
+								<div class="reviewWidth drawOutLine">
 									<c:forEach var="review" varStatus="status" items="${ reviewListFour }">
 										<c:if test="${ status.index gt 1 }">
 											<span>${ review.id }</span><span class="float_right"><fmt:formatDate value="${ review.regDate }" pattern="yyyy-MM-dd" /></span>
@@ -403,7 +427,7 @@ pre{
 					<div id="dialog" style="width: auto;" title="후기 목록">
 						<div><span style="color: #ff385c"><i class="fas fa-star"></i></span>${ score }점ㆍ(후기 ${ count }개)</div><br>
 						<c:forEach var="review" items="${ reviewList }">
-							<div>
+							<div class="drawOutLine">
 								<span>${ review.id }</span><span class="float_right"><fmt:formatDate value="${ review.regDate }" pattern="yyyy-MM-dd" /></span>
 								<div><pre>${ review.comment }</pre></div><br>
 							</div>
@@ -466,13 +490,13 @@ pre{
 				</div>
 			</div>
 		</div>
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
-	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	
 <!-- 	<script src="/script/jquery-3.5.1.js"></script> -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a2aaef4af8220ddff7af9d36feda352a&libraries=services"></script>
 <!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
-<!-- 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
 	
 	<script>
 		let bookList = '${ bookList }';
@@ -746,6 +770,11 @@ pre{
 		  			$("#dialog").dialog("open");
 		  		},
 		  		booking: function() {
+					if('${ id }' == '') {
+						alert('로그인을 하셔야 결제를 진행할 수 있습니다.')
+						$("#loginModal").modal('show');
+			  			return;
+					}
 		  			let isBooking = confirm('정말 결제하시겠습니까?');
 		  			if(isBooking) {
 			  			if(this.startDate == ''|| this.endDate == '') {

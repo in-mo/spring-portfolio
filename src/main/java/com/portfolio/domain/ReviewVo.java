@@ -17,9 +17,11 @@ public class ReviewVo {
 	private String comment;
 	private String score;
 	private int noNum;
+	private int bookNum;
 	private Timestamp regDate;
 	
 	private HostVo hostVo;
 	private ImagesVo imagesVo;
 	private int count;
+	private BookVo bookVo;
 }
