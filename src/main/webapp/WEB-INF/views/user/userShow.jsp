@@ -323,26 +323,6 @@ hr {
 			});
 		}
 		
-		function setHiddenImageBtn() {
-			let uploadpath = '${userVo.uploadpath}';
-			let uuid = '${userVo.uuid}';
-			let filename = '${userVo.filename}';
-			vue.imageBtnShow = false;
-			$('.profileImageBox').empty();
-			let str;
-		
-			if('${userVo.filename}' != '') {
-				str = `
-					<img src="/upload/\${ uploadpath }/\${ uuid }_\${ filename }" width="150" height="150">
-				`;
-			} else {
-				str = `
-					<span><i class="fas fa-user fa-10x"></i></span>
-				`;
-			}
-			$('.profileImageBox').prepend(str);
-		}
-		
 		//==================== 전화번호 =======================//
 		
 		function noSpaceForm(obj) { // 공백사용못하게
