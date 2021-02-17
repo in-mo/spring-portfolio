@@ -36,13 +36,12 @@ div {
 			<h2>자주 하는 질문</h2>
 			<hr>
 		</div>
-		
 		<form action="/customerCenter/faqModify" method="post">
-		<input type="hidden" name="pageNum" value="${ pageNum }">
-		<input type="hidden" name="num" value="${ faqVo.num }">
+			<input type="hidden" name="pageNum" value="${ pageNum }">
+			<input type="hidden" name="num" value="${ faqVo.num }">
 			<div class="faqContent">
 				<div>
-					<h2>FAQ 수정</h2><hr><br>
+					<h2>FAQ 수정</h2>
 					<table class="modifyTable table">
 					<tr>
 						<th>작성자</th>
@@ -54,16 +53,17 @@ div {
 						<th>제목</th>
 						<td>
 							<input type="text" style="width: 98%" name="subject" v-model="title" required>
+							<span style="position: relative; left: 640px; top: -30px;">{{ titleCount }}</span>
 						</td>
 					</tr>
 					<tr>
 						<th>내용</th>
 						<td>
-							<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 300px;" name="content" v-model="content" required></textarea>
+							<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 200px;" name="content" v-model="content" required></textarea>
+							<span style="position: relative; left: 630px; top: -35px;">{{ contentCount }}</span>
 						</td>
 					</tr>
 					</table>	
-					<hr>	
 				</div>
 				<div class="float_right">
 					<input type="submit" value="글수정" class="btn">

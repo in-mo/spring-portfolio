@@ -47,13 +47,13 @@ div {
 		<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 		<div>
 			<h2>자주 하는 질문</h2>
+			<hr>
 		</div>
-		<hr>
 		<form action="/customerCenter/faqWrite" class="form2" method="post">
-		<input type="hidden" name="pageNum" value="${ pageNum }">
+			<input type="hidden" name="pageNum" value="${ pageNum }">
 			<div class="contentWriteForm">
-				<div class="txt3">
-					<h2>FAQ 등록</h2><hr>
+				<div>
+					<h2>FAQ 등록</h2>
 					<table class="table">
 					<tr>
 						<th class="write">작성자</th>
@@ -65,12 +65,14 @@ div {
 						<th class="write">제목</th>
 						<td>
 							<input type="text" style="width: 98%" name="subject" v-model="title" required>
+							<span style="position: relative; left: 640px; top: -30px;">{{ titleCount }}</span>
 						</td>
 					</tr>
 					<tr>
 						<th class="write">내용</th>
 						<td>
-							<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 150px;" name="content" v-model="content" required></textarea>
+							<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 200px;" name="content" v-model="content" required></textarea>
+							<span style="position: relative; left: 630px; top: -35px;">{{ contentCount }}</span>
 						</td>
 					</tr>
 					</table>		

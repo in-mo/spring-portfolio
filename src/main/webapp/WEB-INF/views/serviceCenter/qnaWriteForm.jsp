@@ -47,13 +47,13 @@ hr {
 		<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />	
 		<div>
 			<h2>QnA 게시판</h2>
+			<hr>
 		</div>
-		<hr>
 		<form action="/customerCenter/qnaWrite" class="form2" method="post">
 			<input type="hidden" name="pageNum" value="${ pageNum }">
 			<div class="contentWriteForm">
-				<div class="txt3">
-					<h2>QnA 등록</h2><hr>
+				<div>
+					<h2>QnA 등록</h2>
 					<table class="table">
 						<tr>
 							<th class="write">작성자</th>
@@ -78,15 +78,17 @@ hr {
 							<th class="write">제목</th>
 							<td>
 								<input type="text" style="width: 98%" name="subject" v-model="title" required>
+								<span style="position: relative; left: 640px; top: -30px;">{{ titleCount }}</span>
 							</td>
 						</tr>
 						<tr>
 							<th class="write">내용</th>
 							<td>
 								<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 200px;" name="content" v-model="content" required></textarea>
+								<span style="position: relative; left: 630px; top: -35px;">{{ contentCount }}</span>
 							</td>
 						</tr>
-					</table>		
+					</table>
 				</div>
 				<div class="float_right">
 					<input type="submit" value="글쓰기" class="btn">

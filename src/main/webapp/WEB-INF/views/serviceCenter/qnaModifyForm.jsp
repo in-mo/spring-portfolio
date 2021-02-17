@@ -43,13 +43,13 @@ div {
 		</div>
 		
 		<form action="/customerCenter/qnaModify" method="post">
-		<input type="hidden" name="pageNum" value="${ pageNum }">
-		<input type="hidden" name="num" value="${ qnaVo.num }">
-		<input type="hidden" name="id" value="${ qnaVo.id }">
-		<input type="hidden" name="status" value="${ qnaVo.status }">
+			<input type="hidden" name="pageNum" value="${ pageNum }">
+			<input type="hidden" name="num" value="${ qnaVo.num }">
+			<input type="hidden" name="id" value="${ qnaVo.id }">
+			<input type="hidden" name="status" value="${ qnaVo.status }">
 			<div class="qnaContent">
 				<div>
-					<h2>QnA 수정</h2><hr><br>
+					<h2>QnA 수정</h2>
 					<table class="modifyTable table">
 					<tr>
 						<th>작성자</th>
@@ -74,16 +74,17 @@ div {
 						<th>제목</th>
 						<td>
 							<input type="text" style="width: 98%" name="subject" v-model="title" required>
+							<span style="position: relative; left: 640px; top: -30px;">{{ titleCount }}</span>
 						</td>
 					</tr>
 					<tr>
 						<th>내용</th>
 						<td>
-							<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 300px;" name="content" v-model="content" required></textarea>
+							<textarea maxlength="500" rows="30" cols="40" style="resize: none; width: 98%; height: 200px;" name="content" v-model="content" required></textarea>
+							<span style="position: relative; left: 630px; top: -35px;">{{ contentCount }}</span>
 						</td>
 					</tr>
 					</table>
-					<hr>		
 				</div>
 				<div class="float_right">
 					<input type="submit" value="글수정" class="btn">

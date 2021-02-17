@@ -103,7 +103,7 @@ hr {
 	<div class="app" style="background-color: white;">
 		<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 		<div id="app">
-			<div>평가 및 후기 수정</div>
+			<div class="drawOutLine text-center"><h4><b>평가 및 후기 수정</b></h4></div>
 			<hr>
 			<div class="horizontal">
 				<div class="verticality">
