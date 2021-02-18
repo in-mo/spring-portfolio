@@ -28,6 +28,14 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
 		registration.addPathPatterns("/review/*");
 		registration.addPathPatterns("/travel/*");
 		registration.addPathPatterns("/customerCenter/*");
+		registration.addPathPatterns("/user/show");
+		registration.addPathPatterns("/user/MyReviews");
+		registration.addPathPatterns("/user/MyHosts");
+		registration.addPathPatterns("/user/saveImage");
+		registration.addPathPatterns("/user/saveName");
+		registration.addPathPatterns("/user/saveTel");
+		registration.addPathPatterns("/user/savePwd");
+		registration.addPathPatterns("/user/delete");
 		
 		// 인터셉터 수행에서 제외할 URL 주소 경로 추가
 		registration.excludePathPatterns("/content/info");
