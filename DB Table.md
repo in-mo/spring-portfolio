@@ -2,12 +2,13 @@
 # 개발 환경 : MySQl 5.7
 
 # 회원 정보
-관리자 정보
-id : admin
-password : admin1234
-일반 회원 정보
-id : asdf1234
-password : asdf1234
+   관리자 정보
+   id : admin
+   password : admin1234
+
+   일반 회원 정보
+   id : asdf1234
+   password : asdf1234
 
 # 예약 테이블
 ```SQL
