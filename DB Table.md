@@ -29,7 +29,7 @@ CREATE TABLE `airbnb_book` (
  ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
  ```
  
- 고객센터 QnA 게시판 테이블
+ # 고객센터 QnA 게시판 테이블
  ```SQL
  CREATE TABLE `airbnb_custom_service_qna` (
    `num` int(11) NOT NULL AUTO_INCREMENT,
