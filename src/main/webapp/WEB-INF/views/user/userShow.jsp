@@ -408,9 +408,8 @@ hr {
 			let pass2 = $(this).val();
 		
 			if (pass1 == pass2) {
-		
 				if(pass2.length < 8 || pass2.length > 20) {
-					$('#msgPass').html('8자리 ~ 20자리 이내로 입력해주세요.').css('color', 'red');
+					$('span#msgPass').html('8자리 ~ 20자리 이내로 입력해주세요.').css('color', 'red');
 					return;
 				}
 				let num = pass2.search(/[0-9]/g);
@@ -418,24 +417,24 @@ hr {
 				let spe = pass2.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 				let currentPwd = $('input[name="currentPwd"]').val();
 				if(pass2.search(/\s/) != -1){
-					$('#msgPass').html('비밀번호는 공백 없이 입력해주세요.').css('color', 'red');
+					$('span#msgPass').html('비밀번호는 공백 없이 입력해주세요.').css('color', 'red');
 					return false;
 				}else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
-					$('#msgPass').html('영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.').css('color', 'red');
+					$('span#msgPass').html('영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.').css('color', 'red');
 					return false;
 				} else if(currentPwd == pass2) {
-					$('#msgPass').html('현재 비밀번호와 동일합니다.').css('color', 'red');
+					$('span#msgPass').html('현재 비밀번호와 동일합니다.').css('color', 'red');
 					return false;
 				}
 					
 				
-				$('#msgPass').html('패스워드 일치함').css('color', 'green');
+				$('span#msgPass').html('비밀번호 일치함').css('color', 'green');
 				newPwdComform = true;
 				if(pwdComform && newPwdComform) {
 					$('#changePwdBtn').attr('disabled', false);
 				}
 			} else {
-				$('#msgPass').html('패스워드 불일치').css('color', 'red');
+				$('span#msgPass').html('비밀번호 불일치').css('color', 'red');
 				newPwdComform = false;
 				$('#changePwdBtn').attr('disabled', true);
 			}

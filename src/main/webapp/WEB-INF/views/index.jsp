@@ -157,7 +157,7 @@ hr {
 	<hr>
 	<section id="b">
 		<div>
-			<h2>호텔 종류</h2>
+			<h2>최신 숙박지</h2>
 		</div>
 		
 		<div class="contentTypes drawOutLine">
