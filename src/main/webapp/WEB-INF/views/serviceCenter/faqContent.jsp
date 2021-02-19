@@ -51,8 +51,10 @@
 				</tr>
 			</table>
 			<div class="float_right">
+			<c:if test="${ id eq 'admin' }">
 				<input type=button value="글수정" class="btn" onclick="location.href = '/customerCenter/faqModify?num=${ faqVo.num }&pageNum=${ pageNum }'">
 				<input type=button value="글삭제" class="btn" onclick="remove()">
+			</c:if>
 				<input type=button value="목록" class="btn" onclick="location.href = '/customerCenter/faqList?pageNum=${ pageNum }'">
 			</div>
 			
