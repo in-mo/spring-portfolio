@@ -49,7 +49,9 @@ pre{
 .drawOutLine {
 	border: solid 1px #d2d2d2;
 }
-
+.cursorPointer:hover {
+	cursor: pointer;
+}
 </style>
 </head>
 <body style="background-color: #f2f2f2;">
@@ -83,7 +85,7 @@ pre{
 					<c:choose>
 						<c:when test="${ mPageDto.count gt 0 }">
 							<c:forEach var="review" items="${ reviewList }">
-								<div class="drawOutLine">
+								<div class="drawOutLine cursorPointer" onclick="location.href='/content/info?num=${ review.hostVo.num }'">
 									<div class="horizontal">
 										<div>
 											<div class="verticality drawOutLine">
@@ -122,7 +124,7 @@ pre{
 					<div class="text-center">
 						<c:if test="${ mPageDto.count gt 0 }">
 							<c:if test="${ mPageDto.startPage gt mPageDto.pageBlock }">
-								<a href="/review/MyReviews?pageNum=${ mPageDto.startPage - mPageDto.pageBlock }">[이전]</a>
+								<a href="/user/MyReviews?pageNum=${ mPageDto.startPage - mPageDto.pageBlock }">[이전]</a>
 							</c:if>
 							
 							<c:forEach var="i" begin="${ mPageDto.startPage }" end="${ mPageDto.endPage }" step="1">
@@ -130,11 +132,11 @@ pre{
 								<c:choose>
 								
 									<c:when test="${ pageNum eq i}">
-										<a href="/review/MyReviews?pageNum=${ i }"><b>[${ i }]</b></a>
+										<a href="/user/MyReviews?pageNum=${ i }"><b>[${ i }]</b></a>
 									</c:when>
 									
 									<c:otherwise>
-										<a href="/review/MyReviews?pageNum=${ i }">[${ i }]</a>
+										<a href="/user/MyReviews?pageNum=${ i }">[${ i }]</a>
 									</c:otherwise>
 								
 								</c:choose>
@@ -142,7 +144,7 @@ pre{
 							</c:forEach>
 							
 							<c:if test="${ mPageDto.endPage lt mPageDto.pageCount }">
-								<a href="/review/MyReviews?pageNum=${ mPageDto.startPage + mPageDto.pageBlock }">[다음]</a>
+								<a href="/user/MyReviews?pageNum=${ mPageDto.startPage + mPageDto.pageBlock }">[다음]</a>
 							</c:if>
 						</c:if>
 					</div>

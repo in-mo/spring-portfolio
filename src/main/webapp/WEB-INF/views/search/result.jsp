@@ -134,7 +134,7 @@ hr {
 					<div class="carousel-inner">
 						<div class="carousel-item active">
 							<a href="/search/result?address=서울&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }">
-								<img src="/images/search/10.gif" style="width:100%; height: 400px;" class="d-block w-100">
+								<img src="/images/search/1.jpg" style="width:100%; height: 400px;" class="d-block w-100">
 							</a>
 							<div class="carousel-caption d-none d-md-block">
 		                    	<h3>Seoul</h3>
@@ -144,7 +144,7 @@ hr {
 					
 						<div class="carousel-item">
 							<a href="/search/result?address=인천&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }">
-								<img src="/images/search/11.gif" style="width:100%; height: 400px;" class="d-block w-100">
+								<img src="/images/search/2.jpg" style="width:100%; height: 400px;" class="d-block w-100">
 							</a>
 							<div class="carousel-caption d-none d-md-block">
 		                    	<h3>Incheon</h3>
@@ -154,7 +154,7 @@ hr {
 					
 						<div class="carousel-item">
 							<a href="/search/result?address=대구&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }">
-							<img src="/images/search/5.gif" style="width:100%; height: 400px;" class="d-block w-100">
+							<img src="/images/search/3.jpg" style="width:100%; height: 400px;" class="d-block w-100">
 							</a>
 							<div class="carousel-caption d-none d-md-block">
 		                    	<h3>Daegu</h3>
@@ -164,7 +164,7 @@ hr {
 						
 						<div class="carousel-item">
 							<a href="/search/result?address=부산&checkIn=${ checkIn }&checkOut=${ checkOut }&cntOfPerson=${ cntOfPerson }">
-								<img src="/images/search/4.gif" style="width:100%; height: 400px;" class="d-block w-100">
+								<img src="/images/search/4.jpg" style="width:100%; height: 400px;" class="d-block w-100">
 							</a>
 							<div class="carousel-caption">
 		                    	<h3>Busan</h3>

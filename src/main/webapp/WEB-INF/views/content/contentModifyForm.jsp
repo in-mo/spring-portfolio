@@ -63,7 +63,7 @@ th {
 		<jsp:include page="/WEB-INF/views/include/commonHeader.jsp" />
 		<div id="app">
 			<div>
-				<a href="/content/info?num=${ hostVo.num }">
+				<a href="/user/MyHosts?pageNum=${ pageNum }">
 					<span style="color: #d2d2d2;">
 						<i class="fas fa-angle-left fa-lg"></i>
 					</span>
@@ -407,7 +407,7 @@ th {
 			</div>
 			
 			<div v-if="isPicFileShow">
-				<form action="/content/modify?num=${ hostVo.num }&pageNum=${ pageVo.pageNum }&address=${ pageVo.address }&checkIn=${ pageVo.checkIn }&checkOut=${ pageVo.checkOut }&cntOfPerson=${ pageVo.cntOfPerson }" method="post" enctype="multipart/form-data">
+				<form action="/content/modify?num=${ hostVo.num }&pageNum=${ pageNum }" method="post" enctype="multipart/form-data">
 					<h3>멋진 사진으로 숙소가 돋보이게 해주세요.</h3>
 					<p>휴대전화나 카메라를 사용하여 사진을 찍으세요.
 					숙소를 등록하려면 1장 이상의 사진을 업로드하세요.

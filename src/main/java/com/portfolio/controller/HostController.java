@@ -52,9 +52,6 @@ public class HostController {
 	@Autowired
 	private HostService hostService;
 	
-	@Autowired
-	private SaveService saveService;
-	
 	@GetMapping("/info")
 	public String content(int num, Model model, PageVo pageVo) throws ParseException {
 		log.info("content() 호출됨");
@@ -173,7 +170,9 @@ public class HostController {
 	}
 
 	@GetMapping("/modify")
-	public String modify(int num, Model model) throws ParseException {
+	public String modify(int num, 
+			@RequestParam(defaultValue = "1") int pageNum, 
+			Model model) throws ParseException {
 		log.info("modify() - get 호출");
 		Map<String, Object> contentInfo = hostService.getContentInfo(num);
 		HostVo hostVo = (HostVo) contentInfo.get("hostVo");
@@ -181,6 +180,7 @@ public class HostController {
 		
 		List<ImagesVo> imageList = (List<ImagesVo>) contentInfo.get("imageList");
 		
+		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("hostVo", hostVo);
 		model.addAttribute("imageList", imageList);
 		model.addAttribute("imageList_size", imageList.size());
@@ -203,7 +203,7 @@ public class HostController {
 	@PostMapping("/modify")
 	public String modify(HttpServletRequest request, 
 			int num,
-			PageVo pageVo,
+			int pageNum,
 			// name속성이 filename인 것들만 가져옴.
 			@RequestParam(required = false, value = "filename") List<MultipartFile> multipartFiles,
 			// delfile로 넘어오는 파일을 배열에 담음
@@ -294,8 +294,7 @@ public class HostController {
 		hostService.updateAddImagesAndDelImages(addImages, delFileNums);
 		
 		rttr.addAttribute("num", num);
-		rttr.addAttribute("pageVo", pageVo);
-		
+		rttr.addAttribute("pageNum", pageNum);
 		return "redirect:/content/modify";
 	}
 	
