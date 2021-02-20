@@ -42,7 +42,7 @@ CREATE TABLE `airbnb_user` (
 
 LOCK TABLES `airbnb_user` WRITE;
 /*!40000 ALTER TABLE `airbnb_user` DISABLE KEYS */;
-INSERT INTO `airbnb_user` VALUES ('admin','$2a$10$hHrGikQk.733JaLaAJi2oOm6lL8nfYkWzSAPrCF53k7WxnHpsz0JC','유인모','yin5946@naver.com','010-2052-9054','d0f9ea95-eae0-4ba5-aea9-e9024caa7b14','11.gif','2021/02/17','2021-02-10 10:00:00'),('asdf1234','$2a$10$R1W1MI.wp.XUG.Rhek6YB.dWgJMKOmt95TPGDKkLtVNUjdN4DzHze','유인모','yin5946@naver.com','123-1231-2312','b2e8c4d3-dcff-47e0-859b-9c0e9ecb9f1d','11.gif','2021/02/17','2021-02-15 22:29:47'),('test','$2a$10$MSV/ZFSmQVdO6Xz4uYRjn.MvkdQP5X3NZFWl8L1zGtnuawm0LjOEm','유인모','yin5946@naver.com','123-1231-2312',NULL,NULL,NULL,'2021-02-10 10:00:00');
+INSERT INTO `airbnb_user` VALUES ('admin','$2a$10$hHrGikQk.733JaLaAJi2oOm6lL8nfYkWzSAPrCF53k7WxnHpsz0JC','유인모','yin5946@naver.com','010-2052-9054','0a868d45-0766-4f36-a648-44242d8f8094','pexels-pixabay-35888.jpg','2021/02/20','2021-02-10 10:00:00'),('asdf1234','$2a$10$R1W1MI.wp.XUG.Rhek6YB.dWgJMKOmt95TPGDKkLtVNUjdN4DzHze','유인모','yin5946@naver.com','123-1231-2312','e26d1257-f799-4b9a-826d-6697c3e49a32','pexels-vlad-alexandru-popa-1402787.jpg','2021/02/20','2021-02-15 22:29:47'),('test','$2a$10$xp.Bk5Y5o42X/ymLT.q/NewjUs020WnSPCEp.C3hvmQSTmYpoWZZK','유인모','yin5946@naver.com','123-1231-2312','6d29b13d-47d1-45a7-8d43-3889127dd0e5','pexels-pixabay-235615.jpg','2021/02/20','2021-02-10 10:00:00');
 /*!40000 ALTER TABLE `airbnb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-18 10:49:26
+-- Dump completed on 2021-02-20 13:27:43
