@@ -49,7 +49,9 @@ pre{
 .drawOutLine {
 	border: solid 1px #d2d2d2;
 }
-
+.cursorPointer:hover {
+	cursor: pointer;
+}
 </style>
 </head>
 <body style="background-color: #f2f2f2;">
@@ -83,7 +85,7 @@ pre{
 					<c:choose>
 						<c:when test="${ mPageDto.count gt 0 }">
 							<c:forEach var="review" items="${ reviewList }">
-								<div class="drawOutLine">
+								<div class="drawOutLine cursorPointer" onclick="location.href='/content/info?num=${ review.hostVo.num }'">
 									<div class="horizontal">
 										<div>
 											<div class="verticality drawOutLine">
