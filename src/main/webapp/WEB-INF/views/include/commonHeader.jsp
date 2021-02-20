@@ -306,7 +306,7 @@ header {
 				method: 'post',
 				success: function(res){
 					if(res != 1) {
-						alert('일치하지 않거나 존재하지 않는 아이디와 비밀번호 입니다 .');
+						alert('아이디 또는 패스워드가 일치하지 않습니다.');
 						return;
 					}
 					alert('로그인 하셨습니다.');
