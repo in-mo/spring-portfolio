@@ -85,8 +85,8 @@ pre{
 					<c:choose>
 						<c:when test="${ mPageDto.count gt 0 }">
 							<c:forEach var="review" items="${ reviewList }">
-								<div class="drawOutLine cursorPointer" onclick="location.href='/content/info?num=${ review.hostVo.num }'">
-									<div class="horizontal">
+								<div class="drawOutLine cursorPointer">
+									<div class="horizontal" onclick="location.href='/content/info?num=${ review.hostVo.num }'">
 										<div>
 											<div class="verticality drawOutLine">
 												<img src="/upload/${ review.imagesVo.uploadpath }/${ review.imagesVo.uuid }_${ review.imagesVo.filename }" width="200" height="200">

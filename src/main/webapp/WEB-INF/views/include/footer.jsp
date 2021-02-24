@@ -9,6 +9,8 @@
 .fab { 
 	vertical-align:middle 
 }
+
+a { color: #000; }
 </style>
 <footer class="text-center">
 		<hr style="margin: 0px;">
@@ -18,8 +20,9 @@
 		<hr style="margin: 0px;">
 		<div>
 			© 2021 Airbnb, Inc. All rights reservedㆍ개인정보 처리방침ㆍ이용약관ㆍ사이트맵ㆍ한국의 변경된 환불 정책ㆍ회사 세부정보
-			<i class="fab fa-facebook-square fa-lg"></i>
-			<i class="fab fa-twitter fa-lg"></i>
-			<i class="fab fa-instagram fa-lg"></i>
+			<a href="https://ko-kr.facebook.com/AirbnbKorea/"><i class="fab fa-facebook-square fa-lg"></i></a>
+			<a href="https://twitter.com/airbnb"><i class="fab fa-twitter fa-lg"></i></a>
+			<a href="https://www.instagram.com/airbnbkr/?hl=ko"><i class="fab fa-instagram fa-lg"></i></a>
+			<a href="https://youtu.be/TjHF-mLkvFI"><i class="fab fa-youtube fa-lg"></i></a>
 		</div>
 </footer>
